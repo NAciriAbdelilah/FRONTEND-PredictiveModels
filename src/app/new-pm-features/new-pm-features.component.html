@@ -1,0 +1,166 @@
+
+<div class="container d-flex justify-content-between mt-2 p-lg-2" >
+  <div>
+    <button type="button" class="btn btn-light" [routerLink]="['/admin/predictive-models']">
+      <img src="/assets/images/chevrons.png" alt="Bootstrap" width="30" height="30"> RETOUR
+    </button>
+  </div>
+  <div>
+        <img src="../../assets/images/logo-SG.png" style="width:200px;height:30px;">
+  </div>
+</div>
+
+<div class="container">
+  <div class="card mt-3">
+    <h2 class="card-header">FORMULAIRE D'AJOUT DES FEATURES D'UN MODELE PREDICTIF</h2>
+    <div class="card-body">
+      <!------------------------------------- PROGRESS BAR ------------------------------------------------->
+      <div class="progress" id="progress3">
+        <div class="progress-bar progress-bar-striped bg-danger progress-bar-animated"
+             role="progressbar" style="width: 80%"  aria-valuenow="75"
+             aria-valuemin="0" aria-valuemax="100">
+        </div>
+      </div>
+      <br>
+      <!---------------------------------------------------------------------------------------------------->
+      <!--------------------------------------- Predective Model & Features --------------------------------------------------->
+      <!---------------------------------------------------------------------------------------------------->
+
+      <form [formGroup]="savePMFeaturesFormGroup">
+          <div class="row justify-content-md-center ">
+          <div class="col-6">
+            <!------------------------- SELECT A PREDICTIVE MODEL  ---------------------------->
+            <div class="card">
+              <div class="card-header ">CHOISIR UN MODELE PREDICTIF:</div>
+              <div class="card-body">
+                <select class="form-select form-select mb-3"
+                        formControlName="predictiveModelId"
+                        (change)="onPredictiveModelSelect($event)">
+                  <option value="" disabled selected>SELECTIONNER VOTRE MODELE</option>
+                  <option *ngFor="let listPM of listOfPredictiveModel | async" [value]="listPM.id">
+                    {{ listPM.namePM }}
+                  </option>
+                </select>
+                <small class="text-danger"
+                       *ngIf="savePMFeaturesFormGroup.controls['predictiveModelId'].errors
+                       && savePMFeaturesFormGroup.controls['predictiveModelId'].touched
+                       && savePMFeaturesFormGroup.controls['predictiveModelId'].errors!['required']" >
+                  {{getErrorMessage(' Predictive Model ', savePMFeaturesFormGroup.controls['predictiveModelId'].errors)}}
+                </small>
+              </div>
+            </div>
+            <!--------------------------- SCOPE ------------------------------>
+            <div class="card">
+              <div class="card-header">DESCRIPTION DE TOUS LES FEATURES:</div>
+              <div class="card-body">
+                <!------------------------- SEARCH BAR FEATURES  ---------------------------->
+                <div class="container">
+                  <div class="card mt-3">
+                    <div class="card-body">
+                      <div *ngIf="searchFormGroup">
+                        <form [formGroup]="searchFormGroup">
+                          <div class="input-group">
+                            <button class="btn btn-close-white rounded-start">
+                              <img src="/assets/images/rechercher.png" alt="Bootstrap" width="30" height="30">
+                            </button>
+                            <label class="input-group-text">RECHERCHER</label>
+                            <input type="text" class="form-control" formControlName="keyword" (input)="handleSearchFeatures()" >
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!------------------------------------------------------------------------------->
+
+                <!------------------------- LIST OF ALL THE FEATURES  ---------------------------->
+                <!-- Quatriéme container -->
+
+                <div class="container">
+                  <div class="card mt-3">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-center">
+                        <table class="table table-sm" style="max-width: 1500px;">
+                          <caption> LISTE DES FEATURES</caption>
+                          <thead class="table-secondary text-center">
+                            <tr>
+                              <th class="align-middle">ID</th>
+                              <th class="align-middle">NOM DU FEATURE</th>
+                              <th class="align-middle">DESCRIPTION DU FEATURE</th>
+                              <th class="align-middle">ACTION</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let f of allFeatures | async">
+                              <td >{{ f.id }}</td>
+                              <td>{{ f.namefeature }}</td>
+                              <td>{{ f.description }}</td>
+                              <td *ngIf="authService.hasRole('ADMIN')">
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                  <!-- Add feature button -->
+                                  <button class="btn btn-close-white me-md-2"
+                                          (click)="copyFeatureToSelected(f)"
+                                          [disabled]="selectedFeatures.includes(f)">
+                                    <img src="/assets/images/add6.png" alt="Bootstrap" width="22" height="22">
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!------------------------------------FIN ROW1 - COL 1 ---------------------------------------------->
+          <!------------------------------------- ROW2 - COL2 ----------------------------------------------------------------->
+          <div class="col-6">
+            <div class="card">
+              <div class="card-header">LES FEATURES CHOISIES:</div>
+              <div class="card-body">
+                <table class="table table-sm">
+                  <caption> LISTE DES FEATURES SELECTIONNEES</caption>
+                  <thead class="table-secondary text-center" >
+                    <tr>
+                      <th class="align-middle">ID FEATURE</th>
+                      <th class="align-middle">NOM DU FEATURE</th>
+                      <th class="align-middle">DESCRIPTION DU FEATURE</th>
+                      <th class="align-middle">ACTION</th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="features">
+                  <tr *ngFor="let selectedFeature of selectedFeatures">
+                    <td>{{ selectedFeature.id }}</td>
+                    <td>{{ selectedFeature.namefeature }}</td>
+                    <td>{{ selectedFeature.description }}
+                    <td>
+                      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <!-- Remove feature button -->
+                        <button class="btn btn-close-white me-md-2"
+                                (click)="removeSelectedFeature(selectedFeature)">
+                          <img src="/assets/images/minus.png" alt="Bootstrap" width="22" height="22">
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <br>
+            <!------------------------------------- BUTTONS ----------------------------------------------------------------->
+            <div class="d-grid gap-2 d-md-flex justify-content-center">
+              <button class="btn btn-success" (click)="handleSavePredictiveModelFeatures()">
+                <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">VALIDER</button>
+            </div>
+            <!------------------------------------------------------------------------------------------------------------------>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

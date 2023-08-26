@@ -1,0 +1,6 @@
+.small-dropdown-item {
+  font-size: 14px; /* Adjust the font size as needed */
+}
+.navbar-nav.custom-spacing li {
+  margin-bottom: 10px; /* Adjust the margin as needed */
+}

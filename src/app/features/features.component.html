@@ -1,0 +1,247 @@
+<!-- Premier container -->
+<div class="container d-flex justify-content-between mt-2 p-lg-2">
+  <div>
+    <button type="button" class="btn btn-light" [routerLink]="['/admin/dashboard']">
+      <img src="/assets/images/chevrons.png" alt="Bootstrap" width="30" height="30"> RETOUR AU DASHBOARD
+    </button>
+  </div>
+  <div>
+    <img src="../../assets/images/logo-SG.png" style="width:200px;height:30px;">
+  </div>
+</div>
+
+<!-- Deuxième container -->
+<div class="container">
+  <div class="card mt-3">
+    <h2 class="card-header ">RECHERCHER FEATURE PAR NOM DU MODELE PREDICTIF: </h2>
+    <div class="row justify-content-md-center">
+
+      <!--------------------- FILTER FEATURES BY PREDICTIVE MODEL NAME --------------------->
+        <!------------------------------------- ROW2 - COL1 ----------------------------------------------------------------->
+        <!-- SÉLECTION DU MODÈLE PRÉDICTIF -->
+        <div class="col-6">
+          <div class="card">
+            <h3 class="card-header">CHOISIR UN MODELE PREDICTIF:</h3>
+            <div class="card-body">
+              <div class="row g-3 justify-content-center">
+                <div class="col-auto">
+                  <span for="modelSelect" class="input-group-text">NOM DU MODELE PREDICTIF:</span>
+                </div>
+                <div class="col-auto">
+                  <select class="form-select form-select mb-3"
+                          (change)="onPredictiveModelSelect($event)">
+                    <option value="" disabled selected>SELECTIONNER VOTRE MODELE</option>
+                    <option *ngFor="let listPM of listOfPredictiveModel | async" [value]="listPM.id">
+                      {{ listPM.namePM }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!------------------------------------FIN ROW1 - COL 1 ---------------------------------------------->
+        <!------------------------------------- ROW2 - COL2 ----------------------------------------------------------------->
+      <!-- LISTE DES FEATURES FILTERE PAR NOM DU MODÈLE PRÉDICTIF -->
+        <div class="col-6">
+          <div class="card">
+            <h3 class="card-header">LISTE DES FEATURES:</h3>
+            <div class="card-body">
+              <table class="table table-sm" >
+                <caption> LISTE DES FEATURES POUR CE MODELE </caption>
+                <thead class="table-light">
+                <tr>
+                  <th class="align-middle">ID FEATURE</th>
+                  <th class="align-middle">NOM DU FEATURE</th>
+                  <th class="align-middle">DESCRIPTION DU FEATURE</th>
+                  <th class="align-middle">DATE MODIFICATION</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let f of filteredFeatures | async">
+                  <td>{{ f.id }}</td>
+                  <td>{{ f.namefeature }}</td>
+                  <td>{{ f.description }}</td>
+                  <td>{{ convertTimestampToDate(f.lastModifiedDate) | date: 'medium' }}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!---------------------------------------FIN ROW 2 - COL 2------------------------------------------->
+      </div>
+    </div>
+  </div>
+  <!--------------------------------------------------------------------------------------->
+  <!-- Troisiéme container -->
+
+    <div class="container">
+        <div class="card mt-2">
+            <div class="card-body">
+              <!------------------------- SEARCH BAR FEATURES  ---------------------------->
+              <div class="container">
+                <div class="card mt-3">
+                  <div class="card-body">
+                      <div *ngIf="searchFormGroup">
+                        <form [formGroup]="searchFormGroup">
+                          <div class="input-group">
+                            <button class="btn btn-close-white rounded-start">
+                              <img src="/assets/images/rechercher.png" alt="Bootstrap" width="30" height="30">
+                            </button>
+                            <label class="input-group-text">RECHERHCER</label>
+                            <input type="text" class="form-control" formControlName="keyword" (input)="handleSearchFeatures()">
+                            <button *ngIf="authService.hasRole('ADMIN')"
+                                    class="btn btn-outline-danger btn-sm shadow-sm" data-bs-toggle="modal" data-bs-target="#addFeatureModal"
+                                    (click)="handleNewFeature()">
+                              <img src="/assets/images/ajouter.png" alt="Bootstrap" width="30" height="30"> AJOUTER NOUVEAU FEATURE
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+  <!------------------------- LIST OF ALL THE FEATURES  ---------------------------->
+  <!-- Quatriéme container -->
+
+      <div class="container">
+        <div class="card mt-3">
+          <h2 class="card-header">DESCRIPTION DE TOUS LES FEATURES: </h2>
+            <div class="card-body">
+              <div class="d-flex justify-content-center">
+                <table class="table table-hover" style="max-width: 1000px;">
+                  <caption> CI-DESSUS LA LISTE DE TOUS LES FEATURES DISPONIBLES</caption>
+                  <thead class="table-secondary">
+                    <tr>
+                      <th class="align-middle">ID FEATURE</th>
+                      <th class="align-middle">NOM DU FEATURE</th>
+                      <th class="align-middle">DESCRIPTION DU FEATURE</th>
+                      <th class="align-middle">DATE CREATION</th>
+                      <th class="align-middle">DATE MODIFICATION</th>
+                      <th class="align-middle">ACTIONS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let f of features | async">
+
+                      <td> {{f.id}}</td>
+                      <td> {{f.namefeature}}</td>
+                      <td> {{f.description}}</td>
+                      <td>{{ convertTimestampToDate(f.creationDate) | date: 'medium' }}</td>
+                      <td>{{ convertTimestampToDate(f.lastModifiedDate) | date: 'medium' }}</td>
+
+                      <td *ngIf="authService.hasRole('ADMIN')">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <!-- Update feature button -->
+                            <button class="btn btn-outline-danger" type="button" data-bs-toggle="modal" data-bs-target="#updateFeatureModal"
+                                    (click)="handleOpenUpdateModal(f)">
+                              <img src="/assets/images/write.png" alt="Bootstrap" width="22" height="22">
+                            </button>
+                            <!-- Delete feature button -->
+                            <button class= "btn btn-outline-danger" type="button" (click)="handleDeleteFeature(f)">
+                              <img src="/assets/images/trash.png" alt="Bootstrap" width="22" height="22">
+                            </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+    <!---------------------------------------------------------------------------------->
+
+            <!------------------------- MODAL TO ADD FEATURES  ---------------------------->
+                <div class="modal fade" id="addFeatureModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="addFeatureModalLabel"  aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="addFeatureModalLabel">AJOUTER D'UN NOUVEAU FEATURE</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form [formGroup]="newFeatureFormGroup">
+                          <div class="mb-3">
+                            <label for="feature-name" class="col-form-label">NOM DU FEATURE:</label>
+                            <input type="text" class="form-control" formControlName="namefeature" id="feature-name">
+                            <small class="text-danger"
+                                   *ngIf="newFeatureFormGroup.controls['namefeature'].errors
+                                  && newFeatureFormGroup.controls['namefeature'].touched
+                                  && newFeatureFormGroup.controls['namefeature'].errors!['required']" >
+                              {{getErrorMessage(' Name Feature', newFeatureFormGroup.controls['namefeature'].errors)}}
+                            </small>
+                          </div>
+                          <div class="mb-3">
+                            <label for="description-name" class="col-form-label">DESCRIPTION DU FEATURE:</label>
+                            <textarea type="text" class="form-control" formControlName="description" id="description-name"></textarea>
+                            <small class="text-danger"
+                                   *ngIf="newFeatureFormGroup.controls['description'].errors
+                                  && newFeatureFormGroup.controls['description'].touched
+                                  && newFeatureFormGroup.controls['description'].errors!['required']" >
+                              {{getErrorMessage(' Description Feature', newFeatureFormGroup.controls['description'].errors)}}
+                            </small>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="handleGetAllFeatures()">
+                          <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">FERMER</button>
+                        <button type="button" class="btn btn-success" (click)="handleNewFeature()">
+                          <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">VALIDER</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+            <!-------------------- END OF THE MODAL TO ADD FEATURES  ----------------------->
+
+
+            <!-------------------------- UPDATE FEATURES MODAL ----------------------------->
+            <div class="modal fade" id="updateFeatureModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="updateFeatureModalLabel"  aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h2 class="modal-title fs-5" id="updateFeatureModalLabel">MISE A JOUR D'UN FEATURE</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form [formGroup]="updateFeatureFormGroup">
+                      <div class="mb-3">
+                        <label for="update-feature-name" class="col-form-label">NOM DU FEATURE:</label>
+                        <input type="text" class="form-control" formControlName="namefeature" id="update-feature-name">
+                        <small class="text-danger"
+                               *ngIf="updateFeatureFormGroup.controls['namefeature'].errors
+                          && updateFeatureFormGroup.controls['namefeature'].touched
+                          && updateFeatureFormGroup.controls['namefeature'].errors!['required']">
+                          {{getErrorMessage('Name Feature', updateFeatureFormGroup.controls['namefeature'].errors)}}
+                        </small>
+                      </div>
+                      <div class="mb-3">
+                        <label for="update-description-name" class="col-form-label">DESCRIPTION DU FEATURE:</label>
+                        <textarea type="text" class="form-control" formControlName="description" id="update-description-name"></textarea>
+                        <small class="text-danger"
+                               *ngIf="updateFeatureFormGroup.controls['description'].errors
+                          && updateFeatureFormGroup.controls['description'].touched
+                          && updateFeatureFormGroup.controls['description'].errors!['required']">
+                          {{getErrorMessage('Description Feature', updateFeatureFormGroup.controls['description'].errors)}}
+                        </small>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                      <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">FERMER</button>
+                    <button type="button" class="btn btn-success" (click)="handleUpdateFeature()">
+                      <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">VALIDER</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-------------------------- END OF UPDATE FEATURES MODAL ----------------------------->
+          </div>
+        </div>
+      </div>

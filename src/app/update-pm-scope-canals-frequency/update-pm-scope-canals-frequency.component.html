@@ -1,0 +1,151 @@
+<div class="container d-flex justify-content-between mt-2 p-lg-2" >
+  <div>
+    <button type="button" class="btn btn-light" [routerLink]="['/admin/predictive-models']">
+      <img src="/assets/images/chevrons.png" alt="Bootstrap" width="30" height="30"> RETOUR
+    </button>
+  </div>
+  <div>
+    <!--    <img src="../../assets/images/logo-SG.png" style="width:200px;height:30px;">-->
+  </div>
+</div>
+
+<div class="container">
+  <div class="card mt-3">
+    <h2 class="card-header">MODIFICATION DES MARCHES - CANAUX - FREQUENCES D'UN MODELE PREDICTIF</h2>
+    <div class="card-body">
+
+      <!---------------------------------------------------------------------------------------------------->
+      <!------------------------------------ Scopes - Frequency - Canals ----------------------------------->
+      <!---------------------------------------------------------------------------------------------------->
+
+      <form [formGroup]="updatePMScopeCanalFrequencyFormGroup">
+        <div class="row justify-content-md-center">
+          <div class="col-8">
+            <!------------------------- NAME OF PREDICTIVE MODEL  ---------------------------->
+            <div class="card">
+              <div class="card-header ">CHOISIR UN MODELE PREDICTIF:</div>
+              <div class="card-body">
+                <select class="form-select form-select mb-3"
+                        formControlName="predictiveModelId"
+                        (change)="onPredictiveModelSelect($event)">
+                  <option value="" disabled selected>SELECTIONNER VOTRE MODELE</option>
+                  <option *ngFor="let listPM of listOfPredictiveModel | async" [value]="listPM.id">
+                    {{ listPM.namePM }}
+                  </option>
+                </select>
+                <small class="text-danger"
+                       *ngIf="updatePMScopeCanalFrequencyFormGroup.controls['predictiveModelId'].errors
+                                              && updatePMScopeCanalFrequencyFormGroup.controls['predictiveModelId'].touched
+                                              && updatePMScopeCanalFrequencyFormGroup.controls['predictiveModelId'].errors!['required']" >
+                  {{getErrorMessage(' Predictive Model ', updatePMScopeCanalFrequencyFormGroup.controls['predictiveModelId'].errors)}}
+                </small>
+              </div>
+            </div>
+
+            <!--------------------------- SCOPE ------------------------------>
+            <div class="card">
+              <div class="card-header ">MARCHE:</div>
+              <div class="card-body">
+                <!-- Display filtered scopes and their count horizontally -->
+                <div class="d-flex flex-wrap">
+                  <ng-container *ngIf="listOfPredictiveModel">
+                    <label><strong>LISTE DE(S) MARCHE(S) ACTUEL: </strong></label>
+                    <ng-container *ngFor="let scope of filteredListOfScopes; let i = index;">
+                      <span class="badge bg-danger rounded-pill m-1">
+                        <span class="badge bg-secondary">{{ i + 1 }}</span>
+                        {{ scope.intituleScope }}
+                      </span>
+                    </ng-container>
+                  </ng-container>
+                </div>
+                <!-- Scope Dropdown -->
+                <ng-multiselect-dropdown formControlName="scopes"
+                                         [placeholder]="'CHOISIR UN MARCHE'"
+                                         [settings]="scopeDropdownSettings"
+                                         [data]="scopeDropdownList"
+                                         (onSelect)="scopeOnItemSelect($event)">
+                </ng-multiselect-dropdown>
+                <small class="text-danger"
+                       *ngIf="updatePMScopeCanalFrequencyFormGroup.controls['scopes'].errors
+                                              && updatePMScopeCanalFrequencyFormGroup.controls['scopes'].touched
+                                              && updatePMScopeCanalFrequencyFormGroup.controls['scopes'].errors!['required']" >
+                  {{getErrorMessage(' scopes', updatePMScopeCanalFrequencyFormGroup.controls['scopes'].errors)}}
+                </small>
+              </div>
+              <!----------------------- CANAL -------------------------->
+              <div class="card-header ">CANAL:</div>
+              <div class="card-body">
+                <!-- Display filtered canals and their count horizontally -->
+                <div class="d-flex flex-wrap">
+                  <ng-container *ngIf="listOfPredictiveModel">
+                    <label><strong>LISTE DE(S) CANAL(S) ACTUEL: </strong></label>
+                    <ng-container *ngFor="let canals of filteredListOfCanals; let i = index;">
+                      <span class="badge bg-danger rounded-pill m-1">
+                        <span class="badge bg-secondary">{{ i + 1 }}</span>
+                        {{ canals.intituleCanal }}
+                      </span>
+                    </ng-container>
+                  </ng-container>
+
+                </div>
+                <!-- Canal Dropdown -->
+                <ng-multiselect-dropdown formControlName="canals"
+                                         [placeholder]="'CHOISIR UN CANAL'"
+                                         [settings]="canalDropdownSettings"
+                                         [data]="canalDropdownList"
+                                         (onSelect)="canalOnItemSelect($event)" >
+                </ng-multiselect-dropdown>
+                <small class="text-danger"
+                       *ngIf="updatePMScopeCanalFrequencyFormGroup.controls['canals'].errors
+                                            && updatePMScopeCanalFrequencyFormGroup.controls['canals'].touched
+                                            && updatePMScopeCanalFrequencyFormGroup.controls['canals'].errors!['required']" >
+                  {{getErrorMessage(' canals', updatePMScopeCanalFrequencyFormGroup.controls['canals'].errors)}}
+                </small>
+              </div>
+              <!----------------------- FREQUENCY -------------------------->
+              <div class="card-header ">FREQUENCE:</div>
+              <div class="card-body">
+                <!-- Display filtered scopes and their count horizontally -->
+                <div class="d-flex flex-wrap">
+                  <ng-container *ngIf="listOfPredictiveModel">
+                    <label><strong>LISTE DE(S) FREQUENCE(S) ACTUEL: </strong></label>
+                    <ng-container *ngFor="let frequences of filteredListOfFrequences; let i = index;">
+                        <span class="badge bg-danger rounded-pill m-1">
+                          <span class="badge bg-secondary">{{ i + 1 }}</span>
+                          {{ frequences.intitulefrequence }}
+                        </span>
+                    </ng-container>
+                  </ng-container>
+
+                </div>
+                <!-- Frequency Dropdown -->
+                <ng-multiselect-dropdown formControlName="frequency"
+                                         [placeholder]="'CHOISIR UNE FREQUENCE'"
+                                         [settings]="frequencyDropdownSettings"
+                                         [data]="frequencyDropdownList"
+                                         (onSelect)="frequencyOnItemSelect($event)" >
+                </ng-multiselect-dropdown>
+                <small class="text-danger"
+                       *ngIf="updatePMScopeCanalFrequencyFormGroup.controls['frequency'].errors
+                                            && updatePMScopeCanalFrequencyFormGroup.controls['frequency'].touched
+                                            && updatePMScopeCanalFrequencyFormGroup.controls['frequency'].errors!['required']" >
+                  {{getErrorMessage(' frequency', updatePMScopeCanalFrequencyFormGroup.controls['frequency'].errors)}}
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!------------------------------------- BUTTON SAVE STEP 2 ---------------------------------------------------------->
+        <br/>
+        <div class="container">
+          <div class="d-grid gap-2 col-6 mx-auto">
+            <button [disabled]="!updatePMScopeCanalFrequencyFormGroup.valid" class="btn btn-success" (click)="handleUpdatePredictiveModelScopesCanalsFrequencies()">
+              <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">VALIDER</button>
+          </div>
+        </div>
+        <br/>
+        <!------------------------------------------------------------------------------------------------------------------->
+      </form>
+    </div>
+  </div>
+</div>

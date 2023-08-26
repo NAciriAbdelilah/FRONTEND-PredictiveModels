@@ -1,0 +1,174 @@
+<!-- Premier container -->
+
+    <div class="container d-flex justify-content-between mt-2 p-lg-2">
+      <div>
+        <button type="button" class="btn btn-light" [routerLink]="['/admin/dashboard']">
+          <img src="/assets/images/chevrons.png" alt="Bootstrap" width="30" height="30"> RETOUR AU DASHBOARD
+        </button>
+      </div>
+      <div>
+        <img src="../../assets/images/logo-SG.png" style="width:200px;height:30px;">
+      </div>
+    </div>
+
+<!-- Deuxième container -->
+
+    <div class="container">
+      <div class="card mt-3">
+        <div class="card-body">
+          <!------------------------- SEARCH BAR SCOPE  ---------------------------->
+          <div *ngIf="searchScopeFormGroup">
+            <form [formGroup]="searchScopeFormGroup">
+              <div class="input-group">
+                <button class="btn btn-close-white rounded-start">
+                  <img src="/assets/images/rechercher.png" alt="Bootstrap" width="30" height="30">
+                </button>
+                <label class="input-group-text">RECHERCHER</label>
+                <input type="text" class="form-control" formControlName="keyword" (input)="handleSearchScope()">
+                <button *ngIf="authService.hasRole('ADMIN')"
+                        class="btn btn-outline-danger btn-sm shadow-sm" data-bs-toggle="modal" data-bs-target="#addScopeModal"
+                        (click)="handleNewScope()">
+                  <img src="/assets/images/ajouter.png" alt="Bootstrap" width="30" height="30"> AJOUTER UN MARCHE
+                </button>
+              </div>
+            </form>
+          </div>
+          <!---------------------------------------------------------------------------------->
+        </div>
+      </div>
+    </div>
+
+
+<!-- Troisiéme container -->
+
+<div class="container">
+  <div class="card mt-3">
+    <h2 class="card-header">DESCRIPTION DE TOUS LES MARCHES: </h2>
+    <div class="card-body">
+      <!------------------------- LIST OF ALL THE SCOPES  ---------------------------->
+      <div class="d-flex justify-content-center">
+        <table class="table table-hover" style="max-width:950px;">
+          <caption> LISTE DES MARCHES</caption>
+          <thead class="table-dark text-center">
+            <tr>
+              <th class="align-middle">ID</th>
+              <th class="align-middle">INTITULE DU MARCHE</th>
+              <th class="align-middle">DESCRIPTION DU MARCHE</th>
+              <th class="align-middle">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let s of scopes | async">
+            <td> {{s.id}}</td>
+            <td> {{s.intituleScope}}</td>
+            <td> {{s.descriptionScope}}</td>
+            <td *ngIf="authService.hasRole('ADMIN')">
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                  <!-- Update scope button -->
+                  <button class="btn btn-outline-danger" type="button" data-bs-toggle="modal" data-bs-target="#updateScopeModal"
+                        (click)="handleOpenUpdateModal(s)">
+                    <img src="/assets/images/write.png" alt="Bootstrap" width="22" height="22">
+                  </button>
+                  <!-- Delete scope button -->
+                  <button class= "btn btn-outline-danger" type="button" (click)="handleDeleteScope(s)">
+                    <img src="/assets/images/trash.png" alt="Bootstrap" width="22" height="22">
+                  </button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <!---------------------------------------------------------------------------------->
+
+      <!------------------------- MODAL TO ADD SCOPE  ---------------------------->
+      <div class="modal fade" id="addScopeModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="addScopeModalLabel"  aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title fs-5" id="addScopeModalLabel">AJOUTER UN MARCHE</h2>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="newScopeFormGroup">
+                <div class="mb-3">
+                  <label for="intitule-scope" class="col-form-label">INTITULE DU MARCHE:</label>
+                  <input type="text" class="form-control" formControlName="intituleScope" id="intitule-scope">
+                  <small class="text-danger"
+                         *ngIf="newScopeFormGroup.controls['intituleScope'].errors
+                                  && newScopeFormGroup.controls['intituleScope'].touched
+                                  && newScopeFormGroup.controls['intituleScope'].errors!['required']" >
+                    {{getErrorMessage('Intitule Scope', newScopeFormGroup.controls['intituleScope'].errors)}}
+                  </small>
+                </div>
+                <div class="mb-3">
+                  <label for="description-scope" class="col-form-label">DESCRIPTION DU MARCHE:</label>
+                  <textarea type="text" class="form-control" formControlName="descriptionScope" id="description-scope"></textarea>
+                  <small class="text-danger"
+                         *ngIf="newScopeFormGroup.controls['descriptionScope'].errors
+                                  && newScopeFormGroup.controls['descriptionScope'].touched
+                                  && newScopeFormGroup.controls['descriptionScope'].errors!['required']" >
+                    {{getErrorMessage(' Description Scope', newScopeFormGroup.controls['descriptionScope'].errors)}}
+                  </small>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="handleGetAllScopes()">
+                <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">FERMER</button>
+              <button type="button" class="btn btn-success" (click)="handleNewScope()">
+                <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">VALIDER</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-------------------- END OF THE MODAL TO ADD SCOPE  ----------------------->
+
+
+      <!-------------------------- UPDATE SCOPE MODAL ----------------------------->
+      <div class="modal fade" id="updateScopeModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="updateScopeModalLabel"  aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title fs-5" id="updateScopeModalLabel">MISE A JOUR D'UN MARCHE</h2>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="updateScopeFormGroup">
+                <div class="mb-3">
+                  <label for="update-intitule-scope" class="col-form-label">INTITULE DU MARCHE:</label>
+                  <input type="text" class="form-control" formControlName="intituleScope" id="update-intitule-scope">
+                  <small class="text-danger"
+                         *ngIf="updateScopeFormGroup.controls['intituleScope'].errors
+                          && updateScopeFormGroup.controls['intituleScope'].touched
+                          && updateScopeFormGroup.controls['intituleScope'].errors!['required']">
+                    {{getErrorMessage('Intitule Scope', updateScopeFormGroup.controls['intituleScope'].errors)}}
+                  </small>
+                </div>
+                <div class="mb-3">
+                  <label for="update-description-scope" class="col-form-label">DESCRIPTION DU MARCHE:</label>
+                  <textarea type="text" class="form-control" formControlName="descriptionScope" id="update-description-scope"></textarea>
+                  <small class="text-danger"
+                         *ngIf="updateScopeFormGroup.controls['descriptionScope'].errors
+                          && updateScopeFormGroup.controls['descriptionScope'].touched
+                          && updateScopeFormGroup.controls['descriptionScope'].errors!['required']">
+                    {{getErrorMessage('Description Scope', updateScopeFormGroup.controls['descriptionScope'].errors)}}
+                  </small>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">FERMER</button>
+              <button type="button" class="btn btn-success" (click)="handleUpdateScope()">
+                <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">VALIDER</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-------------------------- END OF UPDATE SCOPE MODAL ----------------------------->
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,264 @@
+<!-- Premier container -->
+
+    <div class="container d-flex justify-content-between mt-2 p-lg-2">
+      <div>
+        <button type="button" class="btn btn-light" [routerLink]="['/admin/dashboard']">
+          <img src="/assets/images/chevrons.png" alt="Bootstrap" width="30" height="30"> RETOUR AU DASHBOARD
+        </button>
+      </div>
+      <div>
+        <img src="../../assets/images/logo-SG.png" style="width:200px;height:30px;">
+      </div>
+    </div>
+
+<!-- Deuxième container -->
+
+    <div class="container">
+      <div class="card mt-3">
+        <div class="card-body">
+          <!------------------------- SEARCH BAR PREDICTIVE MODEL  ---------------------------->
+          <div *ngIf="searchFormGroup">
+            <form [formGroup]="searchFormGroup">
+              <div class="input-group">
+                <button class="btn btn-close-white rounded-start">
+                  <img src="/assets/images/rechercher.png" alt="Bootstrap" width="30" height="30">
+                </button>
+                <label class="input-group-text">RECHERCHER</label>
+                <input type="text" class="form-control" formControlName="keyword" (input)="handleSearchPredectiveModels()">
+                <button *ngIf="authService.hasRole('ADMIN')" class="btn btn-outline-danger btn-sm shadow-sm"
+                        (click)="handleNewPredictiveModel()">
+                  <img src="/assets/images/ajouter.png" alt="Bootstrap" width="30" height="30"> AJOUTER UN MODELE PREDICTIF
+                </button>
+              </div>
+            </form>
+          </div>
+          <!---------------------------------------------------------------------------------->
+        </div>
+      </div>
+    </div>
+
+<!-- Troisiéme container -->
+
+  <div class="container">
+    <ng-container *ngIf="predictiveModel; else errorsOrLoading">
+        <div class="card mt-3 ">
+          <h3 class="card-header">DESCRIPTION DE TOUS LES MODELES PREDICTIFS:</h3>
+          <div class="card-body">
+            <table class="table table-hover">
+              <caption> LISTE DES MODELES PREDICTIFS </caption>
+              <thead class="table-secondary text-center">
+                  <tr>
+                    <th class="align-middle">ID</th>
+                    <th class="align-middle">NOM DU MODELE PREDICTIF</th>
+                    <th class="align-middle">OBJECTIF DU MODELE PREDICTIF</th>
+                    <th class="align-middle">DATE CREATION</th>
+                    <th class="align-middle">VOIR DETAILS</th>
+                    <th class="align-middle">STATUS</th>
+                    <th class="align-middle">ACTIONS</th>
+                  </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let pm of predictiveModel | async">
+                <td> {{pm.id}} </td>
+                <td> {{pm.namePM}} </td>
+                <td> {{pm.objectivePM}} </td>
+                <td>{{ convertTimestampToDate(pm.creationDate) | date: 'medium' }}</td>
+                <td>
+                  <!-- Details PM button -->
+                  <button [routerLink]="['/admin/details-model', pm.id]"
+                    class= "btn btn-close-white rounded-start" type="button">
+                    <img src="/assets/images/details-bar.png" alt="Bootstrap" width="30" height="30">
+                  </button>
+                </td>
+                <td>
+                  <div>
+                      <span class="badge rounded-pill {{ pm.statusPM ? 'text-bg-success' : 'text-bg-warning' }}">
+                        {{ pm.statusPM ? 'En Production' : 'En Pilote' }}
+                      </span>
+                  </div>
+                </td>
+
+                <td *ngIf="authService.hasRole('ADMIN')">
+                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                      <!-- Update PM button -->
+                    <button class="btn btn-outline-danger me-md-2" type="button"
+                            data-bs-toggle="modal" data-bs-target="#updatePredictiveModelModal"
+                            (click)="handleOpenUpdateModal(pm)">
+                      <img src="/assets/images/write.png" alt="Bootstrap" width="22" height="22">
+                    </button>
+                      <!-- Delete PM button -->
+                      <button class= "btn btn-outline-danger" type="button" (click)="handleDeletePredictiveModel(pm)">
+                        <img src="/assets/images/trash.png" alt="Bootstrap" width="22" height="22">
+                      </button>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </ng-container>
+
+  <!----------------------------------------------------------------------------------------------------------------->
+
+
+    <!-------------------------- UPDATE PREDICTIVE MODEL MODAL ----------------------------->
+    <div class="modal fade modal-xl" id="updatePredictiveModelModal" data-bs-backdrop="static" tabindex="-1"
+         aria-labelledby="updatePredictiveModelModalLabel"  aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title fs-5" id="updatePredictiveModelModalLabel">MISE A JOUR D'UN MODELE PREDICTIF</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <div class="card mt-3">
+                <div class="card-body">
+                  <div class="row justify-content-md-start">
+                    <div class="col-12">
+                      <div class="card">
+                        <div class="card-body">
+                          <form [formGroup]="updatePredictiveModelFormGroup">
+
+                            <div class="row justify-content-md-center">
+
+                              <!------------------------------ NAME OF PREDICTIVE MODEL ------------------------------------------------------>
+                              <div class="col-6">
+                                <div class="mb-3">
+                                  <label for="update-name-pm" class="col-form-label">NOM DU MODELE PREDICTIF:</label>
+                                  <input type="text" class="form-control" formControlName="namePM" id="update-name-pm">
+                                  <small class="text-danger"
+                                         *ngIf="updatePredictiveModelFormGroup.controls['namePM'].errors
+                                            && updatePredictiveModelFormGroup.controls['namePM'].touched
+                                            && updatePredictiveModelFormGroup.controls['namePM'].errors!['required']">
+                                    {{getErrorMessage('Predictive Model Name ', updatePredictiveModelFormGroup.controls['namePM'].errors)}}
+                                  </small>
+                                </div>
+
+                                <div class="mb-3">
+                                  <label for="update-objective-pm" class="col-form-label">OBJECTIF DU MODELE PREDICTIF:</label>
+                                  <textarea type="text" class="form-control" formControlName="objectivePM"
+                                            id="update-objective-pm" style="width: 100%; height:100px;">
+                                  </textarea>
+                                  <small class="text-danger"
+                                         *ngIf="updatePredictiveModelFormGroup.controls['objectivePM'].errors
+                                            && updatePredictiveModelFormGroup.controls['objectivePM'].touched
+                                            && updatePredictiveModelFormGroup.controls['objectivePM'].errors!['required']">
+                                    {{getErrorMessage('Objective Predictive Model ', updatePredictiveModelFormGroup.controls['objectivePM'].errors)}}
+                                  </small>
+                                </div>
+
+                                <div class="mb-3">
+                                  <label for="update-definition-pm" class="col-form-label">DEFINITION DU MODELE PREDICTIF:</label>
+                                  <textarea type="text" class="form-control" formControlName="definitionPM"
+                                            id="update-definition-pm" style="width: 100%; height: 150px;">
+                                  </textarea>
+                                  <small class="text-danger"
+                                         *ngIf="updatePredictiveModelFormGroup.controls['definitionPM'].errors
+                                            && updatePredictiveModelFormGroup.controls['definitionPM'].touched
+                                            && updatePredictiveModelFormGroup.controls['definitionPM'].errors!['required']">
+                                    {{getErrorMessage('Definition Predictive Model ', updatePredictiveModelFormGroup.controls['definitionPM'].errors)}}
+                                  </small>
+                                </div>
+
+                                <div class="mb-3">
+                                  <label for="update-version-pm" class="col-form-label">VERSION:</label>
+                                  <input type="text" class="form-control" formControlName="versionPM" id="update-version-pm">
+                                  <small class="text-danger"
+                                         *ngIf="updatePredictiveModelFormGroup.controls['versionPM'].errors
+                                            && updatePredictiveModelFormGroup.controls['versionPM'].touched
+                                            && updatePredictiveModelFormGroup.controls['versionPM'].errors!['required']">
+                                    {{getErrorMessage('Version Model Name ', updatePredictiveModelFormGroup.controls['versionPM'].errors)}}
+                                  </small>
+                                </div>
+
+                                <div class="form-check form-switch fs-6">
+                                  <input class="form-check-input" type="checkbox" formControlName="statusPM" placeholder="Status" id="flexSwitchCheckChecked" >
+                                  <label class="form-check-label" for="flexSwitchCheckChecked">
+                                    {{ isEnPilote ? 'En Production' : 'En Pilote' }}
+                                  </label>
+                                      <small class="text-danger"
+                                             *ngIf="updatePredictiveModelFormGroup.controls['statusPM'].errors
+                                                && updatePredictiveModelFormGroup.controls['statusPM'].touched
+                                                && updatePredictiveModelFormGroup.controls['statusPM'].errors!['required']">
+                                        {{getErrorMessage('Status Model Name ', updatePredictiveModelFormGroup.controls['statusPM'].errors)}}
+                                      </small>
+                                </div>
+                              </div>
+
+                            <!------------------------------ REMARKS OF PREDICTIVE MODEL ------------------------------------------------------>
+                              <div class="col-6">
+                                <div class="card">
+                                  <div class="card-header ">REMARQUES:</div>
+                                  <div class="card-body">
+                                    <div class="input-group mb-3">
+                                      <textarea class="form-control" formControlName="remarksPM" placeholder="Ajouter ( - ) devant chaque Remarque"
+                                          style="width: 150px; height: 150px;" aria-label="RemarksModel"></textarea>
+                                      <small class="text-danger"
+                                             *ngIf="updatePredictiveModelFormGroup.controls['remarksPM'].errors
+                                          && updatePredictiveModelFormGroup.controls['remarksPM'].touched
+                                          && updatePredictiveModelFormGroup.controls['remarksPM'].errors!['required']" >
+                                        {{getErrorMessage('Remarks Predictive Model ', updatePredictiveModelFormGroup.controls['remarksPM'].errors)}}
+                                      </small>
+                                    </div>
+                                  </div>
+                                  <!---------------------------  NEXT STEPS OF PREDICTIVE MODEL  ---------------------------------------->
+                                  <div class="card-header ">NEXT STEPS:</div>
+                                  <div class="card-body">
+                                    <div class="input-group mb-3">
+                                      <textarea class="form-control" formControlName="nextStepsPM" placeholder="Ajouter ( - ) devant chaque Next-Step"
+                                                style="width: 150px; height: 150px;" aria-label="nextStep"></textarea>
+                                      <small class="text-danger"
+                                             *ngIf="updatePredictiveModelFormGroup.controls['nextStepsPM'].errors
+                                         && updatePredictiveModelFormGroup.controls['nextStepsPM'].touched
+                                         && updatePredictiveModelFormGroup.controls['nextStepsPM'].errors!['required']" >
+                                        {{getErrorMessage(' next Steps Predictive Model ', updatePredictiveModelFormGroup.controls['nextStepsPM'].errors)}}
+                                      </small>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <!------------------------------------------------------------------------------------------------------------>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+              <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">FERMER</button>
+            <button type="button" class="btn btn-success" (click)="handleUpdatePredictiveModel()">
+              <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">VALIDER</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-------------------------- END OF UPDATE PREDICTIVE MODEL MODAL ----------------------------->
+
+
+
+
+    <!----------------------------------------------------------------------------------------------------------------->
+
+      <!--    Here how to hold Errors in 3 cases :
+          (Successfully, Failure/Errors , Loading) from our API BACKEND-->
+      <ng-template #errorsOrLoading>
+          <ng-container *ngIf="errorMessage; else loading">
+             <strong class="text-danger">{{errorMessage}}</strong>
+          </ng-container>
+          <ng-template #loading >
+            <div class="d-flex justify-content-center">
+            <strong class="text-danger">Loading... </strong>
+            <div class="spinner-border text-danger" role="status" aria-hidden="true"></div>
+          </div>
+          </ng-template>
+      </ng-template>
+
+  </div>

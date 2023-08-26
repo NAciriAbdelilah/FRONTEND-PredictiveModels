@@ -1,0 +1,104 @@
+<!-- Navbar -->
+
+<nav class=" navbar sticky-top navbar-expand-lg navbar-light"  style="background-color: rgba(236,227,227,0.64);">
+
+  <!-- Container wrapper -->
+    <!-- Navbar brand -->
+    <div class="logo col-2">
+      &nbsp;&nbsp;&nbsp;&nbsp;<img src="../../assets/images/logo-SG.png" style="width:140px;height:25px;">
+    <!--  <a class="navbar-brand" style="font-weight: bold; color: #de2f2d" href="#">
+        &nbsp;&nbsp;&nbsp;<i class="bi bi-dash-square-fill"></i> SOCIETE GENERALE</a>-->
+    </div>
+
+
+  <!-- Collapsible wrapper -->
+
+      <!-- Left links -->
+    <div class="container col-8">
+
+      <ul class="navbar-nav h6 custom-spacing"  style="font-size: small; font-weight: bold" >
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLink="/admin/dashboard">
+              <i class="bi bi-speedometer2"></i> DASHBOARD</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link link-dark dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-graph-up-arrow"></i> MODELES PREDICTIFS
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/predictive-models">CONSULTER LES MODELES PREDICTIFS</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/new-predictive-model">AJOUTER NOUVEAU MODELE PREDICTIF</a></li>
+              <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/new-pm-scope-canals-frequency">AJOUTER DES PARAMETRES AU MODELES</a></li>
+              <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/new-pm-features">AJOUTER DES FEATURES AU MODELES</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/update-pm-scope-canals-frequency">MODIFIER LES PARAMETRES D'UN MODELES</a></li>
+              <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/update-pm-features">MODIFIER LES FEATURES D'UN MODELES</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLink="/admin/features">
+              <i class="bi bi-list-columns"></i> FEATURES</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLink="/admin/output-models">
+              <i class="bi bi-filetype-csv"></i> OUTPUT DES MODELES PREDICTIFS </a>
+          </li>
+
+          <li class="nav-item dropdown">
+              <a class="nav-link link-dark dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-gear"></i> PARAMETRES
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/scopes"> SEGMENTS DES MODELES PREDICTIFS </a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/canals"> CANAUX DES MODELES PREDICTIFS </a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/frequency"> FREQUENCES DES MODELES PREDICTIFS </a></li>
+              </ul>
+          </li>
+      </ul>
+        <!-- Left links -->
+        <!-- End Collapsible wrapper -->
+    </div>
+
+        <!-- Setting dropdown -->
+        <!-- End Setting dropdown -->
+  <div class="container col-1">
+    <a
+      class="nav-link dropdown-toggle"
+      href="#"
+      role="button"
+      data-bs-toggle="dropdown"
+      aria-expanded="false">
+      <img
+        src="./assets/images/employee.png"
+        class="rounded-circle"
+        height="30"
+        alt="Black and White Portrait of a Man"
+        loading="lazy"
+      />
+      &nbsp;{{authService.authenticatedUser!.firstname}}&nbsp;&nbsp;&nbsp;
+    </a>
+    <ul class="dropdown-menu dropdown-menu-sm-end">
+      <li>
+        <a class="dropdown-item small-dropdown-item" (click)="handleLogout()">
+          <i class="bi bi-box-arrow-right"></i> DECONNEXION</a>
+      </li>
+      <li>
+        <a class="dropdown-item small-dropdown-item">
+          <i class="bi bi-key-fill"></i> MOT DE PASSE OUBLIE </a>
+      </li>
+      <li>
+        <a class="dropdown-item small-dropdown-item">
+          <i class="bi bi-person-vcard-fill"></i> CONTACTER NOUS </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
+

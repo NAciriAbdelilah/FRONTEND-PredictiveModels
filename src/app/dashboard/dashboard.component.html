@@ -1,0 +1,77 @@
+
+
+      <div class="container mt-5">
+
+        <div class="row">
+
+          <div class="col-md-4 col-xl-3">
+            <div class="card bg-c-blue order-card">
+              <div class="card-block">
+                <p class="m-b-0">Nombre total des Modéles Prédictifs <br/> en SGMA</p>
+                <h2 class="text-right"><img src="/assets/images/analysis.png" alt="Bootstrap" width="50" height="50">
+                  <ng-container *ngIf="listOfPredictiveModel | async as predictiveModels">
+                    <ng-container *ngFor="let pm of predictiveModels; let i = index;"></ng-container>
+                    <span class="styled-span f-right">{{(predictiveModels.length)}}</span> <!-- Display the total count -->
+                  </ng-container>
+                </h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-xl-3">
+            <div class="card bg-c-green order-card">
+              <div class="card-block">
+                <p class="m-b-0">Nombre des Modéles Prédictifs <br/> en Production</p>
+                <h2 class="text-right"><img src="/assets/images/cost.png" alt="Bootstrap" width="50" height="50">
+                  <span class="styled-span f-right">{{ totalProductionCount }}</span>
+                </h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-xl-3">
+            <div class="card bg-c-yellow order-card">
+              <div class="card-block">
+                <p class="m-b-0">Nombre des Modéles Prédictifs <br/> en Pilote</p>
+                <h2 class="text-right"><img src="/assets/images/coding.png" alt="Bootstrap" width="50" height="50">
+                  <span class="styled-span f-right">{{ totalPilotCount }}</span>
+                </h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-xl-3">
+            <div class="card bg-c-pink order-card">
+              <div class="card-block">
+                <p class="m-b-0">Nombre total des Features <br/> en ......</p>
+                <h2 class="text-right"><img src="/assets/images/project-launch.png" alt="Bootstrap" width="50" height="50">
+                  <span class="styled-span f-right">0</span>
+                </h2>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <section class="deneb_cta">
+          <div class="container">
+            <div class="cta_wrapper">
+              <div class="row align-items-center">
+                <div class="col-lg-7">
+                  <div class="cta_content">
+                    <h3>Pourquoi les Modéles Predictifs ?</h3>
+                    <p>Ces modèles offrent une fenêtre vers l'avenir en utilisant des techniques sophistiquées de traitement de données et d'apprentissage automatique pour anticiper les tendances, les comportements et les événements à venir.
+                      <br/><br/>En explorant les modèles prédictifs dans la base de données de la SGMA, il devient possible de dégager des informations précieuses, de prendre des décisions plus éclairées et de mettre en place des stratégies proactives..</p>
+                  </div>
+                </div>
+                <div class="col-lg-5">
+                  <div class="button_box">
+                    <a class="btn btn-outline-warning" [routerLink]="['/admin/predictive-models']">Découvrir <i class="bi bi-caret-right-fill"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>

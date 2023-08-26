@@ -1,0 +1,59 @@
+<!-- Premier container -->
+<div class="container d-flex justify-content-between mt-2 p-lg-2">
+  <div>
+    <button type="button" class="btn btn-light" [routerLink]="['/admin/dashboard']">
+      <img src="/assets/images/chevrons.png" alt="Bootstrap" width="30" height="30"> RETOUR AU DASHBOARD
+    </button>
+  </div>
+  <div>
+    <img src="../../assets/images/logo-SG.png" style="width:200px;height:30px;">
+  </div>
+</div>
+
+<!-- Deuxième container -->
+<div class="container">
+  <div class="card mt-3">
+    <h3 class="card-header">INSERTION D'UN OUTPUT POUR UN MODELE PREDICTIF: </h3>
+    <div class="card-body">
+
+        <div class="d-flex justify-content-center">
+
+            <form [formGroup]="uploadOutputFileFormGroup" class="was-validated">
+
+
+              <div class="mb-3">
+                <label><strong>Nom du Modéle Prédictif:</strong></label>
+                <select class="form-select form-select mb-3"
+                        formControlName="predictiveModelId"
+                        (change)="onPredictiveModelSelect($event)" required>
+                  <option value="">Selectionner un Modéle  Prédictif</option>
+                  <option *ngFor="let listPM of listOfPredictiveModel | async" [value]="listPM.id">
+                    {{ listPM.namePM }}
+                  </option>
+                </select>
+                <div class="invalid-feedback">Merci de choisir un Modéle Prédictif</div>
+              </div>
+
+              <div class="mb-3">
+                <label><strong>Date derniére Push dans les Canaux:</strong></label>
+                <input type="Date" class="form-control"
+                       formControlName="dateOfPushOutputModel"
+                       (change)="onDateSelect($event)" required>
+                <div class="invalid-feedback">Merci de choisir une Date</div>
+              </div>
+
+              <div class="mb-3">
+                <label><strong>Fichier OutPut :</strong></label>
+                <input type="file" formControlName="fileToUpload"
+                       (change)="selectFile($event)" class="form-control" required>
+                <div class="invalid-feedback">Merci de choisir un fichier</div>
+              </div>
+
+              <div class="mb-3">
+                <button class="btn btn-primary"(click)="uploadFile()">UPLOAD FILE</button>
+              </div>
+            </form>
+        </div>
+    </div>
+  </div>
+</div>

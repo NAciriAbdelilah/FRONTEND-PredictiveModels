@@ -1,0 +1,130 @@
+body{
+  margin-top:20px;
+  background:#FAFAFA;
+}
+
+.order-card {
+  color: #fff;
+}
+
+.bg-c-blue {
+  /*background: linear-gradient(45deg,#4099ff,#73b4ff);*/
+  background: linear-gradient(45deg, #ce3e3e, rgba(16, 16, 15, 0.56));
+}
+
+.bg-c-green {
+  /*background: linear-gradient(45deg,#2ed8b6,#59e0c5);*/
+  background: linear-gradient(45deg, #ce3e3e, rgba(16, 16, 15, 0.56));
+}
+
+.bg-c-yellow {
+  /*background: linear-gradient(45deg,#FFB64D,#ffcb80);*/
+  background: linear-gradient(45deg, #ce3e3e, rgba(16, 16, 15, 0.56));
+}
+
+.bg-c-pink {
+  /*background: linear-gradient(45deg, #de2f2d, #ff7676);*/
+  background: linear-gradient(45deg, #ce3e3e, rgba(16, 16, 15, 0.56));
+}
+
+
+.card {
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+  box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+  border: none;
+  margin-bottom: 30px;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.card .card-block {
+  padding: 25px;
+}
+
+.order-card i {
+  font-size: 26px;
+}
+
+.f-left {
+  float: left;
+}
+
+.f-right {
+  float: right;
+}
+.styled-span {
+  font-size: 50px;
+  color: white;
+  font-weight: bold;
+}
+/*----------------------------------------------------------------------------------------------------------------------*/
+body{margin-top:20px;}
+
+.deneb_cta .cta_wrapper {
+  padding: 45px 50px 42px;
+  max-width: 970px;
+  border-radius: 15px;
+  margin: auto auto -135px;
+  position: relative;
+  background-image: -moz-linear-gradient(0deg, #ffbd27 0%, #feb000 100%);
+  background-image: -webkit-linear-gradient(0deg, #ffbd27 0%, #feb000 100%);
+  background-image: -ms-linear-gradient(0deg, #ffbd27 0%, #feb000 100%);
+  box-shadow: 3px 4px 15px 0 rgba(16, 16, 15, 0.47);
+  z-index: 1;
+}
+.deneb_cta .cta_wrapper:after {
+  content: "";
+  background-position: bottom;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+}
+.deneb_cta .cta_wrapper .cta_content h3 {
+  color: rgba(16, 16, 15, 0.47);
+  font-weight: bold;
+}
+@media (max-width: 767px) {
+  .deneb_cta .cta_wrapper .cta_content h3 {
+    font-size: 24px;
+  }
+}
+.deneb_cta .cta_wrapper .cta_content h3:after {
+  content: "";
+  display: block;
+  max-width: 110px;
+  height: 2px;
+  margin-top: 6px;
+  margin-bottom: 24px;
+}
+.deneb_cta .cta_wrapper .cta_content p {
+  color: rgba(16, 16, 15, 0.97);
+}
+.deneb_cta .cta_wrapper .button_box {
+  float: right;
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .deneb_cta .cta_wrapper .button_box {
+    float: none;
+    text-align: left;
+    margin-top: 30px;
+  }
+}
+@media (max-width: 767px) {
+  .deneb_cta .cta_wrapper .button_box {
+    float: none;
+    text-align: center;
+    margin-top: 30px;
+  }
+}
+.deneb_cta .cta_wrapper .button_box .deneb_btn {
+  background: rgba(16, 16, 15, 0.47);
+  color: #011a3e;
+}
+.deneb_cta .cta_wrapper .button_box .deneb_btn:hover,
+.deneb_cta .cta_wrapper .button_box .deneb_btn:focus {
+  box-shadow: 2.5px 4.33px 15px 0px rgba(0, 0, 0, 0.15);
+}

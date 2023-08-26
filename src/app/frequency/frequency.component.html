@@ -1,0 +1,173 @@
+<!-- Premier container -->
+
+<div class="container d-flex justify-content-between mt-2 p-lg-2">
+  <div>
+    <button type="button" class="btn btn-light" [routerLink]="['/admin/dashboard']">
+      <img src="/assets/images/chevrons.png" alt="Bootstrap" width="30" height="30"> RETOUR AU DASHBOARD
+    </button>
+  </div>
+  <div>
+    <img src="../../assets/images/logo-SG.png" style="width:200px;height:30px;">
+  </div>
+</div>
+
+<!-- Deuxième container -->
+
+<div class="container">
+  <div class="card mt-3">
+    <div class="card-body">
+      <!------------------------- SEARCH BAR FREQUENCY  ---------------------------->
+      <div *ngIf="searchFrequenceFormGroup">
+        <form [formGroup]="searchFrequenceFormGroup">
+          <div class="input-group">
+            <button class="btn btn-close-white rounded-start">
+              <img src="/assets/images/rechercher.png" alt="Bootstrap" width="30" height="30">
+            </button>
+            <label class="input-group-text">RECHERCHER</label>
+            <input type="text" class="form-control" formControlName="keyword" (input)="handleSearchFrequence()">
+            <button *ngIf="authService.hasRole('ADMIN')"
+                    class="btn btn-outline-danger btn-sm shadow-sm" data-bs-toggle="modal" data-bs-target="#addFrequencyModal"
+                    (click)="handleNewFrequence()">
+              <img src="/assets/images/ajouter.png" alt="Bootstrap" width="30" height="30"> AJOUTER UNE FREQUENCE
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Troisiéme container -->
+
+<div class="container">
+  <div class="card mt-3">
+    <h2 class="card-header">DESCRIPTION DE TOUTES LES FREQUENCES: </h2>
+    <div class="card-body">
+      <!------------------------- LIST OF ALL THE FREQUENCIES  ---------------------------->
+      <div class="d-flex justify-content-center">
+        <table class="table table-hover" style="max-width:950px;">
+          <caption> LISTE DES FREQUENCES</caption>
+          <thead class="table-dark">
+            <tr>
+              <th class="align-middle">ID</th>
+              <th class="align-middle">CODE DU FREQUENCE</th>
+              <th class="align-middle">INTITULE DU FREQUENCE</th>
+              <th class="align-middle">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let f of frequences | async">
+            <td> {{f.id}}</td>
+            <td> {{f.codeFrequence}}</td>
+            <td> {{f.intitulefrequence}}</td>
+            <td *ngIf="authService.hasRole('ADMIN')">
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <!-- Update frequences button -->
+                <button class="btn btn-outline-danger" type="button" data-bs-toggle="modal" data-bs-target="#updateFrequencyModal"
+                        (click)="handleOpenUpdateModal(f)">
+                  <img src="/assets/images/write.png" alt="Bootstrap" width="22" height="22">
+                </button>
+                <!-- Delete frequences button -->
+                <button class= "btn btn-outline-danger" type="button" (click)="handleDeleteFrequence(f)">
+                  <img src="/assets/images/trash.png" alt="Bootstrap" width="22" height="22">
+                </button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <!---------------------------------------------------------------------------------->
+
+      <!------------------------- MODAL TO ADD FREQUENCY  ---------------------------->
+      <div class="modal fade" id="addFrequencyModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="addFrequencyModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title fs-5" id="addFrequencyModalLabel">AJOUTER UNE FREQUENCE</h2>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="newFrequenceFormGroup">
+                <div class="mb-3">
+                  <label for="intitule-frequency" class="col-form-label">INTITULE DE LA FREQUENCE:</label>
+                  <textarea type="text" class="form-control" formControlName="intitulefrequence" id="intitule-frequency"></textarea>
+                  <small class="text-danger"
+                         *ngIf="newFrequenceFormGroup.controls['intitulefrequence'].errors
+                                  && newFrequenceFormGroup.controls['intitulefrequence'].touched
+                                  && newFrequenceFormGroup.controls['intitulefrequence'].errors!['required']" >
+                    {{getErrorMessage(' Intitule Frequence', newFrequenceFormGroup.controls['intitulefrequence'].errors)}}
+                  </small>
+                </div>
+                <div class="mb-3">
+                  <label for="code-frequency" class="col-form-label">CODE DE LA FREQUENCE:</label>
+                  <input type="text" class="form-control" formControlName="codeFrequence" id="code-frequency">
+                  <small class="text-danger"
+                         *ngIf="newFrequenceFormGroup.controls['codeFrequence'].errors
+                                  && newFrequenceFormGroup.controls['codeFrequence'].touched
+                                  && newFrequenceFormGroup.controls['codeFrequence'].errors!['required']" >
+                    {{getErrorMessage('Code Frequence', newFrequenceFormGroup.controls['codeFrequence'].errors)}}
+                  </small>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="handleGetAllFrequences()">
+                <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">FERMER</button>
+              <button type="button" class="btn btn-success" (click)="handleNewFrequence()">
+                <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">VALIDER</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-------------------- END OF THE MODAL TO ADD FREQUENCY  ----------------------->
+
+
+      <!-------------------------- UPDATE FREQUENCY MODAL ----------------------------->
+      <div class="modal fade" id="updateFrequencyModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="updateFrequencyModal"  aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title fs-5" id="updateFrequencyModalLabel">MISE A JOUR DE LA FREQUENCE</h2>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="updateFrequenceFormGroup">
+                <div class="mb-3">
+                  <label for="update-intitule-frequency" class="col-form-label">INTITULE DE LA FREQUENCE:</label>
+                  <textarea type="text" class="form-control" formControlName="intitulefrequence" id="update-intitule-frequency"></textarea>
+                  <small class="text-danger"
+                         *ngIf="updateFrequenceFormGroup.controls['intitulefrequence'].errors
+                          && updateFrequenceFormGroup.controls['intitulefrequence'].touched
+                          && updateFrequenceFormGroup.controls['intitulefrequence'].errors!['required']">
+                    {{getErrorMessage('Intitule Frequency', updateFrequenceFormGroup.controls['intitulefrequence'].errors)}}
+                  </small>
+                </div>
+                <div class="mb-3">
+                  <label for="update-code-frequency" class="col-form-label">CODE DE LA FREQUENCE:</label>
+                  <input type="text" class="form-control" formControlName="codeFrequence" id="update-code-frequency">
+                  <small class="text-danger"
+                         *ngIf="updateFrequenceFormGroup.controls['codeFrequence'].errors
+                          && updateFrequenceFormGroup.controls['codeFrequence'].touched
+                          && updateFrequenceFormGroup.controls['codeFrequence'].errors!['required']">
+                    {{getErrorMessage('Code Frequency', updateFrequenceFormGroup.controls['codeFrequence'].errors)}}
+                  </small>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">FERMER</button>
+              <button type="button" class="btn btn-success" (click)="handleUpdateFrequence()">
+                <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">VALIDER</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-------------------------- END OF UPDATE FREQUENCY MODAL ----------------------------->
+    </div>
+  </div>
+</div>
+

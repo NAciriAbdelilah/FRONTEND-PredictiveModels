@@ -1,0 +1,160 @@
+    <div class="container d-flex justify-content-between mt-2 p-lg-2">
+      <div>
+        <button type="button" class="btn btn-light"
+                [routerLink]="['/admin/predictive-models']">
+          <img src="/assets/images/chevrons.png" alt="Bootstrap" width="30" height="30"> RETOUR
+        </button>
+      </div>
+      <div>
+        <img src="../../assets/images/logo-SG.png" style="width:200px;height:30px;">
+      </div>
+    </div>
+
+    <!------------------------- List of Details of the Predictives Models  ---------------------------->
+
+    <div class="container">
+      <div class="card mt-3">
+        <h3 class="card-header">DETAILS DES MODELES PREDICTIFS: </h3>
+        <div class="card-body">
+          <div class="d-flex justify-content-center">
+            <div *ngIf="predictiveModel as pm">
+                <table class="table table-hover" style="max-width: 1500px;">
+                  <caption> DETAILS DES MODELES PREDICTIFS</caption>
+                  <thead class="table-light text-center">
+                    <tr>
+                      <th class="align-middle">NOM DU MODELE PREDICTIF</th>
+                      <th class="align-middle">DEFINITION DU MODELE PREDICTIF </th>
+                      <th class="align-middle">MARCHES</th>
+                      <th class="align-middle">CANAUX</th>
+                      <th class="align-middle">FREQUENCES</th>
+                      <th class="align-middle">VERSION</th>
+                      <th class="align-middle">DATE MODIFICATION</th>
+                      <th class="align-middle">ACTIONS</th>
+                    </tr>
+                  </thead>
+                      <tbody>
+                          <tr>
+                            <td>{{ pm.namePM }}</td>
+                            <td>{{ pm.definitionPM }}</td>
+                            <td>
+                              <ng-container *ngFor="let scopesArray of listOfScopes">
+                                <ul>
+                                  <li *ngFor="let scopes of scopesArray">{{scopes.intituleScope}}</li>
+                                </ul>
+                              </ng-container>
+                            </td>
+                            <td>
+                            <ng-container *ngFor="let canalsArray of listOfCanals">
+                              <ul>
+                                <li *ngFor="let canals of canalsArray">{{canals.intituleCanal}}</li>
+                              </ul>
+                            </ng-container>
+                            </td>
+                            <td>
+                            <ng-container *ngFor="let frequencesArray of listOfFrequency">
+                              <ul>
+                                <li *ngFor="let frequences of frequencesArray">{{frequences.intitulefrequence}}</li>
+                              </ul>
+                            </ng-container>
+                            </td>
+                            <td>{{ pm.versionPM }}</td>
+                            <td>{{ convertTimestampToDate(pm.lastModifiedDate) | date: 'medium' }}</td>
+                            <td *ngIf="authService.hasRole('ADMIN')">
+                              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <!-- Update PM button -->
+                                <button class="btn btn-outline-danger me-md-2" type="button"
+                                        [routerLink]="['/admin/update-pm-scope-canals-frequency']">
+                                  <img src="/assets/images/write.png" alt="Bootstrap" width="22" height="22">
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                      </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+        <!------------------------- Remarks and Next-Steps of Predictive Model  ---------------------------->
+        <div class="container">
+          <div class="card mt-3">
+            <h5 class="card-header bg-danger-subtle"><strong> REMARQUES : </strong> </h5>
+            <div class="card-body">
+              <div class="p-3 text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-3">
+                <div class="callout" *ngFor="let remark of formattedRemarks; let i = index" >
+                  <ng-container *ngIf="remark.trim() !== ''">
+                    - {{ remark }}
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card mt-3">
+              <h5 class="card-header bg-warning"><strong> NEXT-STEPS :</strong>  </h5>
+              <div class="card-body">
+                <div class="p-3 text-warning-emphasis bg-warning-subtle border border-warning-subtle rounded-3">
+                  <div class="callout" *ngFor="let nextStep of formattedNextSteps; let i = index" >
+                    <ng-container *ngIf="nextStep.trim() !== ''">
+                      - {{ nextStep }}
+                    </ng-container>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        <br/>
+        </div>
+    </div>
+
+    <!-------------------------------------- List of Details Features  ----------------------------------------->
+
+    <div class="container">
+      <div class="card mt-3">
+        <h3 class="card-header">LISTE DES FEATURES: </h3>
+        <div class="card-body">
+            <div class="d-flex justify-content-center">
+              <table class="table table-hover" style="max-width: 1000px;">
+                <caption> LISTE DES FEATURES PAR NOM DU MODELE PREDICTIF</caption>
+                <thead class="table-light text-center">
+                  <tr>
+                    <th class="align-middle">ID FEATURE</th>
+                    <th class="align-middle">NOM DU FEATURE</th>
+                    <th class="align-middle">DESCRIPTION DU FEATURE</th>
+                    <th class="align-middle">DATE MODIFICATION</th>
+                    <th class="align-middle">MODIFIER FEATURES</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <ng-container *ngIf="listOfFeatures && listOfFeatures.length > 0">
+                  <ng-container *ngFor="let featuresArray of listOfFeatures">
+                    <tr *ngFor="let features of featuresArray">
+
+                      <td>{{ features.id }}</td>
+                      <td>{{ features.namefeature }}</td>
+                      <td>{{ features.description }}</td>
+                      <td>{{ convertTimestampToDate(features.lastModifiedDate) | date: 'medium' }}</td>
+                      <td *ngIf="authService.hasRole('ADMIN')">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                          <!-- Update Features OF PM button -->
+                          <button class= "btn btn-outline-danger" type="button"
+                                  [routerLink]="['/admin/update-pm-features']">
+                            <img src="/assets/images/write.png" alt="Bootstrap" width="22" height="22">
+                          </button>
+                        </div>
+                      </td>
+
+                    </tr>
+                  </ng-container>
+                </ng-container>
+                <ng-container *ngIf="!listOfFeatures || listOfFeatures.length === 0">
+                  <tr>
+                    <td colspan="4">No features available</td>
+                  </tr>
+                </ng-container>
+                </tbody>
+              </table>
+            </div>
+        </div>
+      </div>
+    </div>

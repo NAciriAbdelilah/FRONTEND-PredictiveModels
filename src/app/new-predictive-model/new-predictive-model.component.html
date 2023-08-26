@@ -1,0 +1,152 @@
+<div class="container d-flex justify-content-between mt-2 p-lg-2" >
+  <div>
+    <button type="button" class="btn btn-light" [routerLink]="['/admin/predictive-models']">
+      <img src="/assets/images/chevrons.png" alt="Bootstrap" width="30" height="30"> RETOUR
+    </button>
+  </div>
+  <div>
+    <img src="../../assets/images/logo-SG.png" style="width:200px;height:30px;">
+  </div>
+</div>
+
+<div class="container">
+  <div class="card mt-3">
+    <h2 class="card-header">FORMULAIRE D'AJOUT D'UN NOUVEAU MODELE PREDICTIF</h2>
+    <div class="card-body">
+     <!------------------------------------- PROGRESS BAR ----------------------------------------------------->
+     <div class="progress" id="progress1">
+          <div class="progress-bar progress-bar-striped bg-danger progress-bar-animated"
+               role="progressbar" style="width: 30%"  aria-valuenow="30"
+               aria-valuemin="0" aria-valuemax="100">
+          </div>
+      </div>
+      <br>
+      <!---------------------------------------------------------------------------------------------------->
+      <!--------------------------------------- Predictive Model  ------------------------------------------>
+      <!---------------------------------------------------------------------------------------------------->
+
+      <form [formGroup]="newPredictiveModelsFormGroup">
+         <div class="row justify-content-md-center">
+            <div class="col-6">
+               <!--------------------------- NAME OF PREDICTIVE MODEL -------------------------------------->
+                <div class="card">
+                        <div class="card-header ">NOM DU MODELE PREDICTIF:</div>
+                        <div class="card-body">
+                            <div class="input-group mb-3">
+                              <input type="text" class="form-control" formControlName="namePM" placeholder="Predictive Model Name" aria-label="NameModel">
+                              <small class="text-danger"
+                                     *ngIf="newPredictiveModelsFormGroup.controls['namePM'].errors
+                                      && newPredictiveModelsFormGroup.controls['namePM'].touched
+                                      && newPredictiveModelsFormGroup.controls['namePM'].errors!['required']" >
+                                {{getErrorMessage(' Predictive Model Name ', newPredictiveModelsFormGroup.controls['namePM'].errors)}}
+                              </small>
+                            </div>
+                        </div>
+                  <!---------------------------  OBJECTIVE OF PREDICTIVE MODEL  ---------------------------------------->
+                        <div class="card-header ">OBJECTIF DU MODELE PREDICTIF:</div>
+                        <div class="card-body">
+                            <div class="input-group mb-3">
+                            <textarea class="form-control" formControlName="objectivePM" placeholder="Objective"
+                                      style="width: 100px; height: 80px;" aria-label="With textarea"></textarea>
+                              <small class="text-danger"
+                                       *ngIf="newPredictiveModelsFormGroup.controls['objectivePM'].errors
+                                       && newPredictiveModelsFormGroup.controls['objectivePM'].touched
+                                       && newPredictiveModelsFormGroup.controls['objectivePM'].errors!['required']" >
+                                {{getErrorMessage(' Objective ', newPredictiveModelsFormGroup.controls['objectivePM'].errors)}}
+                              </small>
+                            </div>
+                        </div>
+                  <!------------------------ DEFINITION OF PREDICTIVE MODEL ----------------------------->
+                        <div class="card-header ">DEFINITION DU MODELE PREDICTIF:</div>
+                        <div class="card-body">
+                           <div class="input-group mb-3">
+                             <textarea class="form-control" formControlName="definitionPM" placeholder="Definition"
+                                       style="width: 150px; height: 100px;" aria-label="With textarea"></textarea>
+                             <small class="text-danger"
+                                      *ngIf="newPredictiveModelsFormGroup.controls['definitionPM'].errors
+                                      && newPredictiveModelsFormGroup.controls['definitionPM'].touched
+                                      && newPredictiveModelsFormGroup.controls['definitionPM'].errors!['required']" >
+                               {{getErrorMessage(' Definition ', newPredictiveModelsFormGroup.controls['definitionPM'].errors)}}
+                             </small>
+                           </div>
+                        </div>
+                  <!-----------------------  VERSION OF PREDICTIVE MODEL  --------------------------->
+                        <div class="card-header ">VERSION:</div>
+                        <div class="card-body">
+                          <div class="input-group mb-3">
+                            <input type="text" class="form-control" formControlName="versionPM" placeholder="Version" aria-label="Version">
+                            <small class="text-danger"
+                                   *ngIf="newPredictiveModelsFormGroup.controls['versionPM'].errors
+                                              && newPredictiveModelsFormGroup.controls['versionPM'].touched
+                                              && newPredictiveModelsFormGroup.controls['versionPM'].errors!['required']" >
+                              {{getErrorMessage(' Version ', newPredictiveModelsFormGroup.controls['versionPM'].errors)}}
+                            </small>
+                          </div>
+                        </div>
+                  <!-----------------------  STATUS OF PREDICTIVE MODEL  --------------------------->
+                      <div class="card-header ">STATUS:</div>
+                      <div class="card-body">
+                        <div class="form-check form-switch fs-6">
+                          <input class="form-check-input" type="checkbox" formControlName="statusPM" placeholder="Status" id="flexSwitchCheckChecked" >
+                          <label class="form-check-label" for="flexSwitchCheckChecked">
+                            {{ isEnPilote ? 'En Production' : 'En Pilote' }}
+                          </label>
+                          <small class="text-danger"
+                                 *ngIf="newPredictiveModelsFormGroup.controls['statusPM'].errors
+                                                  && newPredictiveModelsFormGroup.controls['statusPM'].touched
+                                                  && newPredictiveModelsFormGroup.controls['statusPM'].errors!['required']" >
+                            {{getErrorMessage(' Status ', newPredictiveModelsFormGroup.controls['statusPM'].errors)}}
+                          </small>
+                        </div>
+                      </div>
+                </div>
+            </div>
+         <!------------------------------------------------------------------------------------------------------------->
+
+         <!------------------------------ REMARKS OF PREDICTIVE MODEL ------------------------------------------------------>
+         <div class="col-6">
+           <div class="card">
+               <div class="card-header ">REMARQUES:</div>
+               <div class="card-body">
+                 <div class="input-group mb-3">
+                   <textarea class="form-control" formControlName="remarksPM" placeholder="Ajouter ( - ) devant chaque Remarque"
+                             style="width: 150px; height: 150px;" aria-label="RemarksModel"></textarea>
+                   <small class="text-danger"
+                          *ngIf="newPredictiveModelsFormGroup.controls['remarksPM'].errors
+                                        && newPredictiveModelsFormGroup.controls['remarksPM'].touched
+                                        && newPredictiveModelsFormGroup.controls['remarksPM'].errors!['required']" >
+                     {{getErrorMessage('Remarks Predictive Model ', newPredictiveModelsFormGroup.controls['remarksPM'].errors)}}
+                   </small>
+                 </div>
+               </div>
+               <!---------------------------  NEXT STEPS OF PREDICTIVE MODEL  ---------------------------------------->
+               <div class="card-header ">NEXT STEPS:</div>
+               <div class="card-body">
+                 <div class="input-group mb-3">
+                   <textarea class="form-control" formControlName="nextStepsPM" placeholder="Ajouter ( - ) devant chaque Next-Step"
+                             style="width: 150px; height: 150px;" aria-label="nextStep"></textarea>
+                   <small class="text-danger"
+                          *ngIf="newPredictiveModelsFormGroup.controls['nextStepsPM'].errors
+                                       && newPredictiveModelsFormGroup.controls['nextStepsPM'].touched
+                                       && newPredictiveModelsFormGroup.controls['nextStepsPM'].errors!['required']" >
+                     {{getErrorMessage(' next Steps Predictive Model ', newPredictiveModelsFormGroup.controls['nextStepsPM'].errors)}}
+                   </small>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+        </form>
+      <br>
+      <!------------------------------------------------------------------------------------------------------------>
+      <div class="container">
+        <div class="d-grid gap-2 col-6 mx-auto">
+          <button [disabled]="!newPredictiveModelsFormGroup.valid" class="btn btn-success"
+                  (click)="handleAddPredictiveModel()">
+            <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">VALIDER</button>
+        </div>
+      </div>
+      <!------------------------------------------------------------------------------------------------------------>
+    </div>
+  </div>
+</div>
