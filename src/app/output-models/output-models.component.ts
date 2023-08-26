@@ -32,7 +32,7 @@ export class OutputModelsComponent implements OnInit {
     this.listOfPredictiveModel = this.predictiveModelService.getAllPredictiveModels();
 
     this.uploadOutputFileFormGroup = this.fb.group({
-      predictiveModelId: [null, Validators.required],
+      predictiveModelId: ['', Validators.required],
       dateOfPushOutputModel: [null, Validators.required],
       fileToUpload: [null, Validators.required],
     });

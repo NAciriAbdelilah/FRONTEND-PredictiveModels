@@ -26,6 +26,7 @@ import { UpdatePmFeaturesComponent } from './update-pm-features/update-pm-featur
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatInputModule} from "@angular/material/input";
 import { ChartComponent } from './chart/chart.component';
+import {NgChartsModule} from "ng2-charts";
 
 @NgModule({
   declarations: [
@@ -47,19 +48,20 @@ import { ChartComponent } from './chart/chart.component';
     UpdatePmFeaturesComponent,
     ChartComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatListModule,
-    NgMultiSelectDropDownModule,
-    FormsModule,
-    HttpClientModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatInputModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatListModule,
+        NgMultiSelectDropDownModule,
+        FormsModule,
+        HttpClientModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatInputModule,
+        NgChartsModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

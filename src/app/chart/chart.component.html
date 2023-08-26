@@ -1,1 +1,62 @@
-<p>chart works!</p>
+<!-- Deuxième container -->
+<div class="container">
+  <div class="card mt-3">
+    <div class="card-body">
+
+      <div class="d-flex justify-content-center">
+
+        <form [formGroup]="reportOutputFileFormGroup" class="was-validated">
+
+          <div class="mb-3">
+            <label><strong>Nom du Modéle Prédictif:</strong></label>
+            <select class="form-select form-select mb-3"
+                    formControlName="predictiveModelId"
+                    (change)="onPredictiveModelSelect($event)" required>
+              <option value="">Selectionner un Modéle  Prédictif</option>
+              <option *ngFor="let listPM of listOfPredictiveModel | async" [value]="listPM.id">
+                {{ listPM.namePM }}
+              </option>
+            </select>
+            <div class="invalid-feedback">Merci de choisir un Modéle Prédictif</div>
+          </div>
+
+          <div class="mb-3">
+            <label><strong>Date dernier Push dans les Canaux:</strong></label>
+            <input type="month" class="form-control"
+                   formControlName="dateGeneration"
+                   (change)="onDateSelect($event)" required>
+            <div class="invalid-feedback">Merci de choisir une Date</div>
+          </div>
+          <div class="mb-3">
+            <button class="btn btn-primary" (click)="handleReportOutputModelByDR()">AFFICHER REPORTING</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Troisiéme container -->
+<div class="container">
+  <div class="card mt-3">
+    <div class="card-body">
+      <div class="d-flex justify-content-center">
+
+          <div class="mb-3">
+            <canvas
+              baseChart
+              class="chart"
+              [data]="barChartData"
+              [options]="barChartOptions"
+              [plugins]="barChartPlugins"
+              [type]="barChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"
+            >
+            </canvas>
+          </div>
+
+      </div>
+    </div>
+  </div>
+</div>
