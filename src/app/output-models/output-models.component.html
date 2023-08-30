@@ -35,14 +35,6 @@
               </div>
 
               <div class="mb-3">
-                <label><strong>Date derniére Push dans les Canaux:</strong></label>
-                <input type="Date" class="form-control"
-                       formControlName="dateOfPushOutputModel"
-                       (change)="onDateSelect($event)" required>
-                <div class="invalid-feedback">Merci de choisir une Date</div>
-              </div>
-
-              <div class="mb-3">
                 <label><strong>Fichier OutPut :</strong></label>
                 <input type="file" formControlName="fileToUpload"
                        (change)="selectFile($event)" class="form-control" required>
@@ -50,7 +42,7 @@
               </div>
 
               <div class="mb-3">
-                <button class="btn btn-primary"(click)="uploadFile()">UPLOAD FILE</button>
+                <button class="btn btn-primary"(click)="uploadFile()">UPLOAD OUTPUT</button>
               </div>
             </form>
         </div>

@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PredictiveModelService} from "../services/predictive-model.service";
-import {Observable, of, tap} from "rxjs";
+import {Observable} from "rxjs";
 import {PredictiveModel} from "../model/predictivemodels.model";
-import {ValidationErrors} from "@angular/forms";
 
 @Component({
   selector: 'app-dashboard',
@@ -12,12 +11,13 @@ import {ValidationErrors} from "@angular/forms";
 export class DashboardComponent implements OnInit {
 
 
-  listOfPredictiveModel! : Observable<Array<PredictiveModel>>;
-  errorMessage! : string;
+  listOfPredictiveModel!: Observable<Array<PredictiveModel>>;
+  errorMessage!: string;
   totalProductionCount: number = 0;
   totalPilotCount: number = 0;
 
-  constructor(private predictiveModelService : PredictiveModelService) { }
+  constructor(private predictiveModelService: PredictiveModelService) {
+  }
 
   ngOnInit(): void {
 

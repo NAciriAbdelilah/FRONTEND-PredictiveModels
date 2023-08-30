@@ -3,8 +3,6 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {FileOutputDetailsModel} from "../model/fileOutputDetails.model";
-import {Scopes} from "../model/scopes.model";
-import {ReportModel} from "../model/report.model";
 
 @Injectable({
   providedIn: 'root'

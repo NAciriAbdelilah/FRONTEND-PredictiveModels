@@ -25,29 +25,36 @@ import { UpdatePmScopeCanalsFrequencyComponent } from './update-pm-scope-canals-
 import { UpdatePmFeaturesComponent } from './update-pm-features/update-pm-features.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatInputModule} from "@angular/material/input";
-import { ChartComponent } from './chart/chart.component';
 import {NgChartsModule} from "ng2-charts";
+import { BarChartComponent } from './reporting-charts/bar-chart/bar-chart.component';
+import { FilterByNameAndDateComponent } from './filter-by-name-and-date/filter-by-name-and-date.component';
+import { PieChartMarcheComponent } from './reporting-charts/pie-chart-marche/pie-chart-marche.component';
+import { PieChartDrComponent } from "./reporting-charts/pie-chart-dr/pie-chart-dr.component";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PredictiveModelsComponent,
-    FeaturesComponent,
-    LoginComponent,
-    AdminTemplateComponent,
-    NewPredictiveModelComponent,
-    DetailsModelComponent,
-    ScopesComponent,
-    CanalsComponent,
-    FrequencyComponent,
-    OutputModelsComponent,
-    NewPmScopeCanalsFrequencyComponent,
-    NewPmFeaturesComponent,
-    DashboardComponent,
-    UpdatePmScopeCanalsFrequencyComponent,
-    UpdatePmFeaturesComponent,
-    ChartComponent
-  ],
+    declarations: [
+        AppComponent,
+        PredictiveModelsComponent,
+        FeaturesComponent,
+        LoginComponent,
+        AdminTemplateComponent,
+        NewPredictiveModelComponent,
+        DetailsModelComponent,
+        ScopesComponent,
+        CanalsComponent,
+        FrequencyComponent,
+        OutputModelsComponent,
+        NewPmScopeCanalsFrequencyComponent,
+        NewPmFeaturesComponent,
+        DashboardComponent,
+        UpdatePmScopeCanalsFrequencyComponent,
+        UpdatePmFeaturesComponent,
+        PieChartDrComponent,
+        BarChartComponent,
+        FilterByNameAndDateComponent,
+        PieChartMarcheComponent,
+        PieChartDrComponent
+    ],
     imports: [
         BrowserModule,
         AppRoutingModule,

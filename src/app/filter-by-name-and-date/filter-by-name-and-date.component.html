@@ -1,12 +1,9 @@
-<!-- Deuxième container -->
+<!-- First container (form) -->
 <div class="container">
   <div class="card mt-3">
     <div class="card-body">
-
       <div class="d-flex justify-content-center">
-
         <form [formGroup]="reportOutputFileFormGroup" class="was-validated">
-
           <div class="mb-3">
             <label><strong>Nom du Modéle Prédictif:</strong></label>
             <select class="form-select form-select mb-3"
@@ -28,35 +25,12 @@
             <div class="invalid-feedback">Merci de choisir une Date</div>
           </div>
           <div class="mb-3">
-            <button class="btn btn-primary" (click)="handleReportOutputModelByDR()">AFFICHER REPORTING</button>
+            <button class="btn btn-outline-danger" (click)="showChartByDR()">REPORTING PAR DR</button>&nbsp;
+            <button class="btn btn-outline-danger" (click)="showChartByMarche()">REPORTING PAR MARCHE</button>&nbsp;
           </div>
         </form>
       </div>
-    </div>
-  </div>
-</div>
-
-<!-- Troisiéme container -->
-<div class="container">
-  <div class="card mt-3">
-    <div class="card-body">
-      <div class="d-flex justify-content-center">
-
-          <div class="mb-3">
-            <canvas
-              baseChart
-              class="chart"
-              [data]="barChartData"
-              [options]="barChartOptions"
-              [plugins]="barChartPlugins"
-              [type]="barChartType"
-              (chartHover)="chartHovered($event)"
-              (chartClick)="chartClicked($event)"
-            >
-            </canvas>
-          </div>
-
-      </div>
+      <div><app-pie-chart-dr [reportingByDRData] ="reportingByDR"></app-pie-chart-dr></div>
     </div>
   </div>
 </div>

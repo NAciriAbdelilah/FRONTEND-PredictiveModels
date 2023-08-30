@@ -16,11 +16,10 @@ export class OutputModelsComponent implements OnInit {
 
 
   selectedPredictiveModelId!: number;
-  selectedDatePushOutput! : string;
   listOfPredictiveModel! : Observable<Array<PredictiveModel>>;
   file!: File;
   fileOutputDetailsModel!: FileOutputDetailsModel;
-  fileToUpload: File | null = null; // Change to a single file, not an array
+  fileToUpload: File | null = null;
   uploadOutputFileFormGroup!: FormGroup;
 
   constructor(private predictiveModelService : PredictiveModelService,
@@ -39,16 +38,15 @@ export class OutputModelsComponent implements OnInit {
 
   }
 
-
+//-------------------------------------------------------------------------------------------------------
 
   uploadFile() {
-    const predictiveModelId = this.selectedPredictiveModelId;
-    const dateOfPushOutputModel = new Date(this.selectedDatePushOutput); // Convert to Date object
 
-    // Check if predictiveModelId and dateOfPushOutputModel are not empty
-    if (!predictiveModelId || !dateOfPushOutputModel) {
-      // Display an error message to the user or handle it in your UI as needed
-      alert("Please choose a Predictive Model and Date before uploading !");
+    const predictiveModelId = this.selectedPredictiveModelId;
+
+    // Check if predictiveModelID is not empty
+    if (!predictiveModelId) {
+      alert("Please choose a Predictive Model before uploading the Output !");
       return;
     }
     const formData = new FormData();
@@ -56,7 +54,6 @@ export class OutputModelsComponent implements OnInit {
   // Convert Date to ISO string
     formData.append('data', new Blob([JSON.stringify({
       "predictiveModelId":  this.selectedPredictiveModelId.toString(),
-      "dateOfPushOutputModel": this.selectedDatePushOutput,
     })],  {
       type: "application/json"
     }));
@@ -64,7 +61,6 @@ export class OutputModelsComponent implements OnInit {
     this.outputModelService.upload(formData).subscribe({
       next: (data) => {
         this.fileOutputDetailsModel = data;
-        // Handle the response as needed
         alert("File Uploaded Successfully");
       },
       error: (e) => {
@@ -86,12 +82,6 @@ export class OutputModelsComponent implements OnInit {
     this.selectedPredictiveModelId = parseInt(selectedValue);
     console.log('Selected PM ID:', this.selectedPredictiveModelId);
   }
-
-  onDateSelect(event: any) {
-    this.selectedDatePushOutput = event.target.value;
-    console.log('Selected DATE:', this.selectedDatePushOutput);
-  }
-
 
 //-------------------------------------------------------------------------------------------------------
 
