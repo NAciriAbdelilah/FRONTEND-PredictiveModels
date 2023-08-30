@@ -2,14 +2,6 @@
       <!-- Chart Marchés content -->
       <div class="d-flex justify-content-center">
         <div style="width: 500px; height: 500px;">
-          <canvas
-            baseChart
-            class="chart"
-            [datasets]="pieChartData.datasets"
-            [labels]="pieChartData.labels"
-            [options]="pieChartOptions"
-            [plugins]="pieChartPlugins"
-          >
-          </canvas>
+          <canvas #chartCanvas></canvas>
         </div>
       </div>
