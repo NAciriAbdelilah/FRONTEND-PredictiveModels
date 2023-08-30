@@ -1,31 +1,15 @@
 
-<!-- Second container (charts) -->
-  <div class="container mt-3">
-      <div class="row justify-content-md-center">
-        <div class="col-6">
-            <div class="card">
-              <div class="card-body">
-                <!-- Chart 1 content -->
-                <div class="d-flex justify-content-center">
-                  <div style="width: 500px; height: 500px;">
-                  <canvas
-                    baseChart
-                    class="chart"
-                    [datasets]="pieChartData.datasets"
-                    [labels]="pieChartData.labels"
-                    [options]="pieChartOptions"
-                    [plugins]="pieChartPlugins"
-                  >
-                  </canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
+      <!-- Chart Direction Régionale content -->
+      <div class="d-flex justify-content-center">
+        <div style="width: 500px; height: 500px;">
+        <canvas
+          baseChart
+          class="chart"
+          [datasets]="pieChartData.datasets"
+          [labels]="pieChartData.labels"
+          [options]="pieChartOptions"
+          [plugins]="pieChartPlugins"
+        >
+        </canvas>
         </div>
       </div>
-  </div>
-<!--
-<div class="chart-container" style="position: relative; height:60vh; width:120vw">
-  <canvas id="MyChart">{{chart}}</canvas>
-</div>
--->

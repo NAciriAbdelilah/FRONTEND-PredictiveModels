@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
-import {ChartConfiguration, ChartData, ChartType} from "chart.js";
-import {catchError, of, throwError} from "rxjs";
+import {ChartConfiguration, ChartData, ChartType, Chart} from "chart.js";
+import {catchError, throwError} from "rxjs";
 import DatalabelsPlugin from "chartjs-plugin-datalabels";
 import {BaseChartDirective} from "ng2-charts";
 
@@ -14,21 +14,20 @@ export class PieChartDrComponent implements OnInit, OnChanges {
   @Input() reportingByDRData: any; // Define the input property
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
-  //chart: any;
   labels: string[] = []; // Initialize labels as an empty array
   dataPoints: number[] = []; // Initialize dataPoints as an empty array
   errorMessage: any;
 
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngOnChanges() {
     console.log(this.reportingByDRData)
-    this.createChart();
+    if (this.reportingByDRData) {
+      this.createChart();
+    }
   }
 
   //-------------------------------------------------------------------------------------------------------
@@ -108,7 +107,7 @@ export class PieChartDrComponent implements OnInit, OnChanges {
       {
         data: this.dataPoints,
         backgroundColor: [
-          'rgba(255, 99, 132, 0.7)',
+          'rgb(231,72,70)',
         ],
       },
     ],
@@ -128,9 +127,9 @@ export class PieChartDrComponent implements OnInit, OnChanges {
 
     this.chart?.render();
   }
+//-------------------------------------------------------------------------------------------------------
 
 
 }
 
-//-------------------------------------------------------------------------------------------------------
 

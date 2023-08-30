@@ -105,18 +105,6 @@ export class FilterByNameAndDateComponent implements OnInit {
         console.log('Reporting Predictive Model By Marche:', data);
         this.reportingByMarche = of(data);
 
-        /*        // Update chart data
-                const labelsMarche: string[] = data.map((item) => item.libelleMarche);
-                const dataNumberOfMarche: number[] = data.map((item) => item.numberOfOutput);
-
-                this.chartMarche.labels = labelsMarche;
-                this.barChart.datasets[0].data = dataNumberOfMarche;
-                // Render the chart after updating data
-                this.barCanvas?.nativeElement();
-
-                console.log("-------> Marche :::::::::",labelsMarche)
-                console.log("-------> numberOfOutput :::::::::",dataNumberOfMarche)*/
-
       }
     );
   }

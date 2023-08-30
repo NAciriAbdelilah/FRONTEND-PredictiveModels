@@ -30,7 +30,37 @@
           </div>
         </form>
       </div>
-      <div><app-pie-chart-dr [reportingByDRData] ="reportingByDR"></app-pie-chart-dr></div>
+      <div class="container mt-3">
+        <div class="row justify-content-md-center">
+          <!--  container (DR chart) -->
+          <div class="col-6">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-center">
+                  <div style="width: 500px; height: 500px;">
+                    <div><app-pie-chart-dr [reportingByDRData] ="reportingByDR"></app-pie-chart-dr></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--  container (MARCHE chart) -->
+          <div class="col-6">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-center">
+                  <div style="width: 500px; height: 500px;">
+                    <div><app-pie-chart-marche [reportingByMarcheData] ="reportingByMarche"></app-pie-chart-marche></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
     </div>
   </div>
 </div>

@@ -1,10 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {catchError, Observable, of, throwError} from "rxjs";
-import {Chart, ChartConfiguration, ChartData, ChartType} from "chart.js";
-import {PredictiveModel} from "../../model/predictivemodels.model";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ReportModelService} from "../../services/report-model.service";
-import DatalabelsPlugin from "chartjs-plugin-datalabels";
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-bar-chart',
@@ -14,61 +8,61 @@ import DatalabelsPlugin from "chartjs-plugin-datalabels";
 export class BarChartComponent implements OnInit {
 
 
-
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit(): void {
 
   }
-/*
 
-    @ViewChild('chartMarche') chartMarche : ElementRef | undefined;
+  /*
 
-    // Bar
-    public pieChartMarcheOptions: ChartConfiguration['options'] = {
-      responsive: true,
-      plugins: {
-        legend: {
-          display: true,
-          position: 'top',
-        },
-        datalabels: {
-          formatter: (value: any, barchart: any) => {
-            if (barchart.chartMarche.data.labels) {
-              return barchart.chartMarche.data.labels[barchart.dataIndex];
-            }
+      @ViewChild('chartMarche') chartMarche : ElementRef | undefined;
+
+      // Bar
+      public pieChartMarcheOptions: ChartConfiguration['options'] = {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
           },
-          anchor: 'center', // Horizontal alignment
-          align: 'center',  // Vertical alignment
-        },
-        title: {
-          display: true,
-          text: 'Reporting du Modéle par Marché', // Set your desired title here
-          font: {
-            size: 12, // Set the font size for the title
+          datalabels: {
+            formatter: (value: any, barchart: any) => {
+              if (barchart.chartMarche.data.labels) {
+                return barchart.chartMarche.data.labels[barchart.dataIndex];
+              }
+            },
+            anchor: 'center', // Horizontal alignment
+            align: 'center',  // Vertical alignment
+          },
+          title: {
+            display: true,
+            text: 'Reporting du Modéle par Marché', // Set your desired title here
+            font: {
+              size: 12, // Set the font size for the title
+            },
           },
         },
-      },
-      maintainAspectRatio: false, // Add this line to allow custom sizing
-      aspectRatio: 1, // Adjust the aspect ratio as needed (1 is a square chart)
-      animation: {
-        duration: 200, // Set the animation duration here
-      },
-    };
-
-
-    public pieChartMarcheData: ChartData<'bar', number[], string | string[]> = {
-      labels: [],
-      datasets: [
-        {
-          data: [],
+        maintainAspectRatio: false, // Add this line to allow custom sizing
+        aspectRatio: 1, // Adjust the aspect ratio as needed (1 is a square chart)
+        animation: {
+          duration: 200, // Set the animation duration here
         },
-      ],
-    };
-    public pieChartMarcheType: ChartType = 'bar';
-    public pieChartMarchePlugins = [DatalabelsPlugin];
-*/
+      };
 
+
+      public pieChartMarcheData: ChartData<'bar', number[], string | string[]> = {
+        labels: [],
+        datasets: [
+          {
+            data: [],
+          },
+        ],
+      };
+      public pieChartMarcheType: ChartType = 'bar';
+      public pieChartMarchePlugins = [DatalabelsPlugin];
+  */
 
 
 //-------------------------------------------------------------------------------------------------------
