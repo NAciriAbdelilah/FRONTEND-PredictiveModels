@@ -30,6 +30,7 @@ import { BarChartComponent } from './reporting-charts/bar-chart/bar-chart.compon
 import { FilterByNameAndDateComponent } from './filter-by-name-and-date/filter-by-name-and-date.component';
 import { PieChartMarcheComponent } from './reporting-charts/pie-chart-marche/pie-chart-marche.component';
 import { PieChartDrComponent } from "./reporting-charts/pie-chart-dr/pie-chart-dr.component";
+import { PieChartSegmentComponent } from './reporting-charts/pie-chart-segment/pie-chart-segment.component';
 
 @NgModule({
     declarations: [
@@ -53,7 +54,8 @@ import { PieChartDrComponent } from "./reporting-charts/pie-chart-dr/pie-chart-d
         BarChartComponent,
         FilterByNameAndDateComponent,
         PieChartMarcheComponent,
-        PieChartDrComponent
+        PieChartDrComponent,
+        PieChartSegmentComponent
     ],
     imports: [
         BrowserModule,

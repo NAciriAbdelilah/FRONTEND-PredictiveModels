@@ -4,6 +4,7 @@ import {ReportModelByDR} from "../model/reportModelByDR";
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {ReportModelByMarche} from "../model/reportModelByMarche";
+import {ReportModelBySegment} from "../model/reportModelBySegment";
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,10 @@ export class ReportModelService {
 
   public getReportingByMarche(idPredictiveModel: number, selectedDate : string): Observable<Array<ReportModelByMarche>> {
     return this.http.get<Array<ReportModelByMarche>>(environment.backendHost+"/reportsPredictiveModel/marche/"+idPredictiveModel+"/"+selectedDate)
+  }
+
+  public getReportingBySegment(idPredictiveModel: number, selectedDate : string): Observable<Array<ReportModelBySegment>> {
+    return this.http.get<Array<ReportModelBySegment>>(environment.backendHost+"/reportsPredictiveModel/segment/"+idPredictiveModel+"/"+selectedDate)
   }
 
 }

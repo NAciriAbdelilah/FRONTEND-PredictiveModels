@@ -10,7 +10,7 @@ import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 })
 export class PieChartDrComponent implements OnInit, OnChanges {
   @Input() reportingByDRData: any;
-  @ViewChild('chartCanvas') chartCanvas: ElementRef | undefined; // Reference to the chart canvas
+  @ViewChild('chartCanvasDr') chartCanvasDr: ElementRef | undefined; // Reference to the chart canvas
 
   labels: string[] = [];
   dataPoints: number[] = [];
@@ -28,7 +28,10 @@ export class PieChartDrComponent implements OnInit, OnChanges {
   }
 
   createChart() {
+
     if (this.reportingByDRData) {
+
+      // Create a new chart instance
       this.reportingByDRData.pipe(
         catchError((err) => {
           this.errorMessage = err.message;
@@ -42,8 +45,15 @@ export class PieChartDrComponent implements OnInit, OnChanges {
         this.dataPoints = data.map((item: any) => item.numberOfOutput);
 
         // Create a new chart instance
-        if (this.chartCanvas) {
-          const chartCanvas = this.chartCanvas.nativeElement as HTMLCanvasElement;
+        if (this.chartCanvasDr) {
+
+          // Destroy the existing chart if it exists
+          let chartStatus = Chart.getChart("chartCanvasDr"); // <canvas> id
+          if (chartStatus != undefined) {
+            chartStatus.destroy();
+          }
+
+          const chartCanvas = this.chartCanvasDr.nativeElement as HTMLCanvasElement;
           const ctx = chartCanvas.getContext('2d');
 
           if (ctx) {
@@ -55,8 +65,11 @@ export class PieChartDrComponent implements OnInit, OnChanges {
                   {
                     data: this.dataPoints,
                     backgroundColor: [
-                      'rgb(231, 72, 70)',
-                      // Add more colors as needed
+                      'rgba(231, 72, 70, 1.6)', // Starting color
+                      'rgb(231, 72, 70,1)',
+                      'rgb(231, 72, 70,0.9)',
+                      'rgba(231, 72, 70,0.7)',
+                      'rgba(231, 72, 70, 0.3)' // Ending colored
                     ],
                   },
                 ],

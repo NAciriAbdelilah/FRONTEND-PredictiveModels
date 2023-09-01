@@ -25,8 +25,9 @@
             <div class="invalid-feedback">Merci de choisir une Date</div>
           </div>
           <div class="mb-3">
-            <button class="btn btn-outline-danger" (click)="showChartByDR()">REPORTING PAR DR</button>&nbsp;
-            <button class="btn btn-outline-danger" (click)="showChartByMarche()">REPORTING PAR MARCHE</button>&nbsp;
+            <button class="btn btn-outline-danger" (click)="showChartByDR()">Reporting par Direction Régionale</button>&nbsp;
+            <button class="btn btn-outline-danger" (click)="showChartBySegment()">Reporting par Segment</button>&nbsp;
+            <button class="btn btn-outline-danger" (click)="showChartByMarche()">Reporting par Marchés</button>&nbsp;
           </div>
         </form>
       </div>
@@ -44,8 +45,22 @@
               </div>
             </div>
           </div>
-          <!--  CARD FOR (MARCHE chart) -->
+          <!--  CARD FOR (SEGMENT chart) -->
           <div class="col-6">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-center">
+                  <div style="width: 500px; height: 500px;">
+                    <div><app-pie-chart-segment [reportingBySegmentData] ="reportingBySegment"></app-pie-chart-segment></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-md-center">
+          <!--  CARD FOR (MARCHE chart) -->
+          <div class="col-12">
             <div class="card">
               <div class="card-body">
                 <div class="d-flex justify-content-center">
@@ -56,7 +71,6 @@
               </div>
             </div>
           </div>
-        </div>
       </div>
     </div>
   </div>

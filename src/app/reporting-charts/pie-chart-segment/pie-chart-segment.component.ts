@@ -1,18 +1,17 @@
-import {Component, ElementRef, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
-import {BaseChartDirective} from "ng2-charts";
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {catchError, throwError} from "rxjs";
-import {Chart, ChartConfiguration, ChartData, ChartType} from "chart.js";
-import DatalabelsPlugin from "chartjs-plugin-datalabels";
+import {Chart} from "chart.js";
 
 @Component({
-  selector: 'app-pie-chart-marche',
-  templateUrl: './pie-chart-marche.component.html',
-  styleUrls: ['./pie-chart-marche.component.css']
+  selector: 'app-pie-chart-segment',
+  templateUrl: './pie-chart-segment.component.html',
+  styleUrls: ['./pie-chart-segment.component.css']
 })
-export class PieChartMarcheComponent implements OnInit, OnChanges {
+export class PieChartSegmentComponent implements OnInit {
 
-  @Input() reportingByMarcheData: any; // Define the input property
-  @ViewChild('chartCanvasMarche') chartCanvasMarche: ElementRef | undefined; // Reference to the chart canvas
+
+  @Input() reportingBySegmentData: any; // Define the input property
+  @ViewChild('chartCanvasSegment') chartCanvasSegment: ElementRef | undefined; // Reference to the chart canvas
 
   labels: string[] = []; // Initialize labels as an empty array
   dataPoints: number[] = []; // Initialize dataPoints as an empty array
@@ -24,58 +23,63 @@ export class PieChartMarcheComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges() {
-    console.log(this.reportingByMarcheData)
-    if (this.reportingByMarcheData) {
+    console.log(this.reportingBySegmentData)
+    if (this.reportingBySegmentData) {
       this.createChart();
     }
   }
 
   //-------------------------------------------------------------------------------------------------------
   createChart() {
-    if (this.reportingByMarcheData) {
+
+    if (this.reportingBySegmentData) {
 
       // Create a new chart instance
-      this.reportingByMarcheData.pipe(
+      this.reportingBySegmentData.pipe(
         catchError((err) => {
           this.errorMessage = err.message;
           return throwError(() => new Error(err.message));
         })
       ).subscribe((data: any) => {
-        console.log('ReportingByMarcheData:', data);
+        console.log('ReportingBySegmentData:', data);
 
         // Update chart data
-        this.labels = data.map((item: any) => item.libelleMarche);
+        this.labels = data.map((item: any) => item.libelleSegment);
         this.dataPoints = data.map((item: any) => item.numberOfOutput);
 
+
         // Create a new chart instance
-        if (this.chartCanvasMarche) {
+        if (this.chartCanvasSegment) {
 
           // Destroy the existing chart if it exists
-          let chartStatus = Chart.getChart("chartCanvasMarche"); // <canvas> id
+          let chartStatus = Chart.getChart("chartCanvasSegment"); // <canvas> id
           if (chartStatus != undefined) {
             chartStatus.destroy();
           }
 
-          const chartCanvas = this.chartCanvasMarche.nativeElement as HTMLCanvasElement;
+          const chartCanvas = this.chartCanvasSegment.nativeElement as HTMLCanvasElement;
           const ctx = chartCanvas.getContext('2d');
 
           if (ctx) {
             new Chart(ctx, {
-              type: 'doughnut', // Set the chart type to pie|bar....
+              type: 'bar', // Set the chart type to pie|bar....
               data: {
                 labels: this.labels,
                 datasets: [
                   {
                     data: this.dataPoints,
                     backgroundColor: [
-                      'rgb(255,118,118)', // Starting color
-                      'rgba(250,48,47,0.87)',
-                      'rgba(224,24,22,0.81)',
+                      'rgba(255,118,118)', // Starting color
+                      'rgb(250,48,47)',
+                      'rgba(243,9,9,0.81)',
+                      'rgb(210,40,40)',
+                      'rgba(204,40,39,0.7)',
+                      'rgba(124,14,13,0.81)',
                       'rgba(250,77,76,0.5)',
                       'rgba(134,37,35,0.4)' // Ending colored
                     ],
                   },
-                ],
+                ]
               },
               options: {
                 responsive: true,
@@ -95,7 +99,7 @@ export class PieChartMarcheComponent implements OnInit, OnChanges {
                   },
                   title: {
                     display: true,
-                    text: 'Reporting du Modéle par Marchés',
+                    text: 'Reporting du Modéle par Segments',
                     font: {
                       size: 12,
                     },
@@ -111,7 +115,7 @@ export class PieChartMarcheComponent implements OnInit, OnChanges {
           }
         }
 
-        console.log("MARCHE :::::::::", this.labels);
+        console.log("SEGMENT :::::::::", this.labels);
         console.log("numberOfOutput :::::::::", this.dataPoints);
       });
     }

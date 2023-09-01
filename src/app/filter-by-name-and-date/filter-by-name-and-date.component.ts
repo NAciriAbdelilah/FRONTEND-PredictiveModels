@@ -6,6 +6,7 @@ import {ReportModelByDR} from "../model/reportModelByDR";
 import {ReportModelByMarche} from "../model/reportModelByMarche";
 import {PredictiveModelService} from "../services/predictive-model.service";
 import {ReportModelService} from "../services/report-model.service";
+import {ReportModelBySegment} from "../model/reportModelBySegment";
 
 @Component({
   selector: 'app-filter-by-name-and-date',
@@ -22,6 +23,7 @@ export class FilterByNameAndDateComponent implements OnInit {
 
   reportingByDR!: Observable<Array<ReportModelByDR>>;
   reportingByMarche!: Observable<Array<ReportModelByMarche>>;
+  reportingBySegment!: Observable<Array<ReportModelBySegment>>;
 
 
   constructor(private predictiveModelService: PredictiveModelService,
@@ -42,7 +44,7 @@ export class FilterByNameAndDateComponent implements OnInit {
 
   //-------------------------------------------------------------------------------------------------------
 
-  createChart() {  };
+  //createChart() {  };
 
   //-------------------------------------------------------------------------------------------------------
 
@@ -58,18 +60,18 @@ export class FilterByNameAndDateComponent implements OnInit {
   }
 
 //-------------------------------------------------------------------------------------------------------
-
-  showChartByMarche() {
-    this.handleReportOutputModelByMarche();
-  }
-
-//-------------------------------------------------------------------------------------------------------
   showChartByDR() {
     this.handleReportOutputModelByDR();
   }
-
 //-------------------------------------------------------------------------------------------------------
-
+  showChartByMarche() {
+    this.handleReportOutputModelByMarche();
+  }
+//-------------------------------------------------------------------------------------------------------
+  showChartBySegment() {
+    this.handleReportOutputModelBySegment();
+  }
+//-------------------------------------------------------------------------------------------------------
   handleReportOutputModelByDR() {
     const idPredictiveModel = this.selectedPredictiveModelId;
     const yearMonth = this.selectedDate;
@@ -108,6 +110,26 @@ export class FilterByNameAndDateComponent implements OnInit {
       }
     );
   }
+//-------------------------------------------------------------------------------------------------------
+  handleReportOutputModelBySegment() {
+    const idPredictiveModel = this.selectedPredictiveModelId;
+    const yearMonth = this.selectedDate;
+
+    this.reportModelService.getReportingBySegment(idPredictiveModel, yearMonth).pipe(
+      catchError((err) => {
+        this.errorMessage = err.message;
+        return throwError(() => new Error(err.message));
+      })
+    ).subscribe(
+      (data) => {
+        // Handle the successful response here
+        console.log('Reporting Predictive Model By Segment:', data);
+        this.reportingBySegment = of(data);
+
+      }
+    );
+  }
+//-------------------------------------------------------------------------------------------------------
 
 
 }
