@@ -47,6 +47,8 @@ export class PieChartSegmentComponent implements OnInit {
         this.labels = data.map((item: any) => item.libelleSegment);
         this.dataPoints = data.map((item: any) => item.numberOfOutput);
 
+        // Generate gradient colors based on data values
+        const gradientColors = this.generateGradientColors(this.dataPoints);
 
         // Create a new chart instance
         if (this.chartCanvasSegment) {
@@ -68,16 +70,8 @@ export class PieChartSegmentComponent implements OnInit {
                 datasets: [
                   {
                     data: this.dataPoints,
-                    backgroundColor: [
-                      'rgba(255,118,118)', // Starting color
-                      'rgb(250,48,47)',
-                      'rgba(243,9,9,0.81)',
-                      'rgb(210,40,40)',
-                      'rgba(204,40,39,0.7)',
-                      'rgba(124,14,13,0.81)',
-                      'rgba(250,77,76,0.5)',
-                      'rgba(134,37,35,0.4)' // Ending colored
-                    ],
+                    backgroundColor: gradientColors,
+
                   },
                 ]
               },
@@ -120,5 +114,22 @@ export class PieChartSegmentComponent implements OnInit {
       });
     }
   }
+  //----------------------------------------------------------------------------------------------------------------
+      // Function to generate gradient colors based on data values
+      generateGradientColors(data: number[]): string[] {
+        const minValue = Math.min(...data);
+        const maxValue = Math.max(...data);
+        const valueRange = maxValue - minValue;
+
+        return data.map((value) => {
+          // Calculate a gradient based on the position relative to the range
+          const gradient = (value - minValue + 100) / valueRange;
+          // Map the gradient to a shade of red, with a wider range of shades
+          const redShade = Math.round(255 * gradient);
+          return `rgba(205, 92, 92, ${redShade / 255})`;
+        });
+      }
+
+  //----------------------------------------------------------------------------------------------------------------
 
 }

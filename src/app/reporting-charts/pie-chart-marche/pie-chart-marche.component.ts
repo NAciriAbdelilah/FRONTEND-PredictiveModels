@@ -68,9 +68,7 @@ export class PieChartMarcheComponent implements OnInit, OnChanges {
                   {
                     data: this.dataPoints,
                     backgroundColor: [
-                      'rgb(255,118,118)', // Starting color
-                      'rgba(250,48,47,0.87)',
-                      'rgba(224,24,22,0.81)',
+                      'rgba(224,24,22,0.81)', // Starting color
                       'rgba(250,77,76,0.5)',
                       'rgba(134,37,35,0.4)' // Ending colored
                     ],
