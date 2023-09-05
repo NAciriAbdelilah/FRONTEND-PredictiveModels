@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {catchError, Observable, of, tap, throwError} from "rxjs";
-import {AuthenticationService} from "../services/authentication.service";
 import {ScopesService} from "../services/scopes.service";
 import {Scopes} from "../model/scopes.model";
+import {SecurityService} from "../services/security.service";
 
 @Component({
   selector: 'app-scopes',
@@ -22,7 +22,7 @@ export class ScopesComponent implements OnInit {
 
   constructor( private scopeService : ScopesService ,
                private fb : FormBuilder,
-               public authService : AuthenticationService) { }
+               public securityService : SecurityService) { }
 
   ngOnInit(): void {
 

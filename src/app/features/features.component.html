@@ -92,8 +92,9 @@
                             </button>
                             <label class="input-group-text">RECHERHCER</label>
                             <input type="text" class="form-control" formControlName="keyword" (input)="handleSearchFeatures()">
-                            <button *ngIf="authService.hasRole('ADMIN')"
-                                    class="btn btn-outline-danger btn-sm shadow-sm" data-bs-toggle="modal" data-bs-target="#addFeatureModal"
+                            <button *ngIf="securityService.hasRoleIn(['ADMIN'])"
+                                    class="btn btn-outline-danger btn-sm shadow-sm"
+                                    data-bs-toggle="modal" data-bs-target="#addFeatureModal"
                                     (click)="handleNewFeature()">
                               <img src="/assets/images/ajouter.png" alt="Bootstrap" width="30" height="30"> AJOUTER NOUVEAU FEATURE
                             </button>
@@ -133,10 +134,11 @@
                       <td>{{ convertTimestampToDate(f.creationDate) | date: 'medium' }}</td>
                       <td>{{ convertTimestampToDate(f.lastModifiedDate) | date: 'medium' }}</td>
 
-                      <td *ngIf="authService.hasRole('ADMIN')">
+                      <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <!-- Update feature button -->
-                            <button class="btn btn-outline-danger" type="button" data-bs-toggle="modal" data-bs-target="#updateFeatureModal"
+                            <button class="btn btn-outline-danger" type="button"
+                                    data-bs-toggle="modal" data-bs-target="#updateFeatureModal"
                                     (click)="handleOpenUpdateModal(f)">
                               <img src="/assets/images/write.png" alt="Bootstrap" width="22" height="22">
                             </button>
@@ -156,7 +158,7 @@
     <!---------------------------------------------------------------------------------->
 
             <!------------------------- MODAL TO ADD FEATURES  ---------------------------->
-                <div class="modal fade" id="addFeatureModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="addFeatureModalLabel"  aria-hidden="true">
+                <div class="modal fade" id="addFeatureModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="addFeatureModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">

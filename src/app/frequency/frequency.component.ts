@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {catchError, Observable, of, tap, throwError} from "rxjs";
-import {Canals} from "../model/canals.model";
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
-import {CanalsService} from "../services/canals.service";
-import {AuthenticationService} from "../services/authentication.service";
 import {Frequences} from "../model/frequences.model";
 import {FrequenceService} from "../services/frequence.service";
+import {SecurityService} from "../services/security.service";
 
 @Component({
   selector: 'app-frequency',
@@ -26,7 +24,7 @@ export class FrequencyComponent implements OnInit {
 
   constructor( private frequenceService : FrequenceService ,
                private fb : FormBuilder,
-               public authService : AuthenticationService) { }
+               public securityService : SecurityService) { }
 
   ngOnInit(): void {
 
@@ -174,7 +172,6 @@ export class FrequencyComponent implements OnInit {
       }
     });
   }
-
 
   //-------------------------------------------------------------------------------------------------------
 

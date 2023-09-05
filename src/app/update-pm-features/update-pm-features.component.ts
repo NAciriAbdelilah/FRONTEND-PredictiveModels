@@ -5,8 +5,8 @@ import {Features} from "../model/features.model";
 import {PredictiveModel} from "../model/predictivemodels.model";
 import {PredictiveModelService} from "../services/predictive-model.service";
 import {FeaturesService} from "../services/features.service";
-import {AuthenticationService} from "../services/authentication.service";
 import {Router} from "@angular/router";
+import {SecurityService} from "../services/security.service";
 
 
 @Component({
@@ -29,7 +29,7 @@ export class UpdatePmFeaturesComponent implements OnInit {
   constructor( private predictiveModelService : PredictiveModelService,
                private featureService : FeaturesService,
                private fb : FormBuilder,
-               public authService : AuthenticationService,
+               public securityService : SecurityService,
                private router : Router) { }
 
   ngOnInit(): void {

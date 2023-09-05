@@ -95,7 +95,7 @@
                               <td >{{ f.id }}</td>
                               <td>{{ f.namefeature }}</td>
                               <td>{{ f.description }}</td>
-                              <td *ngIf="authService.hasRole('ADMIN')">
+                              <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                   <!-- Add feature button -->
                                   <button class="btn btn-close-white me-md-2"
@@ -137,7 +137,7 @@
                     <td>{{ selectedFeature.id }}</td>
                     <td>{{ selectedFeature.namefeature }}</td>
                     <td>{{ selectedFeature.description }}
-                    <td>
+                    <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
                       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <!-- Remove feature button -->
                         <button class="btn btn-close-white me-md-2"

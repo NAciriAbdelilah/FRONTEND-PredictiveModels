@@ -25,7 +25,7 @@
                 </button>
                 <label class="input-group-text">RECHERCHER</label>
                 <input type="text" class="form-control" formControlName="keyword" (input)="handleSearchScope()">
-                <button *ngIf="authService.hasRole('ADMIN')"
+                <button *ngIf="securityService.hasRoleIn(['ADMIN'])"
                         class="btn btn-outline-danger btn-sm shadow-sm" data-bs-toggle="modal" data-bs-target="#addScopeModal"
                         (click)="handleNewScope()">
                   <img src="/assets/images/ajouter.png" alt="Bootstrap" width="30" height="30"> AJOUTER UN MARCHE
@@ -62,7 +62,7 @@
             <td> {{s.id}}</td>
             <td> {{s.intituleScope}}</td>
             <td> {{s.descriptionScope}}</td>
-            <td *ngIf="authService.hasRole('ADMIN')">
+            <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                   <!-- Update scope button -->
                   <button class="btn btn-outline-danger" type="button" data-bs-toggle="modal" data-bs-target="#updateScopeModal"

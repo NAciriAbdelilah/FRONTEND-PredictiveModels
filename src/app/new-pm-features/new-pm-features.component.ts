@@ -2,11 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {FeaturesService} from "../services/features.service";
 import {PredictiveModelService} from "../services/predictive-model.service";
-import {AuthenticationService} from "../services/authentication.service";
 import {Router} from "@angular/router";
-import {map, Observable, of} from "rxjs";
+import {map, Observable} from "rxjs";
 import {Features} from "../model/features.model";
 import {PredictiveModel} from "../model/predictivemodels.model";
+import {SecurityService} from "../services/security.service";
 
 @Component({
   selector: 'app-new-pm-features',
@@ -26,7 +26,7 @@ export class NewPmFeaturesComponent implements OnInit {
   constructor( private predictiveModelService : PredictiveModelService,
                private featureService : FeaturesService,
                private fb : FormBuilder,
-               public authService : AuthenticationService,
+               public securityService : SecurityService,
                private router : Router) { }
 
   ngOnInit(): void {

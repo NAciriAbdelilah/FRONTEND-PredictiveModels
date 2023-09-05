@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthenticationService} from "../services/authentication.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {SecurityService} from "../services/security.service";
 
 @Component({
   selector: 'app-admin-template',
@@ -9,18 +9,24 @@ import {Router} from "@angular/router";
 })
 export class AdminTemplateComponent implements OnInit {
 
-  constructor( public authService : AuthenticationService, private router : Router) { }
+  constructor( public securityService : SecurityService,
+               private router: Router,
+               private route : ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.router.navigateByUrl("admin/dashboard");
+   this.router.navigateByUrl("admin/dashboard");
   }
 
-  handleLogout() {
-    this.authService.logout().subscribe({
-      next : (data)=>{
-        this.router.navigateByUrl("/login");
-      }
-    })
+  async handleLogout() {
+    try {
+      await this.securityService.disconnect();
+      console.log("Logout successful");
+      // You can also navigate to a different page after successful logout if needed.
+    } catch (error) {
+      console.error("Logout error", error);
+      // Handle the error here (e.g., display an error message to the user).
+    }
   }
+
 
 }

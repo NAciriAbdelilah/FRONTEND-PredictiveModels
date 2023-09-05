@@ -2,9 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {PredictiveModelsComponent} from "./predictive-models/predictive-models.component";
 import {FeaturesComponent} from "./features/features.component";
-import {LoginComponent} from "./login/login.component";
 import {AdminTemplateComponent} from "./admin-template/admin-template.component";
-import {AuthenticationGuard} from "./guards/authentication.guard";
 import {NewPredictiveModelComponent} from "./new-predictive-model/new-predictive-model.component";
 import {DetailsModelComponent} from "./details-model/details-model.component";
 import {ScopesComponent} from "./scopes/scopes.component";
@@ -16,13 +14,13 @@ import {NewPmFeaturesComponent} from "./new-pm-features/new-pm-features.componen
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {UpdatePmScopeCanalsFrequencyComponent} from "./update-pm-scope-canals-frequency/update-pm-scope-canals-frequency.component";
 import {UpdatePmFeaturesComponent} from "./update-pm-features/update-pm-features.component";
+import {AuthGuard} from "./guards/security.guard";
+
 
 const routes: Routes = [
-  { path: "login", component: LoginComponent},
-  { path: "", component: LoginComponent},
+  { path: "", component: DashboardComponent},
   { path: "admin", component: AdminTemplateComponent,
-
-    canActivate : [AuthenticationGuard], // pour tester le guard qu'on a activé
+    // canActivate : [AuthGuard], data : { roles : ['USER','ADMIN']}, // pour tester le guard qu'on a activé
     children : [  // children >>>> pour rendre les  routes (predictive-models et features) des enfants de ADMIN template
       { path: "predictive-models", component: PredictiveModelsComponent},
       { path: "features", component: FeaturesComponent},

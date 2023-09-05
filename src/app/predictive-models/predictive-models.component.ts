@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {PredictiveModelService} from "../services/predictive-model.service";
 import {PredictiveModel} from "../model/predictivemodels.model";
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
-import {AuthenticationService} from "../services/authentication.service";
 import {Router} from "@angular/router";
 import {catchError, map, Observable, throwError} from "rxjs";
-
-
+import {SecurityService} from "../services/security.service";
 
 
 @Component({
@@ -27,7 +25,7 @@ export class PredictiveModelsComponent implements OnInit {
 
   constructor(private predictiveModelService : PredictiveModelService,
               private fb : FormBuilder,
-              public authService : AuthenticationService,
+              public securityService : SecurityService,
               private router : Router) { }
 
   ngOnInit(): void {

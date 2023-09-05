@@ -1,18 +1,17 @@
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PredictiveModelsComponent } from './predictive-models/predictive-models.component';
 import { FeaturesComponent } from './features/features.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { LoginComponent } from './login/login.component';
 import { AdminTemplateComponent } from './admin-template/admin-template.component';
 import { NewPredictiveModelComponent } from './new-predictive-model/new-predictive-model.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatListModule} from "@angular/material/list";
 import { DetailsModelComponent } from './details-model/details-model.component';
 import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MatSelectModule} from "@angular/material/select";
 import { ScopesComponent } from './scopes/scopes.component';
 import { CanalsComponent } from './canals/canals.component';
@@ -31,13 +30,34 @@ import { FilterByNameAndDateComponent } from './filter-by-name-and-date/filter-b
 import { PieChartMarcheComponent } from './reporting-charts/pie-chart-marche/pie-chart-marche.component';
 import { PieChartDrComponent } from "./reporting-charts/pie-chart-dr/pie-chart-dr.component";
 import { PieChartSegmentComponent } from './reporting-charts/pie-chart-segment/pie-chart-segment.component';
+import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
+import { TokenInterceptor } from './interceptors/TokenInterceptor';
+
+export function keycloakInitializer(keycloak: KeycloakService): () =>
+  Promise<any> {
+  return () =>
+
+    keycloak.init({
+      config: {
+        url: 'http://localhost:8180',// url keycloak
+        realm: 'predictive-models-realm',
+        clientId: 'predictive-models-client'
+      },
+      initOptions: {
+        onLoad: 'login-required',
+        checkLoginIframe: true
+      }
+    }).catch((e) => {
+      console.log("Error thrown in init "+e)
+    });
+}
+
 
 @NgModule({
     declarations: [
         AppComponent,
         PredictiveModelsComponent,
         FeaturesComponent,
-        LoginComponent,
         AdminTemplateComponent,
         NewPredictiveModelComponent,
         DetailsModelComponent,
@@ -50,12 +70,11 @@ import { PieChartSegmentComponent } from './reporting-charts/pie-chart-segment/p
         DashboardComponent,
         UpdatePmScopeCanalsFrequencyComponent,
         UpdatePmFeaturesComponent,
-        PieChartDrComponent,
         BarChartComponent,
         FilterByNameAndDateComponent,
         PieChartMarcheComponent,
         PieChartDrComponent,
-        PieChartSegmentComponent
+        PieChartSegmentComponent,
     ],
     imports: [
         BrowserModule,
@@ -70,8 +89,21 @@ import { PieChartSegmentComponent } from './reporting-charts/pie-chart-segment/p
         MatDatepickerModule,
         MatInputModule,
         NgChartsModule,
+        KeycloakAngularModule
     ],
-  providers: [],
+  providers: [
+    {
+      provide : APP_INITIALIZER,
+      deps : [KeycloakService],
+      useFactory : keycloakInitializer,
+      multi : true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

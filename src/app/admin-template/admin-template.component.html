@@ -1,15 +1,12 @@
 <!-- Navbar -->
-
+<div>
 <nav class=" navbar sticky-top navbar-expand-lg navbar-light"  style="background-color: rgba(236,227,227,0.64);">
 
   <!-- Container wrapper -->
     <!-- Navbar brand -->
     <div class="logo col-2">
       &nbsp;&nbsp;&nbsp;&nbsp;<img src="../../assets/images/logo-SG.png" style="width:140px;height:25px;">
-    <!--  <a class="navbar-brand" style="font-weight: bold; color: #de2f2d" href="#">
-        &nbsp;&nbsp;&nbsp;<i class="bi bi-dash-square-fill"></i> SOCIETE GENERALE</a>-->
     </div>
-
 
   <!-- Collapsible wrapper -->
 
@@ -19,7 +16,8 @@
       <ul class="navbar-nav h6 custom-spacing"  style="font-size: small; font-weight: bold" >
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" routerLink="/admin/dashboard">
-              <i class="bi bi-speedometer2"></i> DASHBOARD</a>
+              <i class="bi bi-speedometer2"></i> DASHBOARD
+            </a>
           </li>
 
           <li class="nav-item dropdown">
@@ -75,17 +73,17 @@
       data-bs-toggle="dropdown"
       aria-expanded="false">
       <img
-        src="./assets/images/employee.png"
+        src="./assets/images/logoutRouge.png"
         class="rounded-circle"
         height="30"
         alt="Black and White Portrait of a Man"
         loading="lazy"
       />
-      &nbsp;{{authService.authenticatedUser!.firstname}}&nbsp;&nbsp;&nbsp;
     </a>
     <ul class="dropdown-menu dropdown-menu-sm-end">
       <li>
-        <a class="dropdown-item small-dropdown-item" (click)="handleLogout()">
+        <a
+           class="dropdown-item small-dropdown-item" (click)="handleLogout()">
           <i class="bi bi-box-arrow-right"></i> DECONNEXION</a>
       </li>
       <li>
@@ -102,3 +100,4 @@
 
 <router-outlet></router-outlet>
 
+</div>

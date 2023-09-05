@@ -59,7 +59,7 @@
                             </td>
                             <td>{{ pm.versionPM }}</td>
                             <td>{{ convertTimestampToDate(pm.lastModifiedDate) | date: 'medium' }}</td>
-                            <td *ngIf="authService.hasRole('ADMIN')">
+                            <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
                               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                 <!-- Update PM button -->
                                 <button class="btn btn-outline-danger me-md-2" type="button"
@@ -134,7 +134,7 @@
                       <td>{{ features.namefeature }}</td>
                       <td>{{ features.description }}</td>
                       <td>{{ convertTimestampToDate(features.lastModifiedDate) | date: 'medium' }}</td>
-                      <td *ngIf="authService.hasRole('ADMIN')">
+                      <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                           <!-- Update Features OF PM button -->
                           <button class= "btn btn-outline-danger" type="button"

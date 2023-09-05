@@ -1,3 +1,4 @@
+/*
 html {
   height: 100%;
 }
@@ -8,7 +9,7 @@ body {
   background-attachment: fixed;
 }
 
-/* Text Align */
+!* Text Align *!
 .text-c {
   text-align: center;
 }
@@ -22,7 +23,7 @@ body {
   text-align: justify;
 }
 
-/* Text Color */
+!* Text Color *!
 .text-whitesmoke {
   color: whitesmoke
 }
@@ -30,13 +31,13 @@ body {
   color: rgb(222, 47, 45)
 }
 
-/* Lines */
+!* Lines *!
 
 .line-b {
   border-bottom: 1px solid #cb3533 !important;
 }
 
-/* Buttons */
+!* Buttons *!
 .button {
   border-radius: 3px;
 }
@@ -61,7 +62,7 @@ body {
   width: 100% !important;
 }
 
-/* Margins g(global) - l(left) - r(right) - t(top) - b(bottom) */
+!* Margins g(global) - l(left) - r(right) - t(top) - b(bottom) *!
 
 .margin-g {
   margin: 15px;
@@ -128,7 +129,7 @@ body {
   margin-bottom: 30px;
 }
 
-/* Bootstrap Form Control Extension */
+!* Bootstrap Form Control Extension *!
 
 .form-control,
 .border-line {
@@ -154,7 +155,7 @@ body {
 }
 .form-control::-webkit-input-placeholder { color: #BDBDBD; }
 
-/* Container */
+!* Container *!
 
 .container-content {
   background-color: rgba(236, 227, 227, 0.64);
@@ -168,7 +169,7 @@ body {
   border-width: 1px 0;
 }
 
-/* Backgrounds */
+!* Backgrounds *!
 
 .main-bg {
 
@@ -176,7 +177,7 @@ body {
   background: linear-gradient( rgb(255, 255, 255), rgb(236, 227, 227));
 }
 
-/* Login & Register Pages*/
+!* Login & Register Pages*!
 
 .login-container {
 
@@ -198,3 +199,4 @@ body {
   letter-spacing: -10px;
   margin-bottom: 0;
 }
+*/

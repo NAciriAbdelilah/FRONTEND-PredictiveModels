@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {FeaturesService} from "../services/features.service";
 import {Features} from "../model/features.model";
-import {AuthenticationService} from "../services/authentication.service";
-import {catchError, map, Observable, of, tap, throwError} from "rxjs";
+import {catchError, Observable, of, tap, throwError} from "rxjs";
 import {PredictiveModel} from "../model/predictivemodels.model";
 import {PredictiveModelService} from "../services/predictive-model.service";
 import {Router} from "@angular/router";
+import {SecurityService} from "../services/security.service";
 
 @Component({
   selector: 'app-features',
@@ -30,7 +30,7 @@ export class FeaturesComponent implements OnInit {
   constructor( private predictiveModelService : PredictiveModelService,
                private featureService : FeaturesService,
                private fb : FormBuilder,
-               public authService : AuthenticationService,
+               public securityService : SecurityService,
                private router : Router) { }
 
   ngOnInit(): void {

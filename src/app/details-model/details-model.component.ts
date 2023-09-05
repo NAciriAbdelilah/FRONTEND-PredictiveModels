@@ -3,7 +3,7 @@
   import {PredictiveModelService} from "../services/predictive-model.service";
   import {FormBuilder} from "@angular/forms";
   import {ActivatedRoute, Router} from "@angular/router";
-  import {catchError, Observable, switchMap, throwError} from "rxjs";
+  import {catchError, throwError} from "rxjs";
   import {FeaturesService} from "../services/features.service";
   import {Features} from "../model/features.model";
   import {Scopes} from "../model/scopes.model";
@@ -12,7 +12,7 @@
   import {Frequences} from "../model/frequences.model";
   import {CanalsService} from "../services/canals.service";
   import {FrequenceService} from "../services/frequence.service";
-  import {AuthenticationService} from "../services/authentication.service";
+  import {SecurityService} from "../services/security.service";
 
   @Component({
     selector: 'app-details-model',
@@ -32,7 +32,7 @@
 
       constructor(
         private predictiveModelService : PredictiveModelService,
-        public authService : AuthenticationService,
+        public securityService : SecurityService,
         private featureService : FeaturesService,
         private scopesService : ScopesService,
         private canalsService : CanalsService,

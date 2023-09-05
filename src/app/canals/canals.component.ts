@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {catchError, Observable, of, tap, throwError} from "rxjs";
-import {Scopes} from "../model/scopes.model";
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
-import {ScopesService} from "../services/scopes.service";
-import {AuthenticationService} from "../services/authentication.service";
 import {Canals} from "../model/canals.model";
 import {CanalsService} from "../services/canals.service";
+import {SecurityService} from "../services/security.service";
 
 @Component({
   selector: 'app-canals',
@@ -26,7 +24,7 @@ export class CanalsComponent implements OnInit {
 
   constructor( private canalService : CanalsService ,
                private fb : FormBuilder,
-               public authService : AuthenticationService) { }
+               public securityService : SecurityService) { }
 
   ngOnInit(): void {
 

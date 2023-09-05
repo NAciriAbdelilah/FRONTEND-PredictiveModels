@@ -14,14 +14,7 @@
   <div class="card mt-3">
     <h2 class="card-header">MISE A JOUR DES FEATURES D'UN MODELE PREDICTIF</h2>
     <div class="card-body">
-      <!------------------------------------- PROGRESS BAR ------------------------------------------------->
-      <!--      <div class="progress" id="progress3">
-              <div class="progress-bar progress-bar-striped bg-danger progress-bar-animated"
-                   role="progressbar" style="width: 80%"  aria-valuenow="75"
-                   aria-valuemin="0" aria-valuemax="100">
-              </div>
-            </div>
-            <br>-->
+
       <!---------------------------------------------------------------------------------------------------->
       <!------------------------------ Predective Model & Features ----------------------------------------->
       <!---------------------------------------------------------------------------------------------------->
@@ -96,7 +89,7 @@
                                 <td >{{ feature.id }}</td>
                                 <td>{{ feature.namefeature }}</td>
                                 <td>{{ feature.description }}</td>
-                                <td *ngIf="authService.hasRole('ADMIN')">
+                                <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
                                   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                     <!-- Add feature button -->
                                     <button class="btn btn-close-white me-md-2"
@@ -139,7 +132,7 @@
                     <td>{{ selectedFeature.id }}</td>
                     <td>{{ selectedFeature.namefeature }}</td>
                     <td>{{ selectedFeature.description }}
-                    <td>
+                    <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
                       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <!-- Remove feature button -->
                         <button class="btn btn-close-white me-md-2"
