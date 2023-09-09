@@ -2,8 +2,8 @@
 
     <div class="container d-flex justify-content-between mt-2 p-lg-2">
       <div>
-        <button type="button" class="btn btn-light" [routerLink]="['/admin/dashboard']">
-          <img src="/assets/images/chevrons.png" alt="Bootstrap" width="30" height="30"> RETOUR AU DASHBOARD
+        <button type="button" class="btn btn-outline-danger rounded-pill" [routerLink]="['/admin/dashboard']">
+          <img src="/assets/images/chevrons.png" alt="Bootstrap" width="20" height="20"> Retour au Dashboard
         </button>
       </div>
       <div>
@@ -51,7 +51,6 @@
           <caption> LISTE DES MARCHES</caption>
           <thead class="table-dark text-center">
             <tr>
-              <th class="align-middle">ID</th>
               <th class="align-middle">INTITULE DU MARCHE</th>
               <th class="align-middle">DESCRIPTION DU MARCHE</th>
               <th class="align-middle">ACTIONS</th>
@@ -59,18 +58,18 @@
           </thead>
           <tbody>
           <tr *ngFor="let s of scopes | async">
-            <td> {{s.id}}</td>
             <td> {{s.intituleScope}}</td>
             <td> {{s.descriptionScope}}</td>
             <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                   <!-- Update scope button -->
-                  <button class="btn btn-outline-danger" type="button" data-bs-toggle="modal" data-bs-target="#updateScopeModal"
+                  <button type="button" class="btn btn-outline-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#updateScopeModal"
                         (click)="handleOpenUpdateModal(s)">
                     <img src="/assets/images/write.png" alt="Bootstrap" width="22" height="22">
                   </button>
                   <!-- Delete scope button -->
-                  <button class= "btn btn-outline-danger" type="button" (click)="handleDeleteScope(s)">
+                  <button type="button" class="btn btn-outline-danger rounded-pill"
+                         (click)="handleDeleteScope(s)">
                     <img src="/assets/images/trash.png" alt="Bootstrap" width="22" height="22">
                   </button>
               </div>
@@ -114,10 +113,12 @@
               </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="handleGetAllScopes()">
-                <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">FERMER</button>
-              <button type="button" class="btn btn-success" (click)="handleNewScope()">
-                <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">VALIDER</button>
+              <button type="button" class="btn btn-outline-danger rounded-pill" data-bs-dismiss="modal"
+                      (click)="handleGetAllScopes()">
+                <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">Fermer</button>
+              <button type="button" class="btn btn-danger rounded-pill"
+                      (click)="handleNewScope()">
+                <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">Ajouter</button>
             </div>
           </div>
         </div>
@@ -131,7 +132,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h2 class="modal-title fs-5" id="updateScopeModalLabel">MISE A JOUR D'UN MARCHE</h2>
+              <h2 class="modal-title fs-5" id="updateScopeModalLabel">METTRE A JOUR UN MARCHE</h2>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -158,11 +159,12 @@
                 </div>
               </form>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">FERMER</button>
-              <button type="button" class="btn btn-success" (click)="handleUpdateScope()">
-                <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">VALIDER</button>
+            <div class="modal-footer justify-content-center">
+              <button type="button" class="btn btn-outline-danger rounded-pill" data-bs-dismiss="modal">
+                <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">Fermer</button>
+              <button type="button" class="btn btn-danger rounded-pill"
+                      (click)="handleUpdateScope()">
+                <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">Modifier</button>
             </div>
           </div>
         </div>

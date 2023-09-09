@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from "rxjs";
-import {PredictiveModel} from "../model/predictivemodels.model";
+import {PredictiveModel} from "../models/predictivemodels.model";
 import {PredictiveModelService} from "../services/predictive-model.service";
-import {FileOutputDetailsModel} from "../model/fileOutputDetails.model";
+import {FileOutputDetailsModel} from "../models/fileOutputDetails.model";
 import {OutputModelService} from "../services/output-model.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 

@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/for
 import {Observable} from "rxjs";
 import {PredictiveModelService} from "../services/predictive-model.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {PredictiveModel} from "../model/predictivemodels.model";
+import {PredictiveModel} from "../models/predictivemodels.model";
 import {ScopesService} from "../services/scopes.service";
 import {CanalsService} from "../services/canals.service";
 import {FrequenceService} from "../services/frequence.service";

@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {catchError, Observable, of, throwError} from "rxjs";
-import {PredictiveModel} from "../model/predictivemodels.model";
+import {PredictiveModel} from "../models/predictivemodels.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ReportModelByDR} from "../model/reportModelByDR";
-import {ReportModelByMarche} from "../model/reportModelByMarche";
+import {ReportModelByDR} from "../models/reportModelByDR";
+import {ReportModelByMarche} from "../models/reportModelByMarche";
 import {PredictiveModelService} from "../services/predictive-model.service";
 import {ReportModelService} from "../services/report-model.service";
-import {ReportModelBySegment} from "../model/reportModelBySegment";
+import {ReportModelBySegment} from "../models/reportModelBySegment";
 
 @Component({
   selector: 'app-filter-by-name-and-date',

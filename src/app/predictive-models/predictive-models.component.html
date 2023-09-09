@@ -2,8 +2,8 @@
 
     <div class="container d-flex justify-content-between mt-2 p-lg-2">
       <div>
-        <button type="button" class="btn btn-light" [routerLink]="['/admin/dashboard']">
-          <img src="/assets/images/chevrons.png" alt="Bootstrap" width="30" height="30"> RETOUR AU DASHBOARD
+        <button type="button" class="btn btn-outline-danger rounded-pill" [routerLink]="['/admin/dashboard']">
+          <img src="/assets/images/chevrons.png" alt="Bootstrap" width="20" height="20"> Retour au Dashboard
         </button>
       </div>
       <div>
@@ -48,7 +48,6 @@
               <caption> LISTE DES MODELES PREDICTIFS </caption>
               <thead class="table-secondary text-center">
                   <tr>
-                    <th class="align-middle">ID</th>
                     <th class="align-middle">NOM DU MODELE PREDICTIF</th>
                     <th class="align-middle">OBJECTIF DU MODELE PREDICTIF</th>
                     <th class="align-middle">DATE CREATION</th>
@@ -59,10 +58,9 @@
               </thead>
               <tbody>
               <tr *ngFor="let pm of predictiveModel | async">
-                <td> {{pm.id}} </td>
                 <td> {{pm.namePM}} </td>
                 <td> {{pm.objectivePM}} </td>
-                <td>{{ convertTimestampToDate(pm.creationDate) | date: 'medium' }}</td>
+                <td>{{ convertTimestampToDate(pm.creationDate) | date: 'dd/MM/yyyy' }}</td>
                 <td>
                   <!-- Details PM button -->
                   <button [routerLink]="['/admin/details-model', pm.id]"
@@ -81,13 +79,14 @@
                 <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
                   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                       <!-- Update PM button -->
-                    <button class="btn btn-outline-danger me-md-2" type="button"
+                    <button type="button" class="btn btn-outline-danger rounded-pill"
                             data-bs-toggle="modal" data-bs-target="#updatePredictiveModelModal"
                             (click)="handleOpenUpdateModal(pm)">
                       <img src="/assets/images/write.png" alt="Bootstrap" width="22" height="22">
                     </button>
                       <!-- Delete PM button -->
-                      <button class= "btn btn-outline-danger" type="button" (click)="handleDeletePredictiveModel(pm)">
+                      <button type="button" class="btn btn-outline-danger rounded-pill"
+                              (click)="handleDeletePredictiveModel(pm)">
                         <img src="/assets/images/trash.png" alt="Bootstrap" width="22" height="22">
                       </button>
                   </div>
@@ -108,7 +107,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h2 class="modal-title fs-5" id="updatePredictiveModelModalLabel">MISE A JOUR D'UN MODELE PREDICTIF</h2>
+            <h2 class="modal-title fs-5" id="updatePredictiveModelModalLabel">METTRE A JOUR UN MODELE PREDICTIF</h2>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -230,19 +229,16 @@
               </div>
             </div>
           </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-              <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">FERMER</button>
-            <button type="button" class="btn btn-success" (click)="handleUpdatePredictiveModel()">
-              <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">VALIDER</button>
+          <div class="modal-footer justify-content-center">
+            <button type="button" class="btn btn-outline-danger rounded-pill" data-bs-dismiss="modal">
+              <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">Fermer</button>
+            <button type="button" class="btn btn-danger rounded-pill"  (click)="handleUpdatePredictiveModel()">
+              <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">Valider</button>
           </div>
         </div>
       </div>
     </div>
     <!-------------------------- END OF UPDATE PREDICTIVE MODEL MODAL ----------------------------->
-
-
 
 
     <!----------------------------------------------------------------------------------------------------------------->

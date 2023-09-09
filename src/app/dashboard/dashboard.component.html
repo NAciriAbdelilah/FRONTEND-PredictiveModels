@@ -1,6 +1,5 @@
 
-
-      <div class="container mt-5">
+<div class="container mt-5">
 
         <div class="row justify-content-center">
 
@@ -11,7 +10,7 @@
                 <h2 class="text-right"><img src="/assets/images/analysis.png" alt="Bootstrap" width="50" height="50">
                   <ng-container *ngIf="listOfPredictiveModel | async as predictiveModels">
                     <ng-container *ngFor="let pm of predictiveModels; let i = index;"></ng-container>
-                    <span class="styled-span f-right">{{(predictiveModels.length)}}</span> <!-- Display the total count -->
+                    <span class="styled-span f-right">{{(predictiveModels.length)}}</span> <!-- Display the total count PM -->
                   </ng-container>
                 </h2>
               </div>
@@ -23,7 +22,7 @@
               <div class="card-block">
                 <p class="m-b-0">Nombre des Modéles Prédictifs <br/> en Production</p>
                 <h2 class="text-right"><img src="/assets/images/cost.png" alt="Bootstrap" width="50" height="50">
-                  <span class="styled-span f-right">{{ totalProductionCount }}</span>
+                  <span class="styled-span f-right">{{ totalProductionCount }}</span> <!-- Display the total count PM in Prod -->
                 </h2>
               </div>
             </div>
@@ -34,7 +33,7 @@
               <div class="card-block">
                 <p class="m-b-0">Nombre des Modéles Prédictifs <br/> en Pilote</p>
                 <h2 class="text-right"><img src="/assets/images/coding.png" alt="Bootstrap" width="50" height="50">
-                  <span class="styled-span f-right">{{ totalPilotCount }}</span>
+                  <span class="styled-span f-right">{{ totalPilotCount }}</span> <!-- Display the total count PM in Pilot-->
                 </h2>
               </div>
             </div>
@@ -64,7 +63,10 @@
                   </div>
                   <div class="col-lg-5">
                     <div class="button_box">
-                      <a class="btn btn-outline-dark" [routerLink]="['/admin/predictive-models']">Découvrir <i class="bi bi-caret-right-fill"></i></a>
+                      <button type="button" class="btn btn-outline-dark rounded-pill lh-lg"
+                              [routerLink]="['/admin/predictive-models']"> Découvrir
+                        <img src="/assets/images/twonext.png" alt="Bootstrap" width="20" height="20">
+                      </button>
                     </div>
                   </div>
                 </div>

@@ -1,8 +1,8 @@
 
 <div class="container d-flex justify-content-between mt-2 p-lg-2" >
   <div>
-    <button type="button" class="btn btn-light" [routerLink]="['/admin/predictive-models']">
-      <img src="/assets/images/chevrons.png" alt="Bootstrap" width="30" height="30"> RETOUR
+    <button type="button" class="btn btn-outline-danger rounded-pill" [routerLink]="['/admin/predictive-models']">
+      <img src="/assets/images/chevrons.png" alt="Bootstrap" width="20" height="20"> Retour
     </button>
   </div>
   <div>
@@ -84,7 +84,6 @@
                           <caption> LISTE DES FEATURES</caption>
                           <thead class="table-secondary text-center">
                             <tr>
-                              <th class="align-middle">ID</th>
                               <th class="align-middle">NOM DU FEATURE</th>
                               <th class="align-middle">DESCRIPTION DU FEATURE</th>
                               <th class="align-middle">ACTION</th>
@@ -92,7 +91,6 @@
                           </thead>
                           <tbody>
                             <tr *ngFor="let f of allFeatures | async">
-                              <td >{{ f.id }}</td>
                               <td>{{ f.namefeature }}</td>
                               <td>{{ f.description }}</td>
                               <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
@@ -126,7 +124,6 @@
                   <caption> LISTE DES FEATURES SELECTIONNEES</caption>
                   <thead class="table-secondary text-center" >
                     <tr>
-                      <th class="align-middle">ID FEATURE</th>
                       <th class="align-middle">NOM DU FEATURE</th>
                       <th class="align-middle">DESCRIPTION DU FEATURE</th>
                       <th class="align-middle">ACTION</th>
@@ -134,7 +131,6 @@
                   </thead>
                   <tbody formArrayName="features">
                   <tr *ngFor="let selectedFeature of selectedFeatures">
-                    <td>{{ selectedFeature.id }}</td>
                     <td>{{ selectedFeature.namefeature }}</td>
                     <td>{{ selectedFeature.description }}
                     <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
@@ -154,8 +150,9 @@
             <br>
             <!------------------------------------- BUTTONS ----------------------------------------------------------------->
             <div class="d-grid gap-2 d-md-flex justify-content-center">
-              <button class="btn btn-success" (click)="handleSavePredictiveModelFeatures()">
-                <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">VALIDER</button>
+              <button type="button" class="btn btn-outline-danger rounded-pill"
+                      (click)="handleSavePredictiveModelFeatures()">
+                <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">Valider</button>
             </div>
             <!------------------------------------------------------------------------------------------------------------------>
           </div>

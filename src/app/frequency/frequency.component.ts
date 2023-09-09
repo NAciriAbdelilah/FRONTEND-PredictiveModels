@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {catchError, Observable, of, tap, throwError} from "rxjs";
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
-import {Frequences} from "../model/frequences.model";
+import {Frequences} from "../models/frequences.model";
 import {FrequenceService} from "../services/frequence.service";
 import {SecurityService} from "../services/security.service";
 

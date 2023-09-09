@@ -2,8 +2,8 @@
 
 <div class="container d-flex justify-content-between mt-2 p-lg-2">
   <div>
-    <button type="button" class="btn btn-light" [routerLink]="['/admin/dashboard']">
-      <img src="/assets/images/chevrons.png" alt="Bootstrap" width="30" height="30"> RETOUR AU DASHBOARD
+    <button type="button" class="btn btn-outline-danger rounded-pill" [routerLink]="['/admin/dashboard']">
+      <img src="/assets/images/chevrons.png" alt="Bootstrap" width="20" height="20"> Retour au Dashboard
     </button>
   </div>
   <div>
@@ -64,12 +64,12 @@
           <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
               <!-- Update canal button -->
-              <button class="btn btn-outline-danger" type="button" data-bs-toggle="modal" data-bs-target="#updateCanalModal"
+              <button class="btn btn-outline-danger rounded-pill" type="button" data-bs-toggle="modal" data-bs-target="#updateCanalModal"
                       (click)="handleOpenUpdateModal(c)">
                 <img src="/assets/images/write.png" alt="Bootstrap" width="22" height="22">
               </button>
               <!-- Delete canal button -->
-              <button class= "btn btn-outline-danger" type="button" (click)="handleDeleteCanal(c)">
+              <button class="btn btn-outline-danger rounded-pill" type="button" (click)="handleDeleteCanal(c)">
                 <img src="/assets/images/trash.png" alt="Bootstrap" width="22" height="22">
               </button>
             </div>
@@ -112,11 +112,11 @@
                 </div>
               </form>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="handleGetAllCanals()">
-                <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">FERMER</button>
-              <button type="button" class="btn btn-success" (click)="handleNewCanal()">
-                <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">VALIDER</button>
+            <div class="modal-footer justify-content-center">
+              <button type="button" class="btn btn-outline-danger rounded-pill" data-bs-dismiss="modal" (click)="handleGetAllCanals()">
+                <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">Fermer</button>
+              <button type="button" class="btn btn-danger rounded-pill" (click)="handleNewCanal()">
+                <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">Ajouter</button>
             </div>
           </div>
         </div>
@@ -130,7 +130,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h2 class="modal-title fs-5" id="updateCanalModalLabel">MISE A JOUR DU CANAL</h2>
+              <h2 class="modal-title fs-5" id="updateCanalModalLabel">METTRE A JOUR UN CANAL</h2>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -157,11 +157,11 @@
                 </div>
               </form>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-light" data-bs-dismiss="modal">
-                <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">FERMER</button>
-              <button type="button" class="btn btn-success" (click)="handleUpdateCanal()">
-                <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">VALIDER</button>
+            <div class="modal-footer justify-content-center">
+              <button type="button" class="btn btn-outline-danger rounded-pill"  data-bs-dismiss="modal">
+                <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">Fermer</button>
+              <button type="button" class="btn btn-danger rounded-pill"  (click)="handleUpdateCanal()">
+                <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">Modifier</button>
             </div>
           </div>
         </div>

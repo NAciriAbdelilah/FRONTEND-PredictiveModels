@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import {Features} from "../model/features.model";
+import {Features} from "../models/features.model";
 import {Observable, of, throwError} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
+import {Pages} from "../models/pages";
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,10 @@ export class FeaturesService {
 
   public getAllFeatures() : Observable<Array<Features>>{
     return this.http.get<Array<Features>>(environment.backendHost+"/features")
+  }
+
+  public getAllFeaturesByPages(page: number = 0, size: number = 0): Observable<Pages> {
+    return this.http.get<Pages>(`${environment.backendHost}/features/getAllFeaturesByPages?page=${page}&size=${size}`);
   }
 
   public getFeaturesByPredictiveModelById(id: number) : Observable<Array<Features>>{
@@ -26,7 +31,6 @@ export class FeaturesService {
   public searchByNameOrDescription(keyword : string) : Observable<Array<Features>>{
     return this.http.get<Array<Features>>(environment.backendHost+"/features/searchByNameOrDescription?keyword="+keyword)
   }
-
 
   public getFeaturesByPredictiveModelName(modelName: string): Observable<Array<Features>> {
     return this.http.get<Array<Features>>(environment.backendHost+"/features/searchByModelName?modelName="+modelName);

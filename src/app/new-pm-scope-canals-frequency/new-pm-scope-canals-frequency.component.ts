@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {Observable} from "rxjs";
-import {Scopes} from "../model/scopes.model";
-import {Canals} from "../model/canals.model";
-import {Frequences} from "../model/frequences.model";
+import {Scopes} from "../models/scopes.model";
+import {Canals} from "../models/canals.model";
+import {Frequences} from "../models/frequences.model";
 import {PredictiveModelService} from "../services/predictive-model.service";
 import {ScopesService} from "../services/scopes.service";
 import {CanalsService} from "../services/canals.service";
 import {FrequenceService} from "../services/frequence.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {PredictiveModel} from "../model/predictivemodels.model";
+import {PredictiveModel} from "../models/predictivemodels.model";
 
 @Component({
   selector: 'app-new-pm-scope-canals-frequency',

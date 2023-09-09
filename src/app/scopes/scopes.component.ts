@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {catchError, Observable, of, tap, throwError} from "rxjs";
 import {ScopesService} from "../services/scopes.service";
-import {Scopes} from "../model/scopes.model";
+import {Scopes} from "../models/scopes.model";
 import {SecurityService} from "../services/security.service";
 
 @Component({

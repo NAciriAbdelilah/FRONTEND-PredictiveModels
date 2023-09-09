@@ -2,8 +2,8 @@
 
 <div class="container d-flex justify-content-between mt-2 p-lg-2">
   <div>
-    <button type="button" class="btn btn-light" [routerLink]="['/admin/dashboard']">
-      <img src="/assets/images/chevrons.png" alt="Bootstrap" width="30" height="30"> RETOUR AU DASHBOARD
+    <button type="button" class="btn btn-outline-danger rounded-pill" [routerLink]="['/admin/dashboard']">
+      <img src="/assets/images/chevrons.png" alt="Bootstrap" width="20" height="20"> Retour au Dashboard
     </button>
   </div>
   <div>
@@ -50,7 +50,6 @@
           <caption> LISTE DES FREQUENCES</caption>
           <thead class="table-dark">
             <tr>
-              <th class="align-middle">ID</th>
               <th class="align-middle">CODE DU FREQUENCE</th>
               <th class="align-middle">INTITULE DU FREQUENCE</th>
               <th class="align-middle">ACTIONS</th>
@@ -58,18 +57,18 @@
           </thead>
           <tbody>
           <tr *ngFor="let f of frequences | async">
-            <td> {{f.id}}</td>
             <td> {{f.codeFrequence}}</td>
             <td> {{f.intitulefrequence}}</td>
             <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <!-- Update frequences button -->
-                <button class="btn btn-outline-danger" type="button" data-bs-toggle="modal" data-bs-target="#updateFrequencyModal"
+                <button type="button" class="btn btn-outline-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#updateFrequencyModal"
                         (click)="handleOpenUpdateModal(f)">
                   <img src="/assets/images/write.png" alt="Bootstrap" width="22" height="22">
                 </button>
                 <!-- Delete frequences button -->
-                <button class= "btn btn-outline-danger" type="button" (click)="handleDeleteFrequence(f)">
+                <button type="button" class="btn btn-outline-danger rounded-pill"
+                        (click)="handleDeleteFrequence(f)">
                   <img src="/assets/images/trash.png" alt="Bootstrap" width="22" height="22">
                 </button>
               </div>
@@ -113,10 +112,12 @@
               </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="handleGetAllFrequences()">
-                <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">FERMER</button>
-              <button type="button" class="btn btn-success" (click)="handleNewFrequence()">
-                <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">VALIDER</button>
+              <button type="button" class="btn btn-outline-danger rounded-pill" data-bs-dismiss="modal"
+                      (click)="handleGetAllFrequences()">
+                <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">Fermer</button>
+              <button type="button" class="btn btn-danger rounded-pill"
+                      (click)="handleNewFrequence()">
+                <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">Ajouter</button>
             </div>
           </div>
         </div>
@@ -130,7 +131,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h2 class="modal-title fs-5" id="updateFrequencyModalLabel">MISE A JOUR DE LA FREQUENCE</h2>
+              <h2 class="modal-title fs-5" id="updateFrequencyModalLabel">METTRE A JOUR UNE FREQUENCE</h2>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -158,10 +159,11 @@
               </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">FERMER</button>
-              <button type="button" class="btn btn-success" (click)="handleUpdateFrequence()">
-                <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">VALIDER</button>
+              <button type="button" class="btn btn-outline-danger rounded-pill" data-bs-dismiss="modal">
+                <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">Fermer</button>
+              <button type="button" class="btn btn-danger rounded-pill"
+                      (click)="handleUpdateFrequence()">
+                <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">Modifier</button>
             </div>
           </div>
         </div>

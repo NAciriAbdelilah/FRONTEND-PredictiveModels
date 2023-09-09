@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {catchError, Observable, of, tap, throwError} from "rxjs";
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
-import {Canals} from "../model/canals.model";
+import {Canals} from "../models/canals.model";
 import {CanalsService} from "../services/canals.service";
 import {SecurityService} from "../services/security.service";
 

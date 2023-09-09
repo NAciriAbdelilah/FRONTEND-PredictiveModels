@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
-import {ReportModelByDR} from "../model/reportModelByDR";
+import {ReportModelByDR} from "../models/reportModelByDR";
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {ReportModelByMarche} from "../model/reportModelByMarche";
-import {ReportModelBySegment} from "../model/reportModelBySegment";
+import {ReportModelByMarche} from "../models/reportModelByMarche";
+import {ReportModelBySegment} from "../models/reportModelBySegment";
 
 @Injectable({
   providedIn: 'root'

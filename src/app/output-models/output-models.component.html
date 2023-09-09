@@ -1,8 +1,8 @@
 <!-- Premier container -->
 <div class="container d-flex justify-content-between mt-2 p-lg-2">
   <div>
-    <button type="button" class="btn btn-light" [routerLink]="['/admin/dashboard']">
-      <img src="/assets/images/chevrons.png" alt="Bootstrap" width="30" height="30"> RETOUR AU DASHBOARD
+    <button type="button" class="btn btn-outline-danger rounded-pill" [routerLink]="['/admin/dashboard']">
+      <img src="/assets/images/chevrons.png" alt="Bootstrap" width="20" height="20"> Retour au Dashboard
     </button>
   </div>
   <div>
@@ -42,7 +42,9 @@
               </div>
 
               <div class="mb-3">
-                <button class="btn btn-outline-danger"(click)="uploadFile()">UPLOAD OUTPUT</button>
+                <button type="button" class="btn btn-outline-danger rounded-pill"
+                        (click)="uploadFile()">Charger le Fichier
+                </button>
               </div>
             </form>
         </div>

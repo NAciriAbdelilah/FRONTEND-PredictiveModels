@@ -1,8 +1,8 @@
     <div class="container d-flex justify-content-between mt-2 p-lg-2">
       <div>
-        <button type="button" class="btn btn-light"
+        <button type="button" class="btn btn-outline-danger rounded-pill"
                 [routerLink]="['/admin/predictive-models']">
-          <img src="/assets/images/chevrons.png" alt="Bootstrap" width="30" height="30"> RETOUR
+          <img src="/assets/images/chevrons.png" alt="Bootstrap" width="20" height="20"> Retour
         </button>
       </div>
       <div>
@@ -58,11 +58,11 @@
                             </ng-container>
                             </td>
                             <td>{{ pm.versionPM }}</td>
-                            <td>{{ convertTimestampToDate(pm.lastModifiedDate) | date: 'medium' }}</td>
+                            <td>{{ convertTimestampToDate(pm.lastModifiedDate) | date: 'dd/MM/yyyy' }}</td>
                             <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
                               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                 <!-- Update PM button -->
-                                <button class="btn btn-outline-danger me-md-2" type="button"
+                                <button type="button" class="btn btn-outline-danger rounded-pill"
                                         [routerLink]="['/admin/update-pm-scope-canals-frequency']">
                                   <img src="/assets/images/write.png" alt="Bootstrap" width="22" height="22">
                                 </button>
@@ -118,7 +118,6 @@
                 <caption> LISTE DES FEATURES PAR NOM DU MODELE PREDICTIF</caption>
                 <thead class="table-light text-center">
                   <tr>
-                    <th class="align-middle">ID FEATURE</th>
                     <th class="align-middle">NOM DU FEATURE</th>
                     <th class="align-middle">DESCRIPTION DU FEATURE</th>
                     <th class="align-middle">DATE MODIFICATION</th>
@@ -130,14 +129,13 @@
                   <ng-container *ngFor="let featuresArray of listOfFeatures">
                     <tr *ngFor="let features of featuresArray">
 
-                      <td>{{ features.id }}</td>
                       <td>{{ features.namefeature }}</td>
                       <td>{{ features.description }}</td>
                       <td>{{ convertTimestampToDate(features.lastModifiedDate) | date: 'medium' }}</td>
                       <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                           <!-- Update Features OF PM button -->
-                          <button class= "btn btn-outline-danger" type="button"
+                          <button type="button" class="btn btn-outline-danger rounded-pill"
                                   [routerLink]="['/admin/update-pm-features']">
                             <img src="/assets/images/write.png" alt="Bootstrap" width="22" height="22">
                           </button>

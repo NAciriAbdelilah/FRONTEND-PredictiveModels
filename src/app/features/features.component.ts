@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {FeaturesService} from "../services/features.service";
-import {Features} from "../model/features.model";
+import {Features} from "../models/features.model";
 import {catchError, Observable, of, tap, throwError} from "rxjs";
-import {PredictiveModel} from "../model/predictivemodels.model";
+import {PredictiveModel} from "../models/predictivemodels.model";
 import {PredictiveModelService} from "../services/predictive-model.service";
 import {Router} from "@angular/router";
 import {SecurityService} from "../services/security.service";
+import {MatPaginatorIntl, PageEvent} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-features',
@@ -25,7 +26,11 @@ export class FeaturesComponent implements OnInit {
   updateFeatureFormGroup!: FormGroup;
   selectedFeatureToUpdate: Features | undefined;
 
-
+  // Pagination properties
+  page : number = 1; // Current page
+  pageSize : number = 10; // Items per page
+  totalItems : number = 0; // Total number of items
+  featuresByPages: Features[] = []; // Changed to an empty array initially
 
   constructor( private predictiveModelService : PredictiveModelService,
                private featureService : FeaturesService,
@@ -50,7 +55,8 @@ export class FeaturesComponent implements OnInit {
       namefeature: ['', Validators.required],
       description: ['', Validators.required],
     });
-
+    this.page = 0;
+    this.pageSize = 10;
     this.handleGetAllFeatures();
   }
 
@@ -63,9 +69,19 @@ export class FeaturesComponent implements OnInit {
 
         this.handleSearchFeaturesByPredictiveModelName();
       }
+
 //-------------------------------------------------------------------------------------------------------
 
-    handleGetAllFeatures() {
+      // Pagination event handler
+      onPageChange(event: PageEvent) {
+        this.page = event.pageIndex; // PageIndex is zero-based for that we initialize page = 1
+        this.pageSize = event.pageSize;
+        this.handleGetAllFeatures();
+      }
+
+//-------------------------------------------------------------------------------------------------------
+
+/*    handleGetAllFeatures() {
       this.featureService.getAllFeatures().subscribe(
         features => {
           console.log("Received updated features:", features);
@@ -76,7 +92,23 @@ export class FeaturesComponent implements OnInit {
           this.errorMessage = error.message;
         }
       );
+    }*/
+
+    handleGetAllFeatures() {
+      this.featureService.getAllFeaturesByPages(this.page, this.pageSize).subscribe(
+        (page) => {
+          console.log('Received page object:', page);
+          this.featuresByPages = page.content; // Assign the page.content directly
+          this.totalItems = page.totalElements; // Set the total count of features
+        },
+        (error) => {
+          console.error('Error fetching features:', error);
+          this.errorMessage = error.message;
+        }
+      );
     }
+
+
 //-------------------------------------------------------------------------------------------------------
 
     handleSearchFeatures() {
@@ -106,8 +138,6 @@ export class FeaturesComponent implements OnInit {
         );
       }
     }
-
-//-------------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------------
     handleNewFeature() {
@@ -208,12 +238,10 @@ export class FeaturesComponent implements OnInit {
 
     // this methode help you to show Date value correctly from the backend
     convertTimestampToDate(timestamp: string): Date {
-      const timestampInMillis = parseInt(timestamp) * 1000;
-      return new Date(timestampInMillis);
+      return new Date(timestamp); // Assuming 'timestamp' is in milliseconds
     }
 
   //-------------------------------------------------------------------------------------------------------
-
     getErrorMessage(fieldName: string, error: ValidationErrors) {
       if (error['required']){
         return fieldName + " is Required";
@@ -221,6 +249,8 @@ export class FeaturesComponent implements OnInit {
         return fieldName + " should have at least "+ error['minLength']['requiredLength'] + " Characters";
       } else return "";
     }
+
+  //-------------------------------------------------------------------------------------------------------
 
 
 }

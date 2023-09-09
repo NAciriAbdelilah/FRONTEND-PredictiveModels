@@ -32,6 +32,8 @@ import { PieChartDrComponent } from "./reporting-charts/pie-chart-dr/pie-chart-d
 import { PieChartSegmentComponent } from './reporting-charts/pie-chart-segment/pie-chart-segment.component';
 import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
 import { TokenInterceptor } from './interceptors/TokenInterceptor';
+import {NgxPaginationModule} from "ngx-pagination";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 export function keycloakInitializer(keycloak: KeycloakService): () =>
   Promise<any> {
@@ -76,21 +78,23 @@ export function keycloakInitializer(keycloak: KeycloakService): () =>
         PieChartDrComponent,
         PieChartSegmentComponent,
     ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        MatListModule,
-        NgMultiSelectDropDownModule,
-        FormsModule,
-        HttpClientModule,
-        MatSelectModule,
-        MatDatepickerModule,
-        MatInputModule,
-        NgChartsModule,
-        KeycloakAngularModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatListModule,
+    NgMultiSelectDropDownModule,
+    FormsModule,
+    HttpClientModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatInputModule,
+    NgChartsModule,
+    KeycloakAngularModule,
+    NgxPaginationModule,
+    MatPaginatorModule,
+  ],
   providers: [
     {
       provide : APP_INITIALIZER,

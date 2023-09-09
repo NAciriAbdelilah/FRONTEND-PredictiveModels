@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {map, Observable} from "rxjs";
-import {Features} from "../model/features.model";
-import {PredictiveModel} from "../model/predictivemodels.model";
+import {Features} from "../models/features.model";
+import {PredictiveModel} from "../models/predictivemodels.model";
 import {PredictiveModelService} from "../services/predictive-model.service";
 import {FeaturesService} from "../services/features.service";
 import {Router} from "@angular/router";

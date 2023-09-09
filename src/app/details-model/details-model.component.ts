@@ -1,15 +1,15 @@
   import { Component, OnInit } from '@angular/core';
-  import {PredictiveModel} from "../model/predictivemodels.model";
+  import {PredictiveModel} from "../models/predictivemodels.model";
   import {PredictiveModelService} from "../services/predictive-model.service";
   import {FormBuilder} from "@angular/forms";
   import {ActivatedRoute, Router} from "@angular/router";
   import {catchError, throwError} from "rxjs";
   import {FeaturesService} from "../services/features.service";
-  import {Features} from "../model/features.model";
-  import {Scopes} from "../model/scopes.model";
+  import {Features} from "../models/features.model";
+  import {Scopes} from "../models/scopes.model";
   import {ScopesService} from "../services/scopes.service";
-  import {Canals} from "../model/canals.model";
-  import {Frequences} from "../model/frequences.model";
+  import {Canals} from "../models/canals.model";
+  import {Frequences} from "../models/frequences.model";
   import {CanalsService} from "../services/canals.service";
   import {FrequenceService} from "../services/frequence.service";
   import {SecurityService} from "../services/security.service";
@@ -125,8 +125,8 @@
         });
       }
 
+      // this methode help you to show Date value correctly from the backend
       convertTimestampToDate(timestamp: string): Date {
-        const timestampInMillis = parseInt(timestamp) * 1000;
-        return new Date(timestampInMillis);
+        return new Date(timestamp); // Assuming 'timestamp' is in milliseconds
       }
   }

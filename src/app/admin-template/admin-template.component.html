@@ -11,7 +11,7 @@
   <!-- Collapsible wrapper -->
 
       <!-- Left links -->
-    <div class="container col-8">
+    <div class="container col-8 mt-2">
 
       <ul class="navbar-nav h6 custom-spacing"  style="font-size: small; font-weight: bold" >
           <li class="nav-item">
@@ -72,13 +72,7 @@
       role="button"
       data-bs-toggle="dropdown"
       aria-expanded="false">
-      <img
-        src="./assets/images/logoutRouge.png"
-        class="rounded-circle"
-        height="30"
-        alt="Black and White Portrait of a Man"
-        loading="lazy"
-      />
+      <img class="rounded-start" src="./assets/images/logoutRed.png" height="30" />
     </a>
     <ul class="dropdown-menu dropdown-menu-sm-end">
       <li>
@@ -86,13 +80,10 @@
            class="dropdown-item small-dropdown-item" (click)="handleLogout()">
           <i class="bi bi-box-arrow-right"></i> DECONNEXION</a>
       </li>
+      <li><hr class="dropdown-divider"></li>
       <li>
         <a class="dropdown-item small-dropdown-item">
           <i class="bi bi-key-fill"></i> MOT DE PASSE OUBLIE </a>
-      </li>
-      <li>
-        <a class="dropdown-item small-dropdown-item">
-          <i class="bi bi-person-vcard-fill"></i> CONTACTER NOUS </a>
       </li>
     </ul>
   </div>

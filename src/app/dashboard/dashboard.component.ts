@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PredictiveModelService} from "../services/predictive-model.service";
 import {Observable} from "rxjs";
-import {PredictiveModel} from "../model/predictivemodels.model";
+import {PredictiveModel} from "../models/predictivemodels.model";
 
 @Component({
   selector: 'app-dashboard',

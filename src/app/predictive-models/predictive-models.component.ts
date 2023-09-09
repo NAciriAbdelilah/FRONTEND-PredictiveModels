@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {PredictiveModelService} from "../services/predictive-model.service";
-import {PredictiveModel} from "../model/predictivemodels.model";
+import {PredictiveModel} from "../models/predictivemodels.model";
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {catchError, map, Observable, throwError} from "rxjs";
@@ -105,8 +105,7 @@ export class PredictiveModelsComponent implements OnInit {
 
     // this methode help you to show Date value correctly from the backend
     convertTimestampToDate(timestamp: string): Date {
-      const timestampInMillis = parseInt(timestamp) * 1000;
-      return new Date(timestampInMillis);
+      return new Date(timestamp); // Assuming 'timestamp' is in milliseconds
     }
 
   // Function to open the update modal and pre-fill the form with existing PM

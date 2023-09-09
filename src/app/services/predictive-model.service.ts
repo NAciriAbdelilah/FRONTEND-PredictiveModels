@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {forkJoin, map, Observable} from "rxjs";
-import {PredictiveModel} from "../model/predictivemodels.model";
+import {PredictiveModel} from "../models/predictivemodels.model";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 

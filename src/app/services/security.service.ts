@@ -25,6 +25,7 @@ export class SecurityService implements OnInit{
     });
 
   }
+
   ngOnInit(): void {
     // Check if the user is authenticated
     if (!this.kcService.isLoggedIn()) {

@@ -1,8 +1,8 @@
 <!-- Premier container -->
 <div class="container d-flex justify-content-between mt-2 p-lg-2">
   <div>
-    <button type="button" class="btn btn-light" [routerLink]="['/admin/dashboard']">
-      <img src="/assets/images/chevrons.png" alt="Bootstrap" width="30" height="30"> RETOUR AU DASHBOARD
+    <button type="button" class="btn btn-outline-danger rounded-pill" [routerLink]="['/admin/dashboard']">
+      <img src="/assets/images/chevrons.png" alt="Bootstrap" width="20" height="20"> Retour au Dashboard
     </button>
   </div>
   <div>
@@ -52,7 +52,6 @@
                 <caption> LISTE DES FEATURES POUR CE MODELE </caption>
                 <thead class="table-light">
                 <tr>
-                  <th class="align-middle">ID FEATURE</th>
                   <th class="align-middle">NOM DU FEATURE</th>
                   <th class="align-middle">DESCRIPTION DU FEATURE</th>
                   <th class="align-middle">DATE MODIFICATION</th>
@@ -60,10 +59,9 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let f of filteredFeatures | async">
-                  <td>{{ f.id }}</td>
                   <td>{{ f.namefeature }}</td>
                   <td>{{ f.description }}</td>
-                  <td>{{ convertTimestampToDate(f.lastModifiedDate) | date: 'medium' }}</td>
+                  <td>{{ convertTimestampToDate(f.lastModifiedDate) | date: 'dd/MM/yyyy'}}</td>
                 </tr>
                 </tbody>
               </table>
@@ -91,7 +89,8 @@
                               <img src="/assets/images/rechercher.png" alt="Bootstrap" width="30" height="30">
                             </button>
                             <label class="input-group-text">RECHERHCER</label>
-                            <input type="text" class="form-control" formControlName="keyword" (input)="handleSearchFeatures()">
+                            <input type="text" class="form-control" formControlName="keyword"
+                                   (input)="handleSearchFeatures()">
                             <button *ngIf="securityService.hasRoleIn(['ADMIN'])"
                                     class="btn btn-outline-danger btn-sm shadow-sm"
                                     data-bs-toggle="modal" data-bs-target="#addFeatureModal"
@@ -106,7 +105,8 @@
               </div>
 
   <!------------------------- LIST OF ALL THE FEATURES  ---------------------------->
-  <!-- Quatriéme container -->
+
+              <!-- Quatriéme container -->
 
       <div class="container">
         <div class="card mt-3">
@@ -126,24 +126,25 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let f of features | async">
+                    <tr *ngFor="let f of featuresByPages ">
 
                       <td> {{f.id}}</td>
                       <td> {{f.namefeature}}</td>
                       <td> {{f.description}}</td>
-                      <td>{{ convertTimestampToDate(f.creationDate) | date: 'medium' }}</td>
-                      <td>{{ convertTimestampToDate(f.lastModifiedDate) | date: 'medium' }}</td>
+                      <td>{{ convertTimestampToDate(f.creationDate) | date: 'dd/MM/yyyy' }}</td>
+                      <td>{{ convertTimestampToDate(f.lastModifiedDate) | date: 'dd/MM/yyyy' }}</td>
 
                       <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <!-- Update feature button -->
-                            <button class="btn btn-outline-danger" type="button"
+                            <button type="button" class="btn btn-outline-danger rounded-pill"
                                     data-bs-toggle="modal" data-bs-target="#updateFeatureModal"
                                     (click)="handleOpenUpdateModal(f)">
                               <img src="/assets/images/write.png" alt="Bootstrap" width="22" height="22">
                             </button>
                             <!-- Delete feature button -->
-                            <button class= "btn btn-outline-danger" type="button" (click)="handleDeleteFeature(f)">
+                            <button type="button" class="btn btn-outline-danger rounded-pill"
+                                    (click)="handleDeleteFeature(f)">
                               <img src="/assets/images/trash.png" alt="Bootstrap" width="22" height="22">
                             </button>
                         </div>
@@ -152,6 +153,13 @@
                   </tbody>
                 </table>
               </div>
+                  <!-- Pagination controls -->
+                    <mat-paginator
+                      [length]="totalItems"
+                      [pageSize]="pageSize"
+                      [pageSizeOptions]="[5, 10, 20, 50, 100]"
+                      (page)="onPageChange($event)">
+                    </mat-paginator>
             </div>
           </div>
         </div>
@@ -162,7 +170,7 @@
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h2 class="modal-title fs-5" id="addFeatureModalLabel">AJOUTER D'UN NOUVEAU FEATURE</h2>
+                        <h2 class="modal-title fs-5" id="addFeatureModalLabel">AJOUTER UN NOUVEAU FEATURE</h2>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
@@ -189,11 +197,13 @@
                           </div>
                         </form>
                       </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="handleGetAllFeatures()">
-                          <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">FERMER</button>
-                        <button type="button" class="btn btn-success" (click)="handleNewFeature()">
-                          <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">VALIDER</button>
+                      <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-outline-danger rounded-pill" data-bs-dismiss="modal"
+                                (click)="handleGetAllFeatures()">
+                          <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">Fermer</button>
+                        <button type="button" class="btn btn-danger rounded-pill"
+                                (click)="handleNewFeature()">
+                          <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">Ajouter</button>
                       </div>
                     </div>
                   </div>
@@ -207,7 +217,7 @@
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h2 class="modal-title fs-5" id="updateFeatureModalLabel">MISE A JOUR D'UN FEATURE</h2>
+                    <h2 class="modal-title fs-5" id="updateFeatureModalLabel">METTRE A JOUR UN FEATURE</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
@@ -234,11 +244,13 @@
                       </div>
                     </form>
                   </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                      <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">FERMER</button>
-                    <button type="button" class="btn btn-success" (click)="handleUpdateFeature()">
-                      <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">VALIDER</button>
+                  <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-danger rounded-pill" data-bs-dismiss="modal"
+                            (click)="handleGetAllFeatures()">
+                      <img src="/assets/images/fermer.png" alt="Bootstrap" width="30" height="30">Fermer</button>
+                    <button type="button" class="btn btn-outline-danger rounded-pill"
+                            (click)="handleUpdateFeature()">
+                      <img src="/assets/images/check.png" alt="Bootstrap" width="30" height="30">Modifier</button>
                   </div>
                 </div>
               </div>
