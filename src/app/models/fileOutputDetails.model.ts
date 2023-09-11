@@ -1,15 +1,21 @@
 export interface FileOutputDetailsModel {
-    id: number;
-    predictiveModelId:number;
-    lastModifiedDate: string;
-    dateOfPushOutputModel: string;
-    codeClient: string;
-    directionRegionale: string;
-    uniteCentrale: string;
-    libelleMarche: string;
-    libelleSegment: string;
-    libelleCanal: string;
-    moisAnneeOutPut: string;
-    fileToUpload: string;
+  id: number;
+  codeClient: string;
+  directionRegionale: string;
+  drpp: string;
+  uniteCentrale: string;
+  ageClient: string;
+  ancienneteClient: string;
+  codeMarche: string;
+  libelleMarche: string;
+  codeGestionnaire: string;
+  libelleSegment: string;
+  libelleCanal: string;
+  moisOutput: string;
+  yearOutput: string;
+  codeAgence: string;
+  nomModel: string;
+  lastModifiedDate: string;
+  predictiveModelId: number;
 
 }

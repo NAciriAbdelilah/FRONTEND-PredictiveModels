@@ -45,7 +45,7 @@ export class PieChartDrComponent implements OnInit, OnChanges {
         this.dataPoints = data.map((item: any) => item.numberOfOutput);
 
         // Generate gradient colors based on data values
-        const gradientColors = this.generateGradientColors(this.dataPoints);
+        //const gradientColors = this.generateGradientColors(this.dataPoints);
 
         // Create a new chart instance
         if (this.chartCanvasDr) {
@@ -67,7 +67,21 @@ export class PieChartDrComponent implements OnInit, OnChanges {
                 datasets: [
                   {
                     data: this.dataPoints,
-                    backgroundColor: gradientColors,
+                    //backgroundColor: gradientColors,
+                    backgroundColor: [
+                      'rgba(220, 20, 60, 1)',
+                      'rgba(105, 105, 105, 1)',
+                      'rgba(205, 92, 92, 1)',
+                      'rgba(25, 25, 112, 1)',
+                      'rgba(255, 69, 0, 1)',
+                      'rgba(100, 149, 237, 1)',
+                      'rgba(0, 128, 128, 1)',
+                      'rgba(128, 0, 128, 1)',
+                      'rgba(205, 92, 92, 1)',
+                      'rgba(211, 211, 211, 1)',
+                      'rgba(135, 206, 250, 1)',
+                      'rgba(165, 42, 42, 1)',
+                    ],
                   },
                 ],
               },
