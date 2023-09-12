@@ -117,18 +117,16 @@
                   <caption> CI-DESSUS LA LISTE DE TOUS LES FEATURES DISPONIBLES</caption>
                   <thead class="table-secondary">
                     <tr>
-                      <th class="align-middle">ID FEATURE</th>
                       <th class="align-middle">NOM DU FEATURE</th>
                       <th class="align-middle">DESCRIPTION DU FEATURE</th>
                       <th class="align-middle">DATE CREATION</th>
                       <th class="align-middle">DATE MODIFICATION</th>
-                      <th class="align-middle">ACTIONS</th>
+                      <th  class="align-middle" *ngIf="securityService.hasRoleIn(['ADMIN'])" >ACTIONS</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let f of featuresByPages ">
 
-                      <td> {{f.id}}</td>
                       <td> {{f.namefeature}}</td>
                       <td> {{f.description}}</td>
                       <td>{{ convertTimestampToDate(f.creationDate) | date: 'dd/MM/yyyy' }}</td>

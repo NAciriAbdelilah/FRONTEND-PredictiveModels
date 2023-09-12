@@ -52,7 +52,7 @@
             <tr>
               <th class="align-middle">CODE DU FREQUENCE</th>
               <th class="align-middle">INTITULE DU FREQUENCE</th>
-              <th class="align-middle">ACTIONS</th>
+              <th class="align-middle" *ngIf="securityService.hasRoleIn(['ADMIN'])" >ACTIONS</th>
             </tr>
           </thead>
           <tbody>

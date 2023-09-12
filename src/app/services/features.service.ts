@@ -3,7 +3,7 @@ import {Features} from "../models/features.model";
 import {Observable, of, throwError} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {Pages} from "../models/pages";
+import {PagesFeatures} from "../models/pagesFeatures";
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +16,8 @@ export class FeaturesService {
     return this.http.get<Array<Features>>(environment.backendHost+"/features")
   }
 
-  public getAllFeaturesByPages(page: number = 0, size: number = 0): Observable<Pages> {
-    return this.http.get<Pages>(`${environment.backendHost}/features/getAllFeaturesByPages?page=${page}&size=${size}`);
+  public getAllFeaturesByPages(page: number = 0, size: number = 0): Observable<PagesFeatures> {
+    return this.http.get<PagesFeatures>(`${environment.backendHost}/features/getAllFeaturesByPages?page=${page}&size=${size}`);
   }
 
   public getFeaturesByPredictiveModelById(id: number) : Observable<Array<Features>>{

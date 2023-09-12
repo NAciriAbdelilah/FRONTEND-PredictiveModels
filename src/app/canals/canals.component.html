@@ -50,15 +50,13 @@
         <caption> LISTE DES CANAUX</caption>
         <thead class="table-dark">
         <tr>
-          <th class="align-middle">ID</th>
           <th class="align-middle">INTITULE DU CANAL</th>
           <th class="align-middle">DESCRIPTION DU CANAL</th>
-          <th class="align-middle">ACTIONS</th>
+          <th class="align-middle" *ngIf="securityService.hasRoleIn(['ADMIN'])" >ACTIONS</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let c of canals | async">
-          <td> {{c.id}}</td>
           <td> {{c.intituleCanal}}</td>
           <td> {{c.descriptionCanal}}</td>
           <td *ngIf="securityService.hasRoleIn(['ADMIN'])">

@@ -1,6 +1,6 @@
 import {Features} from "./features.model";
 
-export interface Pages {
+export interface PagesFeatures {
 
   content: Features[],
   pageable: {

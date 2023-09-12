@@ -53,7 +53,7 @@
             <tr>
               <th class="align-middle">INTITULE DU MARCHE</th>
               <th class="align-middle">DESCRIPTION DU MARCHE</th>
-              <th class="align-middle">ACTIONS</th>
+              <th class="align-middle" *ngIf="securityService.hasRoleIn(['ADMIN'])" >ACTIONS</th>
             </tr>
           </thead>
           <tbody>

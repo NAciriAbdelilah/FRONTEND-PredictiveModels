@@ -28,7 +28,7 @@ export class FeaturesComponent implements OnInit {
 
   // Pagination properties
   page : number = 1; // Current page
-  pageSize : number = 10; // Items per page
+  pageSize : number = 5; // Items per page
   totalItems : number = 0; // Total number of items
   featuresByPages: Features[] = []; // Changed to an empty array initially
 
@@ -56,7 +56,7 @@ export class FeaturesComponent implements OnInit {
       description: ['', Validators.required],
     });
     this.page = 0;
-    this.pageSize = 10;
+    this.pageSize = 5;
     this.handleGetAllFeatures();
   }
 

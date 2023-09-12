@@ -29,7 +29,7 @@
                       <th class="align-middle">FREQUENCES</th>
                       <th class="align-middle">VERSION</th>
                       <th class="align-middle">DATE MODIFICATION</th>
-                      <th class="align-middle">ACTIONS</th>
+                      <th class="align-middle" *ngIf="securityService.hasRoleIn(['ADMIN'])" >ACTIONS</th>
                     </tr>
                   </thead>
                       <tbody>
@@ -121,7 +121,7 @@
                     <th class="align-middle">NOM DU FEATURE</th>
                     <th class="align-middle">DESCRIPTION DU FEATURE</th>
                     <th class="align-middle">DATE MODIFICATION</th>
-                    <th class="align-middle">MODIFIER FEATURES</th>
+                    <th class="align-middle" *ngIf="securityService.hasRoleIn(['ADMIN'])" >MODIFIER FEATURES</th>
                   </tr>
                 </thead>
                 <tbody>

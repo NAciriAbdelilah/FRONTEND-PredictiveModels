@@ -5,7 +5,7 @@
   <!-- Container wrapper -->
     <!-- Navbar brand -->
     <div class="logo col-2">
-      &nbsp;&nbsp;&nbsp;&nbsp;<img src="../../assets/images/logo-SG.png" style="width:140px;height:25px;">
+      &nbsp;&nbsp;&nbsp;&nbsp;<img src="../../assets/images/logo-SG.png" style="width:160px;height:25px;">
     </div>
 
   <!-- Collapsible wrapper -->
@@ -26,13 +26,18 @@
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/predictive-models">CONSULTER LES MODELES PREDICTIFS</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/new-predictive-model">AJOUTER NOUVEAU MODELE PREDICTIF</a></li>
-              <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/new-pm-scope-canals-frequency">AJOUTER DES PARAMETRES AU MODELES</a></li>
-              <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/new-pm-features">AJOUTER DES FEATURES AU MODELES</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/update-pm-scope-canals-frequency">MODIFIER LES PARAMETRES D'UN MODELES</a></li>
-              <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/update-pm-features">MODIFIER LES FEATURES D'UN MODELES</a></li>
+              <li><hr class="dropdown-divider" *ngIf="securityService.hasRoleIn(['ADMIN'])" ></li>
+              <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/new-predictive-model"
+                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >AJOUTER NOUVEAU MODELE PREDICTIF</a></li>
+              <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/new-pm-scope-canals-frequency"
+                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >AJOUTER DES PARAMETRES AU MODELES</a></li>
+              <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/new-pm-features"
+                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >AJOUTER DES FEATURES AU MODELES</a></li>
+              <li><hr class="dropdown-divider" *ngIf="securityService.hasRoleIn(['ADMIN'])" ></li>
+              <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/update-pm-scope-canals-frequency"
+                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >MODIFIER LES PARAMETRES D'UN MODELES</a></li>
+              <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/update-pm-features"
+                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >MODIFIER LES FEATURES D'UN MODELES</a></li>
             </ul>
           </li>
 
@@ -42,7 +47,8 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="/admin/output-models">
+            <a class="nav-link active" aria-current="page" routerLink="/admin/output-models"
+               *ngIf="securityService.hasRoleIn(['ADMIN'])" >
               <i class="bi bi-filetype-csv"></i> OUTPUT DES MODELES PREDICTIFS </a>
           </li>
 
@@ -72,18 +78,13 @@
       role="button"
       data-bs-toggle="dropdown"
       aria-expanded="false">
-      <img class="rounded-start" src="./assets/images/logoutRed.png" height="30" />
+      <img class="rounded-start" src="./assets/images/shutdown.png" height="30" />
     </a>
     <ul class="dropdown-menu dropdown-menu-sm-end">
       <li>
         <a
            class="dropdown-item small-dropdown-item" (click)="handleLogout()">
           <i class="bi bi-box-arrow-right"></i> DECONNEXION</a>
-      </li>
-      <li><hr class="dropdown-divider"></li>
-      <li>
-        <a class="dropdown-item small-dropdown-item">
-          <i class="bi bi-key-fill"></i> MOT DE PASSE OUBLIE </a>
       </li>
     </ul>
   </div>
