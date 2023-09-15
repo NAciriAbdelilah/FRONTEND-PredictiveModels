@@ -10,6 +10,7 @@ import {CanalsService} from "../services/canals.service";
 import {FrequenceService} from "../services/frequence.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PredictiveModel} from "../models/predictivemodels.model";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-new-pm-scope-canals-frequency',
@@ -132,8 +133,14 @@ export class NewPmScopeCanalsFrequencyComponent implements OnInit {
 
       handleSavePredictiveModelScopesCanalsFrequencies() {
         if (this.selectedPredictiveModelId === null) {
-          // Display an error message to the user or handle it in your UI as needed
-          alert("Please select a Predictive Model before saving !");
+          Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: 'Veuillez sélectionner un Modéle Prédictif avant d\'enregistrer !!',
+            showConfirmButton: true,
+            confirmButtonColor: '#cb3533',
+            timer: 3000
+          });
           return;
         }
 
@@ -152,8 +159,15 @@ export class NewPmScopeCanalsFrequencyComponent implements OnInit {
 
         this.predictiveModelService.SaveNewPredictiveModelScopeCanalFrequency(SavedObject).subscribe({
           next : data =>{
-            alert("Scopes & Canals & Frequencies saved successfully!\n" +
-              "Now pass to Step3 to Add Features");
+            Swal.fire({
+              position: 'center',
+              title: "Marchés, Canaux et Frequences enregistrés avec succès.",
+              text: "Passez maintenant à l'étape 3 pour ajouter les Features!",
+              icon: 'success',
+              showConfirmButton: true,
+              confirmButtonColor: '#cb3533',
+              //timer: 3000
+            });
             console.log(JSON.stringify(SavedObject));
             this.savePMScopeCanalFrequencyFormGroup.reset();
             this.router.navigateByUrl("/admin/new-pm-features")

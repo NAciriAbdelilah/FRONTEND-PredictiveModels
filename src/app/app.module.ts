@@ -35,6 +35,8 @@ import { TokenInterceptor } from './interceptors/TokenInterceptor';
 import {NgxPaginationModule} from "ngx-pagination";
 import {MatPaginatorModule} from "@angular/material/paginator";
 
+
+
 export function keycloakInitializer(keycloak: KeycloakService): () =>
   Promise<any> {
   return () =>
@@ -77,6 +79,7 @@ export function keycloakInitializer(keycloak: KeycloakService): () =>
         PieChartMarcheComponent,
         PieChartDrComponent,
         PieChartSegmentComponent,
+
     ],
   imports: [
     BrowserModule,

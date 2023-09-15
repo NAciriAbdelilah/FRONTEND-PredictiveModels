@@ -5,7 +5,7 @@
       <div class="d-flex justify-content-center">
         <form [formGroup]="reportOutputFileFormGroup" class="was-validated">
           <div class="mb-3">
-            <label><strong>Nom du Modéle Prédictif:</strong></label>
+            <label><strong>NOM DU MODELE PREDICTIF:</strong></label>
             <select class="form-select form-select mb-3"
                     formControlName="predictiveModelId"
                     (change)="onPredictiveModelSelect($event)" required>
@@ -18,20 +18,35 @@
           </div>
 
           <div class="mb-3">
-            <label><strong>Date dernier Push dans les Canaux:</strong></label>
+            <label><strong>DATE DU CIBLE:</strong></label>
             <input type="month" class="form-control"
                    formControlName="dateGeneration"
                    (change)="onDateSelect($event)" required>
             <div class="invalid-feedback">Merci de choisir une Date</div>
           </div>
+
           <div class="mb-3">
+            <label><strong>CHOISIR UN CANAL:</strong></label>
+
+            <select class="form-select form-select mb-3"
+                    formControlName="canalName"
+                    (change)="onCanalSelect($event)" required>
+              <option value="">Selectionner un Canal</option>
+              <option *ngFor="let listCanals of listOfCanals | async" [value]="listCanals.intituleCanal">
+                {{ listCanals.intituleCanal }}
+              </option>
+            </select>
+
+          </div>
+
+<!--          <div class="mb-3">
             <button class="btn btn-outline-danger rounded-pill"
                     (click)="showChartByDR()">Reporting par Direction Régionale</button>&nbsp;
             <button class="btn btn-outline-danger rounded-pill"
                     (click)="showChartBySegment()">Reporting par Segment</button>&nbsp;
             <button class="btn btn-outline-danger rounded-pill"
                     (click)="showChartByMarche()">Reporting par Marchés</button>&nbsp;
-          </div>
+          </div>-->
         </form>
       </div>
       <div class="container mt-3">

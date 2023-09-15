@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/for
 import {Router} from "@angular/router";
 import {catchError, map, Observable, throwError} from "rxjs";
 import {SecurityService} from "../services/security.service";
+import Swal from "sweetalert2";
 
 
 @Component({
@@ -76,24 +77,8 @@ export class PredictiveModelsComponent implements OnInit {
       }
     }
 
-    handleDeletePredictiveModel(pm: PredictiveModel) {
-      let conf = confirm("Are you sure to Delete ?");
-      if (!conf) return;
 
-      this.predictiveModelService.deletePredictiveModel(pm.id).subscribe({
-        next: () => {
-          this.handleGetAllPredictiveModels();
-          this.predictiveModel = this.predictiveModel.pipe(
-            map(data => data.filter(item => item.id !== pm.id))
-          );
-
-        },
-        error: (err) => {
-          this.errorMessage = err;
-        }
-      });
-    }
-
+  //-------------------------------------------------------------------------------------------------------
 
     handleNewPredictiveModel() {
      this.router.navigateByUrl("/admin/new-predictive-model")
@@ -128,19 +113,87 @@ export class PredictiveModelsComponent implements OnInit {
         ...this.selectedPredictiveModelToUpdate,
         ...this.updatePredictiveModelFormGroup.value,
       };
-      console.log(updatedPM)
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Votre Modéle Prédictif Mis à jour avec succès!',
+        showConfirmButton: true,
+        confirmButtonColor: '#cb3533',
+        timer: 3000
+      });
       this.predictiveModelService.updatePredictiveModel(this.selectedPredictiveModelToUpdate.id, updatedPM).subscribe({
         next: () => {
           this.handleGetAllPredictiveModels();
-          alert("The Predictive Model changes saved successfully.");
         },
         error: (err) => {
           this.errorMessage = err;
         }
       });
     } else {
-      alert("Please fill out both the fields before saving changes.");
+      Swal.fire({
+        position: 'center',
+        icon: 'info',
+        title: 'Veuillez remplir les deux champs avant d\'enregistrer les modifications',
+        showConfirmButton: true,
+        confirmButtonColor: '#cb3533',
+        timer: 3000
+      });
     }
+  }
+
+  //-------------------------------------------------------------------------------------------------------
+
+  handleDeletePredictiveModel(pm: PredictiveModel) {
+    Swal.fire({
+      title: "Êtes-vous sûr de vouloir supprimer?",
+      text: "Vous ne pourrez pas récupérer ce Modéle Prédictif !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: 'Oui, Supprimer!',
+      confirmButtonColor: '#cb3533',
+      cancelButtonText: 'No, Annuler',
+      cancelButtonColor: 'rgba(16,16,15,0.47)',
+
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Specify the response type as text
+        this.predictiveModelService.deletePredictiveModel(pm.id, { responseType: 'text' }).subscribe({
+          next: (response) => {
+            this.handleGetAllPredictiveModels();
+            this.predictiveModel = this.predictiveModel.pipe(
+              map(data => data.filter(item => item.id !== pm.id))
+            );
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Suppression!',
+              html: response,
+              showConfirmButton: true,
+              confirmButtonColor: '#cb3533',
+              timer: 3000
+            }).then(() => {
+              console.log('Success message displayed');
+              this.handleGetAllPredictiveModels();
+            });
+          },
+          error: (err) => {
+            console.error('Error deleting Predictive Model:', err);
+            this.errorMessage = err;
+          }
+        });
+      }
+      else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Annulation Suppression!',
+          html: 'Votre Modéle Prédictif  est en sécurité :)',
+          showConfirmButton: true,
+          confirmButtonColor: '#cb3533',
+          timer: 3000
+        });
+      }
+    });
   }
 
   //-------------------------------------------------------------------------------------------------------

@@ -7,6 +7,7 @@ import {PredictiveModel} from "../models/predictivemodels.model";
 import {ScopesService} from "../services/scopes.service";
 import {CanalsService} from "../services/canals.service";
 import {FrequenceService} from "../services/frequence.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-new-predictive-model',
@@ -57,8 +58,15 @@ export class NewPredictiveModelComponent implements OnInit {
       let newPM: PredictiveModel = this.newPredictiveModelsFormGroup.value;
       this.predictiveModelService.addNewPredictiveModel(newPM).subscribe({
         next: data => {
-          alert("Predictive Model saved successfully!\n" +
-            "Now pass to Step2 to Add Scopes - Canals - Frequencies");
+          Swal.fire({
+            position: 'center',
+            title: "Modéle Prédictif enregistré avec succès.",
+            text: "Passez maintenant à l'étape 2 pour ajouter les Marchés, Canaux et Fréquences!",
+            icon: 'success',
+            showConfirmButton: true,
+            confirmButtonColor: '#cb3533',
+            //timer: 3000
+          });
           this.newPredictiveModelsFormGroup.reset();
           this.router.navigateByUrl("/admin/new-pm-scope-canals-frequency");
         },

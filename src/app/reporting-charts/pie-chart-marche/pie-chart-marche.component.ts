@@ -47,6 +47,7 @@ export class PieChartMarcheComponent implements OnInit, OnChanges {
         this.labels = data.map((item: any) => item.libelleMarche);
         this.dataPoints = data.map((item: any) => item.numberOfOutput);
 
+
         // Create a new chart instance
         if (this.chartCanvasMarche) {
 
@@ -61,24 +62,25 @@ export class PieChartMarcheComponent implements OnInit, OnChanges {
 
           if (ctx) {
             new Chart(ctx, {
-              type: 'doughnut', // Set the chart type to pie|bar....
+              type: 'pie', // Set the chart type to pie|bar....
               data: {
                 labels: this.labels,
                 datasets: [
                   {
                     data: this.dataPoints,
+
                     backgroundColor: [
                       'rgba(220, 20, 60, 1)',
                       'rgba(105, 105, 105, 1)',
                       'rgba(205, 92, 92, 1)',
                       'rgba(25, 25, 112, 1)',
                       'rgba(255, 69, 0, 1)',
-                      'rgba(112, 128, 144, 1)',
+                      'rgba(135, 206, 250, 1)',
                       'rgba(100, 149, 237, 1)',
                       'rgba(0, 128, 128, 1)',
                       'rgba(128, 0, 128, 1)',
                       'rgba(205, 92, 92, 1)',
-                      'rgba(135, 206, 250, 1)',
+                      'rgba(112, 128, 144, 1)',
                       'rgba(165, 42, 42, 1)',
                     ],
                   },

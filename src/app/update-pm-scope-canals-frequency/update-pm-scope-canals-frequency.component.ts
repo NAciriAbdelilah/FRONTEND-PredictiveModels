@@ -10,6 +10,7 @@ import {ScopesService} from "../services/scopes.service";
 import {CanalsService} from "../services/canals.service";
 import {FrequenceService} from "../services/frequence.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-update-pm-scope-canals-frequency',
@@ -178,6 +179,8 @@ export class UpdatePmScopeCanalsFrequencyComponent implements OnInit {
 
   }
 
+//-------------------------------------------------------------------------------------------------------
+
   onPredictiveModelSelect(event: any) {
     const selectedValue = event.target.value;
     this.selectedPredictiveModelId = parseInt(selectedValue);
@@ -199,12 +202,20 @@ export class UpdatePmScopeCanalsFrequencyComponent implements OnInit {
     console.log('$event canal is : ', $event);
   }
 
+//-------------------------------------------------------------------------------------------------------
 
   handleUpdatePredictiveModelScopesCanalsFrequencies() {
 
     if (this.selectedPredictiveModelId === null) {
       // Display an error message to the user or handle it in your UI as needed
-      alert("Please select a Predictive Model before updating !");
+      Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: 'Veuillez sélectionner un Modèle Prédictif avant de mettre à jour ses Paramétres!',
+        showConfirmButton: true,
+        confirmButtonColor: '#cb3533',
+        timer: 3000
+      });
       return;
     }
 
@@ -232,7 +243,14 @@ export class UpdatePmScopeCanalsFrequencyComponent implements OnInit {
 
     this.predictiveModelService.updatePredictiveModelScopeCanalFrequency(this.selectedPredictiveModelId, updatedObject).subscribe({
       next : data =>{
-        alert("Scopes & Canals & Frequencies updated successfully!");
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Marchés, Canaux et Frequences mises à jour avec succès!',
+          showConfirmButton: true,
+          confirmButtonColor: '#cb3533',
+          timer: 3000
+        });
         console.log(JSON.stringify(updatedObject));
         this.updatePMScopeCanalFrequencyFormGroup.reset();
         this.router.navigateByUrl("/admin/predictive-models")
@@ -246,6 +264,7 @@ export class UpdatePmScopeCanalsFrequencyComponent implements OnInit {
     })
   }
 
+//-------------------------------------------------------------------------------------------------------
 
   getErrorMessage(fieldName: string, error: ValidationErrors) {
     if (error['required']){
@@ -255,6 +274,7 @@ export class UpdatePmScopeCanalsFrequencyComponent implements OnInit {
     } else return "";
 
   }
+//-------------------------------------------------------------------------------------------------------
 
 
 }

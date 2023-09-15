@@ -4,6 +4,8 @@ import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/for
 import {Frequences} from "../models/frequences.model";
 import {FrequenceService} from "../services/frequence.service";
 import {SecurityService} from "../services/security.service";
+import Swal from "sweetalert2";
+import {Canals} from "../models/canals.model";
 
 @Component({
   selector: 'app-frequency',
@@ -87,13 +89,27 @@ export class FrequencyComponent implements OnInit {
       this.handleCheckFrequence(newFrequence.intitulefrequence).subscribe({
         next: (existingFrequence) => {
           if (existingFrequence.length > 0) {
-            alert("A Frequency with the same name already exists. Please choose a different name.");
+            Swal.fire({
+              position: 'center',
+              icon: 'info',
+              title: 'Frequence du même nom existe déjà. Veuillez choisir un autre nom..',
+              showConfirmButton: true,
+              confirmButtonColor: '#cb3533',
+              timer: 3000
+            });
           } else {
             // Add the new Frequency since the name is unique
             this.frequenceService.addNewFrequence(newFrequence).pipe(
               tap(() => {
                 this.newFrequenceFormGroup.reset();
-                alert("Frequency saved successfully!");
+                Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: 'Frequence enregistré avec succès!',
+                  showConfirmButton: true,
+                  confirmButtonColor: '#cb3533',
+                  timer: 3000
+                });
               })
             ).subscribe({
               next: () => {
@@ -109,10 +125,10 @@ export class FrequencyComponent implements OnInit {
           console.log(err);
         }
       });
-    } else {
-      alert("Please fill out both the 'Frequency Code' and 'Intitule Frequency' fields.");
     }
   }
+
+//-------------------------------------------------------------------------------------------------------
 
   // Function to check if a canal with the same name already exists in the database
   handleCheckFrequence(keyword: string): Observable<Array<Frequences>> {
@@ -142,7 +158,14 @@ export class FrequencyComponent implements OnInit {
         ...this.selectedFrequenceToUpdate,
         ...this.updateFrequenceFormGroup.value,
       };
-
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Votre Frequence Mis à jour avec succès!',
+        showConfirmButton: true,
+        confirmButtonColor: '#cb3533',
+        timer: 3000
+      });
       this.frequenceService.updateFrequence(this.selectedFrequenceToUpdate.id, updatedFrequence).subscribe({
         next: () => {
           this.handleGetAllFrequences();
@@ -152,26 +175,70 @@ export class FrequencyComponent implements OnInit {
         }
       });
     } else {
-      alert("Please fill out both the 'Code Frequency' and 'Intitule Frequency' fields.");
+      Swal.fire({
+        position: 'center',
+        icon: 'info',
+        title: 'Veuillez remplir les champs «Code du Frequence» et «Intitule du Frequence».',
+        showConfirmButton: true,
+        confirmButtonColor: '#cb3533',
+        timer: 3000
+      });
     }
   }
 
 //-------------------------------------------------------------------------------------------------------
 
   handleDeleteFrequence(frequences: Frequences) {
-    let conf = confirm("Are you sure to Delete ?");
-    if (!conf) return;
+    Swal.fire({
+      title: "Êtes-vous sûr de vouloir supprimer?",
+      text: "Vous ne pourrez pas récupérer ce Frequence !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: 'Oui, Supprimer!',
+      confirmButtonColor: '#cb3533',
+      cancelButtonText: 'No, Annuler',
+      cancelButtonColor: 'rgba(16,16,15,0.47)',
 
-    this.frequenceService.deleteFrequence(frequences.id).subscribe({
-      next: () => {
-        // Update the table list after the Frequency is deleted
-        this.handleGetAllFrequences();
-      },
-      error: (err) => {
-        this.errorMessage = err;
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Specify the response type as text
+        this.frequenceService.deleteFrequence(frequences.id, { responseType: 'text' }).subscribe({
+          next: (response) => {
+            console.log('Frequence deleted successfully');
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Suppression!',
+              html: response,
+              showConfirmButton: true,
+              confirmButtonColor: '#cb3533',
+              timer: 3000
+            }).then(() => {
+              console.log('Success message displayed');
+              this.handleGetAllFrequences();
+            });
+          },
+          error: (err) => {
+            console.error('Error deleting Frequence:', err);
+            this.errorMessage = err;
+          }
+        });
+      }
+      else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Annulation Suppression!',
+          html: 'Votre Frequence  est en sécurité :)',
+          showConfirmButton: true,
+          confirmButtonColor: '#cb3533',
+          timer: 3000
+        });
       }
     });
   }
+
+  //-------------------------------------------------------------------------------------------------------
 
   //-------------------------------------------------------------------------------------------------------
 

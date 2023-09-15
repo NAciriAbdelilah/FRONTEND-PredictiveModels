@@ -13,16 +13,16 @@ export class ReportModelService {
 
   constructor(private http:HttpClient) { }
 
-  public getReportingByDR(idPredictiveModel: number, selectedDate : string): Observable<Array<ReportModelByDR>> {
-    return this.http.get<Array<ReportModelByDR>>(environment.backendHost+"/reportsPredictiveModel/directionRegionale/"+idPredictiveModel+"/"+selectedDate)
+  public getReportingByDR(idPredictiveModel: number, selectedDate : string, selectedCanalsName : string): Observable<Array<ReportModelByDR>> {
+    return this.http.get<Array<ReportModelByDR>>(environment.backendHost+"/reportsPredictiveModel/directionRegionale/"+idPredictiveModel+"/"+selectedDate+"/"+selectedCanalsName)
   }
 
-  public getReportingByMarche(idPredictiveModel: number, selectedDate : string): Observable<Array<ReportModelByMarche>> {
-    return this.http.get<Array<ReportModelByMarche>>(environment.backendHost+"/reportsPredictiveModel/marche/"+idPredictiveModel+"/"+selectedDate)
+  public getReportingBySegment(idPredictiveModel: number, selectedDate : string, selectedCanalsName : string): Observable<Array<ReportModelBySegment>> {
+    return this.http.get<Array<ReportModelBySegment>>(environment.backendHost+"/reportsPredictiveModel/segment/"+idPredictiveModel+"/"+selectedDate+"/"+selectedCanalsName)
   }
 
-  public getReportingBySegment(idPredictiveModel: number, selectedDate : string): Observable<Array<ReportModelBySegment>> {
-    return this.http.get<Array<ReportModelBySegment>>(environment.backendHost+"/reportsPredictiveModel/segment/"+idPredictiveModel+"/"+selectedDate)
+  public getReportingByMarche(idPredictiveModel: number, selectedDate : string, selectedCanalsName : string): Observable<Array<ReportModelByMarche>> {
+    return this.http.get<Array<ReportModelByMarche>>(environment.backendHost+"/reportsPredictiveModel/marche/"+idPredictiveModel+"/"+selectedDate+"/"+selectedCanalsName)
   }
 
 }

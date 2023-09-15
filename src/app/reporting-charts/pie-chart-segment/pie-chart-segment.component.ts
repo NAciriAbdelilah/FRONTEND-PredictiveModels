@@ -85,7 +85,6 @@ export class PieChartSegmentComponent implements OnInit {
                       'rgba(135, 206, 250, 1)',
                       'rgba(165, 42, 42, 1)',
                     ],
-
                   },
                 ]
               },
@@ -93,7 +92,7 @@ export class PieChartSegmentComponent implements OnInit {
                 responsive: true,
                 plugins: {
                   legend: {
-                    display: true,
+                    display: false,
                     position: 'top',
                   },
                   datalabels: {

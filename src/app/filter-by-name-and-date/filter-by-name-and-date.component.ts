@@ -7,6 +7,8 @@ import {ReportModelByMarche} from "../models/reportModelByMarche";
 import {PredictiveModelService} from "../services/predictive-model.service";
 import {ReportModelService} from "../services/report-model.service";
 import {ReportModelBySegment} from "../models/reportModelBySegment";
+import {Canals} from "../models/canals.model";
+import {CanalsService} from "../services/canals.service";
 
 @Component({
   selector: 'app-filter-by-name-and-date',
@@ -17,16 +19,20 @@ export class FilterByNameAndDateComponent implements OnInit {
 
   selectedPredictiveModelId!: number;
   selectedDate!: string;
+  selectedCanalsName!: string;
+
   listOfPredictiveModel!: Observable<Array<PredictiveModel>>;
+  listOfCanals! : Observable<Array<Canals>>;
   reportOutputFileFormGroup!: FormGroup;
   errorMessage!: string;
 
   reportingByDR!: Observable<Array<ReportModelByDR>>;
-  reportingByMarche!: Observable<Array<ReportModelByMarche>>;
   reportingBySegment!: Observable<Array<ReportModelBySegment>>;
+  reportingByMarche!: Observable<Array<ReportModelByMarche>>;
 
 
   constructor(private predictiveModelService: PredictiveModelService,
+              private canalService : CanalsService,
               public reportModelService: ReportModelService,
               private fb: FormBuilder) {
   }
@@ -35,9 +41,13 @@ export class FilterByNameAndDateComponent implements OnInit {
 
     this.listOfPredictiveModel = this.predictiveModelService.getAllPredictiveModels();
 
+    this.listOfCanals = this.canalService.getAllCanals();
+
     this.reportOutputFileFormGroup = this.fb.group({
       predictiveModelId: ['', Validators.required],
       dateGeneration: ['', Validators.required],
+      canalName: ['', Validators.required],
+
     });
 
   }
@@ -50,31 +60,46 @@ export class FilterByNameAndDateComponent implements OnInit {
     const selectedValue = event.target.value;
     this.selectedPredictiveModelId = parseInt(selectedValue);
     console.log('Selected PM ID:', this.selectedPredictiveModelId);
+    this.handleReportOutputModelByDR();
+    this.handleReportOutputModelBySegment();
+    this.handleReportOutputModelByMarche();
   }
 
   onDateSelect(event: any) {
     this.selectedDate = event.target.value;
     console.log('Selected DATE:', this.selectedDate);
+    this.handleReportOutputModelByDR();
+    this.handleReportOutputModelBySegment();
+    this.handleReportOutputModelByMarche();
+  }
+
+  onCanalSelect(event: any) {
+    this.selectedCanalsName = event.target.value;
+    console.log('Selected CANAL NAME:', this.selectedCanalsName);
+    this.handleReportOutputModelByDR();
+    this.handleReportOutputModelBySegment();
+    this.handleReportOutputModelByMarche();
   }
 
 //-------------------------------------------------------------------------------------------------------
-  showChartByDR() {
+/*  showChartByDR() {
     this.handleReportOutputModelByDR();
-  }
-//-------------------------------------------------------------------------------------------------------
-  showChartByMarche() {
-    this.handleReportOutputModelByMarche();
   }
 //-------------------------------------------------------------------------------------------------------
   showChartBySegment() {
     this.handleReportOutputModelBySegment();
   }
 //-------------------------------------------------------------------------------------------------------
+  showChartByMarche() {
+    this.handleReportOutputModelByMarche();
+  }*/
+//-------------------------------------------------------------------------------------------------------
   handleReportOutputModelByDR() {
     const idPredictiveModel = this.selectedPredictiveModelId;
     const yearMonth = this.selectedDate;
+    const canalName = this.selectedCanalsName;
 
-    this.reportModelService.getReportingByDR(idPredictiveModel, yearMonth).pipe(
+    this.reportModelService.getReportingByDR(idPredictiveModel, yearMonth, canalName).pipe(
       catchError((err) => {
         this.errorMessage = err.message;
         return throwError(() => new Error(err.message));
@@ -93,8 +118,10 @@ export class FilterByNameAndDateComponent implements OnInit {
   handleReportOutputModelByMarche() {
     const idPredictiveModel = this.selectedPredictiveModelId;
     const yearMonth = this.selectedDate;
+    const canalName = this.selectedCanalsName;
 
-    this.reportModelService.getReportingByMarche(idPredictiveModel, yearMonth).pipe(
+
+    this.reportModelService.getReportingByMarche(idPredictiveModel, yearMonth, canalName).pipe(
       catchError((err) => {
         this.errorMessage = err.message;
         return throwError(() => new Error(err.message));
@@ -112,8 +139,9 @@ export class FilterByNameAndDateComponent implements OnInit {
   handleReportOutputModelBySegment() {
     const idPredictiveModel = this.selectedPredictiveModelId;
     const yearMonth = this.selectedDate;
+    const canalName = this.selectedCanalsName;
 
-    this.reportModelService.getReportingBySegment(idPredictiveModel, yearMonth).pipe(
+    this.reportModelService.getReportingBySegment(idPredictiveModel, yearMonth, canalName).pipe(
       catchError((err) => {
         this.errorMessage = err.message;
         return throwError(() => new Error(err.message));

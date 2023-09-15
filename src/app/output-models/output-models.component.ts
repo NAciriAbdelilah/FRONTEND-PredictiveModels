@@ -5,6 +5,7 @@ import {PredictiveModelService} from "../services/predictive-model.service";
 import {FileOutputDetailsModel} from "../models/fileOutputDetails.model";
 import {OutputModelService} from "../services/output-model.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import Swal from "sweetalert2";
 
 
 @Component({
@@ -47,13 +48,27 @@ export class OutputModelsComponent implements OnInit {
 
     // Check if predictiveModelID is not empty
     if (!predictiveModelId) {
-      alert('Please choose a Predictive Model before uploading the Output!');
+      Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: 'Veuillez choisir un modèle prédictif avant de télécharger son output',
+        showConfirmButton: true,
+        confirmButtonColor: '#cb3533',
+        timer: 3000
+      });
       return;
     }
 
     // Check if a file is selected
     if (!this.fileToUpload) {
-      alert('Please choose a file before uploading!');
+      Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: 'Veuillez choisir un fichier cible avant de télécharger',
+        showConfirmButton: true,
+        confirmButtonColor: '#cb3533',
+        timer: 3000
+      });
       return;
     }
 
@@ -74,7 +89,14 @@ export class OutputModelsComponent implements OnInit {
 
         // Check if the header matches the expected header
         if (header !== expectedHeader) {
-          alert('Invalid CSV file header. Please make sure the header matches the expected format.');
+          Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: 'En-tête de fichier CSV invalide. Veuillez vous assurer que l\'en-tête correspond au format attendu!',
+            showConfirmButton: true,
+            confirmButtonColor: '#cb3533',
+            timer: 3000
+          });
           return;
         }
 
@@ -93,12 +115,18 @@ export class OutputModelsComponent implements OnInit {
 
         this.outputModelService.upload(formData).subscribe({
           next: (data) => {
-            // Handle the response as needed
             console.log(data);
-            alert('File Uploaded Successfully');
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Fichier téléchargé avec succès.!',
+              showConfirmButton: true,
+              confirmButtonColor: '#cb3533',
+              timer: 3000
+            });
           },
           error: (e) => {
-            console.log(e);
+            console.log('error',e);
             // Handle errors
           },
         });

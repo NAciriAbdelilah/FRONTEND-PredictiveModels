@@ -31,8 +31,8 @@ export class FrequenceService {
     return this.http.put<Frequences>(environment.backendHost+"/frequences/"+id,frequences)
   }
 
-  public deleteFrequence(id :number): Observable<void>{
-    return this.http.delete<void>(environment.backendHost+"/frequences/"+id)
+  public deleteFrequence(id :number, p: { responseType: string }): Observable<string>{
+    return this.http.delete(environment.backendHost+"/frequences/"+id, { responseType: 'text'})
   }
 
 }

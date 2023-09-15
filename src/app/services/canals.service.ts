@@ -31,8 +31,10 @@ export class CanalsService {
     return this.http.put<Canals>(environment.backendHost+"/canals/"+id,canals)
   }
 
-  public deleteCanals(id :number): Observable<void>{
-    return this.http.delete<void>(environment.backendHost+"/canals/"+id)
+  public deleteCanals(id: number, p: { responseType: string }): Observable<string> {
+    return this.http.delete(environment.backendHost + "/canals/" + id, { responseType: 'text'});
   }
+
+
 
 }

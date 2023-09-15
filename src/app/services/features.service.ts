@@ -44,8 +44,8 @@ export class FeaturesService {
       return this.http.put<Features>(environment.backendHost+"/features/"+id,features)
   }
 
-  public deleteFeature(id :number): Observable<void>{
-    return this.http.delete<void>(environment.backendHost+"/features/"+id)
+  public deleteFeature(id :number, p: { responseType: string }): Observable<string>{
+    return this.http.delete(environment.backendHost+"/features/"+id, { responseType: 'text'})
   }
 
 

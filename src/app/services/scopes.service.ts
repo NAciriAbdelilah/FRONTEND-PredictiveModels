@@ -31,8 +31,8 @@ export class ScopesService {
     return this.http.put<Scopes>(environment.backendHost+"/scopes/"+id,scopes)
   }
 
-  public deleteScopes(id :number): Observable<void>{
-    return this.http.delete<void>(environment.backendHost+"/scopes/"+id)
+  public deleteScopes(id :number, p: { responseType: string }): Observable<string>{
+    return this.http.delete(environment.backendHost+"/scopes/"+id , { responseType: 'text'})
   }
 
 

@@ -27,10 +27,6 @@ export class PredictiveModelService {
     return this.http.post<PredictiveModel>( environment.backendHost+"/predectiveModels",predictiveModel)
   }
 
-  public deletePredictiveModel(id :number): Observable<PredictiveModel>{
-    return this.http.delete<PredictiveModel>( environment.backendHost+"/predectiveModels/"+id)
-  }
-
   public updatePredictiveModel(id: number , predictiveModel : PredictiveModel) : Observable<PredictiveModel>{
     return this.http.put<PredictiveModel>(environment.backendHost+"/predectiveModels/"+id,predictiveModel)
   }
@@ -50,5 +46,10 @@ export class PredictiveModelService {
   public updatePredictiveModelFeatures(id: number, predictiveModel : any) : Observable<PredictiveModel>{
     return this.http.put<PredictiveModel>( environment.backendHost+"/predectiveModels/updatePMFeatures/"+id,predictiveModel)
   }
+
+  public deletePredictiveModel(id :number, p: { responseType: string }): Observable<string>{
+    return this.http.delete( environment.backendHost+"/predectiveModels/"+id  , { responseType: 'text'})
+  }
+
 
 }

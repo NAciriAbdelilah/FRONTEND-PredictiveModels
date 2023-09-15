@@ -4,6 +4,7 @@ import {catchError, Observable, of, tap, throwError} from "rxjs";
 import {ScopesService} from "../services/scopes.service";
 import {Scopes} from "../models/scopes.model";
 import {SecurityService} from "../services/security.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-scopes',
@@ -86,14 +87,27 @@ export class ScopesComponent implements OnInit {
         this.handleCheckScope(newScope.intituleScope).subscribe({
           next: (existingScope) => {
             if (existingScope.length > 0) {
-              alert("A Scope with the same name already exists. Please choose a different name.");
+              Swal.fire({
+                position: 'center',
+                icon: 'info',
+                title: 'Marché du même nom existe déjà. Veuillez choisir un autre nom..',
+                showConfirmButton: true,
+                confirmButtonColor: '#cb3533',
+                timer: 3000
+              });
             } else {
               // Add the new Scope since the name is unique
               this.scopeService.addNewScopes(newScope).pipe(
                 tap(() => {
                   this.newScopeFormGroup.reset();
-                  alert("Scope saved successfully!");
-                })
+                  Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Marché enregistré avec succès!',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#cb3533',
+                    timer: 3000
+                  });                })
               ).subscribe({
                 next: () => {
                   this.handleGetAllScopes(); // Fetch the updated scopes list after adding a new scope
@@ -108,8 +122,6 @@ export class ScopesComponent implements OnInit {
             console.log(err);
           }
         });
-      } else {
-        alert("Please fill out both the 'Scope Intitule' and 'Description Scope' fields.");
       }
     }
 //-------------------------------------------------------------------------------------------------------
@@ -142,7 +154,14 @@ export class ScopesComponent implements OnInit {
               ...this.selectedScopeToUpdate,
               ...this.updateScopeFormGroup.value,
             };
-
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Votre Marché Mis à jour avec succès!',
+              showConfirmButton: true,
+              confirmButtonColor: '#cb3533',
+              timer: 3000
+            });
             this.scopeService.updateScopes(this.selectedScopeToUpdate.id, updatedScope).subscribe({
               next: () => {
                 this.handleGetAllScopes();
@@ -152,27 +171,68 @@ export class ScopesComponent implements OnInit {
               }
             });
           } else {
-            alert("Please fill out both the 'Intitule Scope ' and 'Description Scope' fields.");
+            Swal.fire({
+              position: 'center',
+              icon: 'info',
+              title: 'Veuillez remplir les champs «Intitule du Marché» et «Description du Marché».',
+              showConfirmButton: true,
+              confirmButtonColor: '#cb3533',
+              timer: 3000
+            });
           }
         }
 
 //-------------------------------------------------------------------------------------------------------
 
-      handleDeleteScope(scope: Scopes) {
-        let conf = confirm("Are you sure to Delete ?");
-        if (!conf) return;
+  handleDeleteScope(scope: Scopes) {
+    Swal.fire({
+      title: "Êtes-vous sûr de vouloir supprimer?",
+      text: "Vous ne pourrez pas récupérer ce Marché !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: 'Oui, Supprimer!',
+      confirmButtonColor: '#cb3533',
+      cancelButtonText: 'No, Annuler',
+      cancelButtonColor: 'rgba(16,16,15,0.47)',
 
-        this.scopeService.deleteScopes(scope.id).subscribe({
-          next: () => {
-            // Update the table list after the scope is deleted
-            this.handleGetAllScopes();
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Specify the response type as text
+        this.scopeService.deleteScopes(scope.id, { responseType: 'text' }).subscribe({
+          next: (response) => {
+            console.log('Scope deleted successfully');
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Suppression!',
+              html: response,
+              showConfirmButton: true,
+              confirmButtonColor: '#cb3533',
+              timer: 3000
+            }).then(() => {
+              console.log('Success message displayed');
+              this.handleGetAllScopes();
+            });
           },
           error: (err) => {
+            console.error('Error deleting Scope:', err);
             this.errorMessage = err;
           }
         });
       }
-
+      else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Votre Marché Mis à jour avec succès!',
+          html: 'Votre Marché est en sécurité :)',
+          showConfirmButton: true,
+          confirmButtonColor: '#cb3533',
+          timer: 3000
+        });
+      }
+    });
+  }
 
   //-------------------------------------------------------------------------------------------------------
 
@@ -183,5 +243,6 @@ export class ScopesComponent implements OnInit {
       return fieldName + " should have at least "+ error['minLength']['requiredLength'] + " Characters";
     } else return "";
   }
+  //-------------------------------------------------------------------------------------------------------
 
 }

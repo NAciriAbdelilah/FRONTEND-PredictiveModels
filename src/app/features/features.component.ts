@@ -7,7 +7,8 @@ import {PredictiveModel} from "../models/predictivemodels.model";
 import {PredictiveModelService} from "../services/predictive-model.service";
 import {Router} from "@angular/router";
 import {SecurityService} from "../services/security.service";
-import {MatPaginatorIntl, PageEvent} from '@angular/material/paginator';
+import {PageEvent} from '@angular/material/paginator';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-features',
@@ -66,7 +67,6 @@ export class FeaturesComponent implements OnInit {
         const selectedValue = event.target.value;
         this.selectedPredictiveModelId = parseInt(selectedValue);
         console.log('Selected PM ID:', this.selectedPredictiveModelId);
-
         this.handleSearchFeaturesByPredictiveModelName();
       }
 
@@ -148,13 +148,27 @@ export class FeaturesComponent implements OnInit {
         this.handleCheckFeatures(newFeature.namefeature).subscribe({
           next: (existingFeatures) => {
             if (existingFeatures.length > 0) {
-              alert("A feature with the same name already exists. Please choose a different name.");
+              Swal.fire({
+                position: 'center',
+                icon: 'info',
+                title: 'Feature du même nom existe déjà. Veuillez choisir un autre nom..',
+                showConfirmButton: true,
+                confirmButtonColor: '#cb3533',
+                timer: 2000
+              });
             } else {
               // Add the new feature since the name is unique
               this.featureService.addNewFeature(newFeature).pipe(
                 tap(() => {
                   this.newFeatureFormGroup.reset();
-                  alert("Feature saved successfully!");
+                  Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Feature enregistré avec succès!',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#cb3533',
+                    timer: 3000
+                  });
                 })
               ).subscribe({
                 next: () => {
@@ -170,10 +184,9 @@ export class FeaturesComponent implements OnInit {
             console.log(err);
           }
         });
-      } else {
-        alert("Please fill out both the 'Feature name' and 'Description Feature' fields.");
       }
     }
+  //-------------------------------------------------------------------------------------------------------
 
 // Function to check if a feature with the same name already exists in the database
     handleCheckFeatures(keyword: string): Observable<Array<Features>> {
@@ -203,7 +216,14 @@ export class FeaturesComponent implements OnInit {
           ...this.selectedFeatureToUpdate,
           ...this.updateFeatureFormGroup.value,
         };
-
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Votre Feature Mis à jour avec succès!',
+          showConfirmButton: true,
+          confirmButtonColor: '#cb3533',
+          timer: 3000
+        });
         this.featureService.updateFeature(this.selectedFeatureToUpdate.id, updatedFeature).subscribe({
             next: () => {
               this.handleGetAllFeatures();
@@ -213,26 +233,70 @@ export class FeaturesComponent implements OnInit {
             }
           });
       } else {
-        alert("Please fill out both the 'Feature name' and 'Description Feature' fields.");
+        Swal.fire({
+          position: 'center',
+          icon: 'info',
+          title: 'Veuillez remplir les champs «Feature name» et «Description Feature».',
+          showConfirmButton: true,
+          confirmButtonColor: '#cb3533',
+          timer: 3000
+        });
       }
     }
 
 //-------------------------------------------------------------------------------------------------------
 
-    handleDeleteFeature(feature: Features) {
-      let conf = confirm("Are you sure to Delete ?");
-      if (!conf) return;
+  handleDeleteFeature(feature: Features) {
+    Swal.fire({
+      title: "Êtes-vous sûr de vouloir supprimer?",
+      text: "Vous ne pourrez pas récupérer ce Feature !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: 'Oui, Supprimer!',
+      confirmButtonColor: '#cb3533',
+      cancelButtonText: 'No, Annuler',
+      cancelButtonColor: 'rgba(16,16,15,0.47)',
 
-      this.featureService.deleteFeature(feature.id).subscribe({
-        next: () => {
-          // Update the table list after the feature is deleted
-          this.handleGetAllFeatures();
-        },
-        error: (err) => {
-          this.errorMessage = err;
-        }
-      });
-    }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Specify the response type as text
+        this.featureService.deleteFeature(feature.id, { responseType: 'text' }).subscribe({
+          next: (response) => {
+            console.log('Feature deleted successfully');
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Suppression!',
+              html: response,
+              showConfirmButton: true,
+              confirmButtonColor: '#cb3533',
+              timer: 3000
+            }).then(() => {
+              console.log('Success message displayed');
+              this.handleGetAllFeatures();
+            });
+          },
+          error: (err) => {
+            console.error('Error deleting feature:', err);
+            this.errorMessage = err;
+          }
+        });
+      }
+      else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Annulation Suppression!',
+          html: 'Votre Feature  est en sécurité :)',
+          showConfirmButton: true,
+          confirmButtonColor: '#cb3533',
+          timer: 3000
+        });
+      }
+    });
+  }
+
+
 
   //-------------------------------------------------------------------------------------------------------
 

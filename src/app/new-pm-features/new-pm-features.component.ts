@@ -7,6 +7,7 @@ import {map, Observable} from "rxjs";
 import {Features} from "../models/features.model";
 import {PredictiveModel} from "../models/predictivemodels.model";
 import {SecurityService} from "../services/security.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-new-pm-features',
@@ -45,6 +46,8 @@ export class NewPmFeaturesComponent implements OnInit {
 
   }
 
+  //-------------------------------------------------------------------------------------------------------
+
   handleLoadFeatures() {
     this.allFeatures = this.featureService.getAllFeatures();
   }
@@ -63,6 +66,8 @@ export class NewPmFeaturesComponent implements OnInit {
     this.selectedPredictiveModelId = parseInt(selectedValue);
     console.log('Selected PM ID:', this.selectedPredictiveModelId);
   }
+
+  //-------------------------------------------------------------------------------------------------------
 
   copyFeatureToSelected(feature: Features) {
     // Get the form array
@@ -85,7 +90,7 @@ export class NewPmFeaturesComponent implements OnInit {
     );
   }
 
-
+  //-------------------------------------------------------------------------------------------------------
 
   removeSelectedFeature(feature: Features) {
     // Get the form array
@@ -107,13 +112,20 @@ export class NewPmFeaturesComponent implements OnInit {
 
   }
 
-
+  //-------------------------------------------------------------------------------------------------------
 
   handleSavePredictiveModelFeatures() {
 
     if (this.selectedPredictiveModelId === null) {
       // Display an error message to the user or handle it in your UI as needed
-      alert("Please select a Predictive Model before saving features.");
+      Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: 'Veuillez sélectionner un Modéle Prédictif avant d\'enregistrer !!',
+        showConfirmButton: true,
+        confirmButtonColor: '#cb3533',
+        timer: 3000
+      });
       return;
     }
       // Get the features form array
@@ -129,7 +141,14 @@ export class NewPmFeaturesComponent implements OnInit {
 
       this.predictiveModelService.SaveNewPredictiveModelFeatures(SavedObject).subscribe({
         next : data =>{
-          alert("Features saved successfully!");
+          Swal.fire({
+            position: 'center',
+            title: "Features enregistrés avec succès.",
+            icon: 'success',
+            showConfirmButton: true,
+            confirmButtonColor: '#cb3533',
+            //timer: 3000
+          });
           console.log(JSON.stringify(SavedObject));
           this.savePMFeaturesFormGroup.reset();
           this.router.navigateByUrl("/admin/predictive-models")
@@ -142,6 +161,8 @@ export class NewPmFeaturesComponent implements OnInit {
 
       })
   }
+
+  //-------------------------------------------------------------------------------------------------------
 
     getErrorMessage(fieldName: string, error: ValidationErrors) {
       if (error['required']){

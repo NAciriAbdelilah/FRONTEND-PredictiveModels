@@ -7,6 +7,7 @@ import {PredictiveModelService} from "../services/predictive-model.service";
 import {FeaturesService} from "../services/features.service";
 import {Router} from "@angular/router";
 import {SecurityService} from "../services/security.service";
+import Swal from "sweetalert2";
 
 
 @Component({
@@ -87,6 +88,8 @@ export class UpdatePmFeaturesComponent implements OnInit {
     this.fetchFilteredFeatureByIDData();
   }
 
+//-------------------------------------------------------------------------------------------------------
+
   copyFeatureToSelected(feature: Features) {
     // Get the form array
     const featuresFormArray = this.updatePMFeaturesFormGroup.get('features') as FormArray;
@@ -110,6 +113,7 @@ export class UpdatePmFeaturesComponent implements OnInit {
   }
 
 
+//-------------------------------------------------------------------------------------------------------
 
   removeSelectedFeature(feature: Features) {
     // Get the form array
@@ -131,12 +135,20 @@ export class UpdatePmFeaturesComponent implements OnInit {
 
   }
 
+//-------------------------------------------------------------------------------------------------------
 
   handleUpdatePredictiveModelFeatures() {
 
     if (this.selectedPredictiveModelId === null) {
       // Display an error message to the user or handle it in your UI as needed
-      alert("Please select a Predictive Model before updating features.");
+      Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: 'Veuillez sélectionner un Modèle Prédictif avant de mettre à jour ses Features!',
+        showConfirmButton: true,
+        confirmButtonColor: '#cb3533',
+        timer: 3000
+      });
       return;
     }
 
@@ -155,13 +167,21 @@ export class UpdatePmFeaturesComponent implements OnInit {
       featuresIds: this.featuresIds,
     }
 
+//-------------------------------------------------------------------------------------------------------
+
     this.predictiveModelService.updatePredictiveModelFeatures(this.selectedPredictiveModelId,updatedObject).subscribe({
       next : data =>{
-        alert("Features updated successfully!");
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Features mises à jour avec succès!',
+          showConfirmButton: true,
+          confirmButtonColor: '#cb3533',
+          timer: 3000
+        });
         console.log(JSON.stringify(updatedObject));
         this.updatePMFeaturesFormGroup.reset();
         this.router.navigateByUrl("/admin/features")
-
       },
       error: err => {
         console.log(this.selectedPredictiveModelId)
@@ -170,6 +190,8 @@ export class UpdatePmFeaturesComponent implements OnInit {
 
     })
   }
+
+//-------------------------------------------------------------------------------------------------------
 
   getErrorMessage(fieldName: string, error: ValidationErrors) {
     if (error['required']){

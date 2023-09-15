@@ -89,7 +89,7 @@ export class PieChartDrComponent implements OnInit, OnChanges {
                 responsive: true,
                 plugins: {
                   legend: {
-                    display: true,
+                    display: false,
                     position: 'top',
                   },
                   datalabels: {

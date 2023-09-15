@@ -4,6 +4,8 @@ import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/for
 import {Canals} from "../models/canals.model";
 import {CanalsService} from "../services/canals.service";
 import {SecurityService} from "../services/security.service";
+import Swal from 'sweetalert2'
+
 
 @Component({
   selector: 'app-canals',
@@ -22,7 +24,7 @@ export class CanalsComponent implements OnInit {
   selectedCanalToUpdate: Canals | undefined;
 
 
-  constructor( private canalService : CanalsService ,
+  constructor( private canalService : CanalsService,
                private fb : FormBuilder,
                public securityService : SecurityService) { }
 
@@ -87,13 +89,27 @@ export class CanalsComponent implements OnInit {
       this.handleCheckCanal(newCanal.intituleCanal).subscribe({
         next: (existingCanal) => {
           if (existingCanal.length > 0) {
-            alert("A Canal with the same name already exists. Please choose a different name.");
+            Swal.fire({
+              position: 'center',
+              icon: 'info',
+              title: 'Canal du même nom existe déjà. Veuillez choisir un autre nom..',
+              showConfirmButton: true,
+              confirmButtonColor: '#cb3533',
+              timer: 3000
+            });
           } else {
             // Add the new Canal since the name is unique
             this.canalService.addNewCanals(newCanal).pipe(
               tap(() => {
                 this.newCanalFormGroup.reset();
-                alert("Canal saved successfully!");
+                Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: 'Canal enregistré avec succès!',
+                  showConfirmButton: true,
+                  confirmButtonColor: '#cb3533',
+                  timer: 3000
+                });
               })
             ).subscribe({
               next: () => {
@@ -109,10 +125,10 @@ export class CanalsComponent implements OnInit {
           console.log(err);
         }
       });
-    } else {
-      alert("Please fill out both the 'Canal Intitule' and 'Description Canal' fields.");
     }
   }
+
+//-------------------------------------------------------------------------------------------------------
 
   // Function to check if a canal with the same name already exists in the database
   handleCheckCanal(keyword: string): Observable<Array<Canals>> {
@@ -124,7 +140,7 @@ export class CanalsComponent implements OnInit {
     );
   }
 
-//-------------------------------------------------------------------------------------------------------
+  //-------------------------------------------------------------------------------------------------------
 
   // Function to open the update modal and pre-fill the form with existing canal details
   handleOpenUpdateModal(canal: Canals) {
@@ -142,7 +158,14 @@ export class CanalsComponent implements OnInit {
         ...this.selectedCanalToUpdate,
         ...this.updateCanalFormGroup.value,
       };
-
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Votre Canal Mis à jour avec succès!',
+        showConfirmButton: true,
+        confirmButtonColor: '#cb3533',
+        timer: 3000
+      });
       this.canalService.updateCanals(this.selectedCanalToUpdate.id, updatedCanal).subscribe({
         next: () => {
           this.handleGetAllCanals();
@@ -152,27 +175,68 @@ export class CanalsComponent implements OnInit {
         }
       });
     } else {
-      alert("Please fill out both the 'Intitule Canal ' and 'Description Canal' fields.");
+      Swal.fire({
+        position: 'center',
+        icon: 'info',
+        title: 'Veuillez remplir les champs «Intitule du canal» et «Description du canal».',
+        showConfirmButton: true,
+        confirmButtonColor: '#cb3533',
+        timer: 3000
+      });
     }
   }
 
 //-------------------------------------------------------------------------------------------------------
-
   handleDeleteCanal(canal: Canals) {
-    let conf = confirm("Are you sure to Delete ?");
-    if (!conf) return;
+    Swal.fire({
+      title: "Êtes-vous sûr de vouloir supprimer?",
+      text: "Vous ne pourrez pas récupérer ce Canal !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: 'Oui, Supprimer!',
+      confirmButtonColor: '#cb3533',
+      cancelButtonText: 'No, Annuler',
+      cancelButtonColor: 'rgba(16,16,15,0.47)',
 
-    this.canalService.deleteCanals(canal.id).subscribe({
-      next: () => {
-        // Update the table list after the Canal is deleted
-        this.handleGetAllCanals();
-      },
-      error: (err) => {
-        this.errorMessage = err;
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Specify the response type as text
+        this.canalService.deleteCanals(canal.id, { responseType: 'text' }).subscribe({
+          next: (response) => {
+            console.log('Canal deleted successfully');
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Suppression!',
+              html: response,
+              showConfirmButton: true,
+              confirmButtonColor: '#cb3533',
+              timer: 3000
+            }).then(() => {
+              console.log('Success message displayed');
+              // Update the table list after the Canal is deleted
+              this.handleGetAllCanals();
+            });
+          },
+          error: (err) => {
+            console.error('Error deleting canal:', err);
+            this.errorMessage = err;
+          }
+        });
+      }
+      else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Annulation Suppression!',
+          html: 'Votre Canal  est en sécurité :)',
+          showConfirmButton: true,
+          confirmButtonColor: '#cb3533',
+          timer: 3000
+        });
       }
     });
   }
-
 
   //-------------------------------------------------------------------------------------------------------
 
