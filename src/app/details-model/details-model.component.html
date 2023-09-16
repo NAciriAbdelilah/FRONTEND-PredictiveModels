@@ -34,26 +34,32 @@
                   </thead>
                       <tbody>
                           <tr>
-                            <td>{{ pm.namePM }}</td>
+                            <td> <strong> {{ pm.namePM }} </strong> </td>
                             <td>{{ pm.definitionPM }}</td>
                             <td>
                               <ng-container *ngFor="let scopesArray of listOfScopes">
                                 <ul>
-                                  <li *ngFor="let scopes of scopesArray">{{scopes.intituleScope}}</li>
+                                  <li *ngFor="let scopes of scopesArray">
+                                    <strong> {{scopes.intituleScope}} </strong>
+                                  </li>
                                 </ul>
                               </ng-container>
                             </td>
                             <td>
                             <ng-container *ngFor="let canalsArray of listOfCanals">
                               <ul>
-                                <li *ngFor="let canals of canalsArray">{{canals.intituleCanal}}</li>
+                                <li *ngFor="let canals of canalsArray">
+                                  <strong> {{canals.intituleCanal}} </strong>
+                                </li>
                               </ul>
                             </ng-container>
                             </td>
                             <td>
                             <ng-container *ngFor="let frequencesArray of listOfFrequency">
                               <ul>
-                                <li *ngFor="let frequences of frequencesArray">{{frequences.intitulefrequence}}</li>
+                                <li *ngFor="let frequences of frequencesArray">
+                                  <strong> {{frequences.intitulefrequence}} </strong>
+                                </li>
                               </ul>
                             </ng-container>
                             </td>
@@ -116,7 +122,7 @@
             <div class="d-flex justify-content-center">
               <table class="table table-hover" style="max-width: 1000px;">
                 <caption> LISTE DES FEATURES PAR NOM DU MODELE PREDICTIF</caption>
-                <thead class="table-light text-center">
+                <thead class="table-light text-start">
                   <tr>
                     <th class="align-middle">NOM DU FEATURE</th>
                     <th class="align-middle">DESCRIPTION DU FEATURE</th>
@@ -129,7 +135,7 @@
                   <ng-container *ngFor="let featuresArray of listOfFeatures">
                     <tr *ngFor="let features of featuresArray">
 
-                      <td>{{ features.namefeature }}</td>
+                      <td> <strong> {{ features.namefeature }} </strong></td>
                       <td>{{ features.description }}</td>
                       <td>{{ convertTimestampToDate(features.lastModifiedDate) | date: 'medium' }}</td>
                       <td *ngIf="securityService.hasRoleIn(['ADMIN'])">

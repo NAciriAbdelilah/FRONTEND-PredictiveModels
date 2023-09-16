@@ -206,5 +206,11 @@ export class PredictiveModelsComponent implements OnInit {
     } else return "";
   }
 
+  navigateToDetailsPage(pmId: number) {
+    this.router.navigate(['/admin/details-model', pmId]);
+  }
+
+  //-------------------------------------------------------------------------------------------------------
+
 
 }

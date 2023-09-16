@@ -59,7 +59,7 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let f of filteredFeatures | async">
-                  <td>{{ f.namefeature }}</td>
+                  <td><strong>{{ f.namefeature }}</strong></td>
                   <td>{{ f.description }}</td>
                   <td>{{ convertTimestampToDate(f.lastModifiedDate) | date: 'dd/MM/yyyy'}}</td>
                 </tr>
@@ -127,7 +127,7 @@
                   <tbody>
                     <tr *ngFor="let f of featuresByPages ">
 
-                      <td> {{f.namefeature}}</td>
+                      <td><strong>{{ f.namefeature }}</strong></td>
                       <td> {{f.description}}</td>
                       <td>{{ convertTimestampToDate(f.creationDate) | date: 'dd/MM/yyyy' }}</td>
                       <td>{{ convertTimestampToDate(f.lastModifiedDate) | date: 'dd/MM/yyyy' }}</td>

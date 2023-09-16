@@ -51,18 +51,20 @@
                     <th class="align-middle">NOM DU MODELE PREDICTIF</th>
                     <th class="align-middle">OBJECTIF DU MODELE PREDICTIF</th>
                     <th class="align-middle">DATE CREATION</th>
+
                     <th class="align-middle">VOIR DETAILS</th>
+
                     <th class="align-middle">STATUS</th>
                     <th *ngIf="securityService.hasRoleIn(['ADMIN'])"  class="align-middle">ACTIONS</th>
                   </tr>
               </thead>
               <tbody>
               <tr *ngFor="let pm of predictiveModel | async">
-                <td> {{pm.namePM}} </td>
+                <td> <strong> {{pm.namePM}} </strong> </td>
                 <td> {{pm.objectivePM}} </td>
                 <td>{{ convertTimestampToDate(pm.creationDate) | date: 'dd/MM/yyyy' }}</td>
                 <td>
-                  <!-- Details PM button -->
+                <!--Details PM button-->
                   <button [routerLink]="['/admin/details-model', pm.id]"
                     class= "btn btn-close-white rounded-start" type="button">
                     <img src="/assets/images/details-bar.png" alt="Bootstrap" width="30" height="30">

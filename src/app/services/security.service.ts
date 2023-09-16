@@ -10,14 +10,14 @@ export class SecurityService implements OnInit{
   firstName: string | undefined;
   lastName: string | undefined;
 
-  constructor (public kcService: KeycloakService) {
+  constructor (public keycloakService: KeycloakService) {
     this.init();
   }
   init(){
-    this.kcService.keycloakEvents$.subscribe({
+    this.keycloakService.keycloakEvents$.subscribe({
       next: (e) => {
         if (e.type == KeycloakEventType.OnAuthSuccess) {
-          this.kcService.loadUserProfile().then(profile=>{
+          this.keycloakService.loadUserProfile().then(profile=>{
             this.profile=profile;
           });
         }
@@ -26,25 +26,23 @@ export class SecurityService implements OnInit{
 
   }
 
-  ngOnInit(): void {
-    // Check if the user is authenticated
-    if (!this.kcService.isLoggedIn()) {
-      return;
-    }
-    const idToken = this.kcService.getKeycloakInstance().idTokenParsed;
-    // @ts-ignore
-    this.firstName = idToken.given_name;
-    // @ts-ignore
-    this.lastName = idToken.family_name;
+  ngOnInit(): void {}
 
-    console.log("firstName+lastName",this.lastName,this.firstName)
-    console.log("idToken",idToken)
+  getUserName(): string {
+    const user = this.keycloakService.getKeycloakInstance()?.tokenParsed;
+    return user?.["name"] || 'Unknown User';
   }
 
+  getFirstName(): string {
+    const user = this.keycloakService.getKeycloakInstance()?.tokenParsed;
+    const fullName = user?.['name'] || 'Unknown User';
+    const firstName = fullName.split(' ')[0];
+    return firstName;
+  }
 
   public hasRoleIn(roles:string[]):boolean
   {
-    let userRoles = this.kcService.getUserRoles();
+    let userRoles = this.keycloakService.getUserRoles();
     for(let role of roles){
       if (userRoles.includes(role)) return true;
     } return false;
@@ -52,13 +50,13 @@ export class SecurityService implements OnInit{
 
   public getRole() : string
   {
-    let role = this.kcService.getUserRoles();
+    let role = this.keycloakService.getUserRoles();
     return role[5];
   }
 
   disconnect()
   {
-    this.kcService.logout(window.location.origin).then((success) => {
+    this.keycloakService.logout(window.location.origin).then((success) => {
       console.log("--> log: logout success ", success );
     }).catch((error) => {
       console.log("--> log: logout error ", error );
@@ -67,7 +65,7 @@ export class SecurityService implements OnInit{
 
   async connect()
   {
-    await this.kcService.login({
+    await this.keycloakService.login({
       redirectUri : window.location.origin
     }).then((success)=>{
       console.log("login success,success");
