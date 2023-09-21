@@ -1,6 +1,6 @@
 <!-- Navbar -->
 <div>
-<nav class=" navbar sticky-top navbar-expand-lg navbar-light"  style="background-color: rgba(16,16,15,0.47);">
+<nav class=" navbar sticky-top navbar-expand-lg navbar-light"  style="background-color: rgba(16,16,15,0.07);">
 
   <!-- Container wrapper -->
     <!-- Navbar brand -->
@@ -16,28 +16,26 @@
       <ul class="navbar-nav h6 custom-spacing"  style="font-size: small; font-weight: bold" >
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" routerLink="/admin/dashboard">
-              <i class="bi bi-speedometer2"></i> DASHBOARD
-            </a>
+              <i class="bi bi-speedometer2"></i> DASHBOARD</a>
           </li>
 
           <li class="nav-item dropdown">
             <a class="nav-link link-dark dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="bi bi-graph-up-arrow"></i> MODELES PREDICTIFS
-            </a>
+              <i class="bi bi-graph-up-arrow"></i> MODELES PREDICTIFS</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/predictive-models">CONSULTER LES MODELES PREDICTIFS</a></li>
               <li><hr class="dropdown-divider" *ngIf="securityService.hasRoleIn(['ADMIN'])" ></li>
               <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/new-predictive-model"
-                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >AJOUTER NOUVEAU MODELE PREDICTIF</a></li>
+                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >AJOUTER NOUVEAU MODELE </a></li>
               <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/new-pm-scope-canals-frequency"
-                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >AJOUTER DES PARAMETRES AU MODELES</a></li>
+                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >AJOUTER DES PARAMETRES</a></li>
               <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/new-pm-features"
-                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >AJOUTER DES FEATURES AU MODELES</a></li>
+                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >AJOUTER DES FEATURES</a></li>
               <li><hr class="dropdown-divider" *ngIf="securityService.hasRoleIn(['ADMIN'])" ></li>
               <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/update-pm-scope-canals-frequency"
-                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >MODIFIER LES PARAMETRES D'UN MODELES</a></li>
+                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >MODIFIER LES PARAMETRES</a></li>
               <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/update-pm-features"
-                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >MODIFIER LES FEATURES D'UN MODELES</a></li>
+                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >MODIFIER LES FEATURES</a></li>
             </ul>
           </li>
 
@@ -46,24 +44,24 @@
               <i class="bi bi-list-columns"></i> FEATURES</a>
           </li>
 
+        <li class="nav-item dropdown">
+          <a class="nav-link link-dark dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-gear"></i> PARAMETRES</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/scopes"> MARCHES DES MODELES PREDICTIFS </a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/canals"> CANAUX DES MODELES PREDICTIFS </a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/frequency"> FREQUENCES DES MODELES PREDICTIFS </a></li>
+          </ul>
+        </li>
+
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" routerLink="/admin/output-models"
                *ngIf="securityService.hasRoleIn(['ADMIN'])" >
               <i class="bi bi-filetype-csv"></i> OUTPUT DES MODELES PREDICTIFS </a>
           </li>
 
-          <li class="nav-item dropdown">
-              <a class="nav-link link-dark dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-gear"></i> PARAMETRES
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/scopes"> MARCHES DES MODELES PREDICTIFS </a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/canals"> CANAUX DES MODELES PREDICTIFS </a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/frequency"> FREQUENCES DES MODELES PREDICTIFS </a></li>
-              </ul>
-          </li>
       </ul>
         <!-- Left links -->
         <!-- End Collapsible wrapper -->

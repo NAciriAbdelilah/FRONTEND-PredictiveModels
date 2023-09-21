@@ -9,17 +9,17 @@ body{
 
 .bg-c-blue {
   /*background: linear-gradient(45deg,#4099ff,#73b4ff);*/
-  background: linear-gradient(45deg, #ce3e3e, rgba(16, 16, 15, 0.56));
+  background: linear-gradient(45deg, #e74343, rgba(9, 9, 91, 0.56));
 }
 
 .bg-c-green {
   /*background: linear-gradient(45deg,#2ed8b6,#59e0c5);*/
-  background: linear-gradient(45deg, #ce3e3e, rgba(16, 16, 15, 0.56));
+  background: linear-gradient(45deg, #e74343, rgba(9, 9, 91, 0.56));
 }
 
 .bg-c-yellow {
   /*background: linear-gradient(45deg,#FFB64D,#ffcb80);*/
-  background: linear-gradient(45deg, #ce3e3e, rgba(16, 16, 15, 0.56));
+  background: linear-gradient(45deg, #e74343, rgba(9, 9, 91, 0.56));
 }
 
 .bg-c-pink {

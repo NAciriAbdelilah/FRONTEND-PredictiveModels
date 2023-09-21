@@ -34,6 +34,7 @@ import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
 import { TokenInterceptor } from './interceptors/TokenInterceptor';
 import {NgxPaginationModule} from "ngx-pagination";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {RouterModule} from "@angular/router";
 
 
 
@@ -89,6 +90,7 @@ export function keycloakInitializer(keycloak: KeycloakService): () =>
     MatListModule,
     NgMultiSelectDropDownModule,
     FormsModule,
+    RouterModule,
     HttpClientModule,
     MatSelectModule,
     MatDatepickerModule,

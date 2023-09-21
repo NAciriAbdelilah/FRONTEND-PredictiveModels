@@ -40,7 +40,7 @@
                               <ng-container *ngFor="let scopesArray of listOfScopes">
                                 <ul>
                                   <li *ngFor="let scopes of scopesArray">
-                                    <strong> {{scopes.intituleScope}} </strong>
+                                    <strong> {{scopes["intituleScope"]}} </strong>
                                   </li>
                                 </ul>
                               </ng-container>
@@ -49,7 +49,7 @@
                             <ng-container *ngFor="let canalsArray of listOfCanals">
                               <ul>
                                 <li *ngFor="let canals of canalsArray">
-                                  <strong> {{canals.intituleCanal}} </strong>
+                                  <strong> {{canals["intituleCanal"]}} </strong>
                                 </li>
                               </ul>
                             </ng-container>
@@ -58,7 +58,7 @@
                             <ng-container *ngFor="let frequencesArray of listOfFrequency">
                               <ul>
                                 <li *ngFor="let frequences of frequencesArray">
-                                  <strong> {{frequences.intitulefrequence}} </strong>
+                                  <strong> {{frequences["intitulefrequence"]}} </strong>
                                 </li>
                               </ul>
                             </ng-container>
@@ -120,45 +120,47 @@
         <h3 class="card-header">LISTE DES FEATURES: </h3>
         <div class="card-body">
             <div class="d-flex justify-content-center">
-              <table class="table table-hover" style="max-width: 1000px;">
-                <caption> LISTE DES FEATURES PAR NOM DU MODELE PREDICTIF</caption>
+              <table class="table table-hover" style="max-width: 1000px;" *ngIf="featuresByPages.length > 0">
+                <caption>LISTE DES FEATURES PAR NOM DU MODELE PREDICTIF</caption>
                 <thead class="table-light text-start">
-                  <tr>
-                    <th class="align-middle">NOM DU FEATURE</th>
-                    <th class="align-middle">DESCRIPTION DU FEATURE</th>
-                    <th class="align-middle">DATE MODIFICATION</th>
-                    <th class="align-middle" *ngIf="securityService.hasRoleIn(['ADMIN'])" >MODIFIER FEATURES</th>
-                  </tr>
+                <tr>
+                  <th class="align-middle">NOM DU FEATURE</th>
+                  <th class="align-middle">DESCRIPTION DU FEATURE</th>
+                  <th class="align-middle">DATE MODIFICATION</th>
+                  <th class="align-middle" *ngIf="securityService.hasRoleIn(['ADMIN'])">MODIFIER FEATURES</th>
+                </tr>
                 </thead>
                 <tbody>
-                <ng-container *ngIf="listOfFeatures && listOfFeatures.length > 0">
-                  <ng-container *ngFor="let featuresArray of listOfFeatures">
-                    <tr *ngFor="let features of featuresArray">
-
-                      <td> <strong> {{ features.namefeature }} </strong></td>
-                      <td>{{ features.description }}</td>
-                      <td>{{ convertTimestampToDate(features.lastModifiedDate) | date: 'medium' }}</td>
-                      <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                          <!-- Update Features OF PM button -->
-                          <button type="button" class="btn btn-outline-danger rounded-pill"
-                                  [routerLink]="['/admin/update-pm-features']">
-                            <img src="/assets/images/write.png" alt="Bootstrap" width="22" height="22">
-                          </button>
-                        </div>
-                      </td>
-
-                    </tr>
-                  </ng-container>
-                </ng-container>
-                <ng-container *ngIf="!listOfFeatures || listOfFeatures.length === 0">
-                  <tr>
-                    <td colspan="4">No features available</td>
-                  </tr>
-                </ng-container>
+                <tr *ngFor="let feature of featuresByPages">
+                  <td><strong>{{ feature.namefeature }}</strong></td>
+                  <td>{{ feature.description }}</td>
+                  <td>{{ convertTimestampToDate(feature.lastModifiedDate) | date: 'medium' }}</td>
+                  <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                      <!-- Update Features OF PM button -->
+                      <button type="button" class="btn btn-outline-danger rounded-pill"
+                              [routerLink]="['/admin/update-pm-features']">
+                        <img src="/assets/images/write.png" alt="Bootstrap" width="22" height="22">
+                      </button>
+                    </div>
+                  </td>
+                </tr>
                 </tbody>
               </table>
+
+              <ng-container *ngIf="!featuresByPages || featuresByPages.length === 0">
+                <tr>
+                  <td colspan="4">No features available</td>
+                </tr>
+              </ng-container>
             </div>
+                  <!-- Pagination controls -->
+                  <mat-paginator
+                    [length]="totalItems"
+                    [pageSize]="pageSize"
+                    [pageSizeOptions]="[5, 10, 20, 50, 100]"
+                    (page)="loadFeaturesPage($event.pageIndex, $event.pageSize,predictiveModel.id)">
+                  </mat-paginator>
         </div>
       </div>
     </div>

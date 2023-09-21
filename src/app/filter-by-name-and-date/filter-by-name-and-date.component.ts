@@ -40,15 +40,32 @@ export class FilterByNameAndDateComponent implements OnInit {
   ngOnInit(): void {
 
     this.listOfPredictiveModel = this.predictiveModelService.getAllPredictiveModels();
-
     this.listOfCanals = this.canalService.getAllCanals();
 
-    this.reportOutputFileFormGroup = this.fb.group({
-      predictiveModelId: ['', Validators.required],
-      dateGeneration: ['', Validators.required],
-      canalName: ['', Validators.required],
+/*    this.reportOutputFileFormGroup = this.fb.group({
+      predictiveModelId: ['1', Validators.required],
+      dateGeneration: ['2023-01', Validators.required],
+      canalName: ['INTAJ', Validators.required],
+    });*/
 
+    // Set default values for predictiveModelId, dateGeneration, and canalName
+    const defaultPredictiveModelId = '153'; // Replace with your desired default value
+    const defaultDateGeneration = '2023-05'; // Replace with your desired default value
+    const defaultCanalName = 'SMS'; // Replace with your desired default value
+
+    this.reportOutputFileFormGroup = this.fb.group({
+      predictiveModelId: [defaultPredictiveModelId, Validators.required],
+      dateGeneration: [defaultDateGeneration, Validators.required],
+      canalName: [defaultCanalName, Validators.required]
     });
+
+    // Load the charts with default values
+    this.selectedPredictiveModelId = parseInt(defaultPredictiveModelId);
+    this.selectedDate = defaultDateGeneration;
+    this.selectedCanalsName = defaultCanalName;
+    this.handleReportOutputModelByDR();
+    this.handleReportOutputModelBySegment();
+    this.handleReportOutputModelByMarche();
 
   }
 

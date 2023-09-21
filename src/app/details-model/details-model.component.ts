@@ -22,13 +22,22 @@
   export class DetailsModelComponent implements OnInit {
 
     predictiveModel!: PredictiveModel;
-    listOfFeatures: Array<Array<Features>> = [];
+    // listOfFeatures: Array<Array<Features>> = [];
     listOfScopes: Array<Array<Scopes>> = [];
     listOfCanals: Array<Array<Canals>> = [];
     listOfFrequency: Array<Array<Frequences>> = [];
     errorMessage! : string;
     formattedRemarks: string[] = []; // Array to store formatted remarks
     formattedNextSteps: string[] = []; // Array to store formatted next Steps
+
+
+    // Pagination properties
+    page: number = 0; // Current page
+    pageSize: number = 5; // Items per page
+    totalItems: number = 0; // Total number of items
+    featuresByPages: Features[] = []; // Array to hold the current page of features
+
+
 
       constructor(
         private predictiveModelService : PredictiveModelService,
@@ -43,15 +52,19 @@
       ) { }
 
       ngOnInit(): void {
+
         this.route.params.subscribe(params => {
           const predictiveModelId = +params['id'];
           this.handleGetPredictiveModelDetails(predictiveModelId);
-          this.handleGetFeaturesByPredictiveModelID(predictiveModelId);
           this.handleGetScopesByPredictiveModelID(predictiveModelId);
           this.handleGetCanalsByPredictiveModelID(predictiveModelId);
           this.handleGetFrequencyByPredictiveModelID(predictiveModelId);
+          // the loadFeaturesPage below is for handling the features by pagination
+          this.loadFeaturesPage(this.page, this.pageSize,predictiveModelId);
+
         });
       }
+//-------------------------------------------------------------------------------------------------------
 
     // this method help to format remarks PM
     formatRemarksAndNextSteps(): void {
@@ -62,6 +75,7 @@
 
       }
     }
+//-------------------------------------------------------------------------------------------------------
 
       handleGetPredictiveModelDetails(predictiveModelId: number): void {
         this.predictiveModelService.getPredictiveModelById(predictiveModelId).pipe(
@@ -76,8 +90,9 @@
           console.log(this.formattedRemarks,this.formattedNextSteps)
         });
       }
+//-------------------------------------------------------------------------------------------------------
 
-      handleGetFeaturesByPredictiveModelID(predictiveModelId: number): void {
+/*      handleGetFeaturesByPredictiveModelID(predictiveModelId: number): void {
         this.featureService.getFeaturesByPredictiveModelById(predictiveModelId).pipe(
           catchError(err => {
             this.errorMessage = err.message;
@@ -87,9 +102,34 @@
           this.listOfFeatures.push(featuresArray);
           console.log("this.listOfFeatures", this.listOfFeatures);
         });
-      }
+      }*/
 
-      handleGetScopesByPredictiveModelID(predictiveModelId: number): void {
+//-------------------------------------------------------------------------------------------------------
+
+    handleGetFeaturesByPredictiveModelID(predictiveModelId: number, page: number, size: number): void {
+      this.featureService.getAllFeaturesByPagesByID(page, size, predictiveModelId).pipe(
+        catchError(err => {
+          this.errorMessage = err.message;
+          return throwError(err);
+        })
+      ).subscribe(
+        (page) => {
+          console.log('Received page object:', page);
+          this.featuresByPages = page.content; // Assign the page.content directly
+          this.totalItems = page.totalElements; // Set the total count of features
+        },
+        (error) => {
+          console.error('Error fetching features:', error);
+          this.errorMessage = error.message;
+        }
+      );
+
+    }
+
+//-------------------------------------------------------------------------------------------------------
+
+
+    handleGetScopesByPredictiveModelID(predictiveModelId: number): void {
         this.scopesService.getScopesByPredictiveModelById(predictiveModelId).pipe(
           catchError(err => {
             this.errorMessage = err.message;
@@ -100,6 +140,7 @@
           console.log("this.listOfScopes", this.listOfScopes);
         });
       }
+//-------------------------------------------------------------------------------------------------------
 
       handleGetCanalsByPredictiveModelID(predictiveModelId: number): void {
         this.canalsService.getCanalsByPredictiveModelById(predictiveModelId).pipe(
@@ -112,6 +153,7 @@
           console.log("this.listOfCanals", this.listOfCanals);
         });
       }
+//-------------------------------------------------------------------------------------------------------
 
       handleGetFrequencyByPredictiveModelID(predictiveModelId: number): void {
         this.frequenceService.getFrequencyByPredictiveModelById(predictiveModelId).pipe(
@@ -126,7 +168,19 @@
       }
 
       // this methode help you to show Date value correctly from the backend
-      convertTimestampToDate(timestamp: string): Date {
-        return new Date(timestamp); // Assuming 'timestamp' is in milliseconds
+    convertTimestampToDate(timestamp: string | undefined): Date | undefined {
+      return timestamp ? new Date(timestamp) : undefined;
+    }
+
+//-------------------------------------------------------------------------------------------------------
+
+      // Pagination event handler
+      loadFeaturesPage(page: number, size: number,id: number) {
+        this.page = page;
+        this.pageSize = size;
+        this.handleGetFeaturesByPredictiveModelID(id, page, size);
       }
+
+//-------------------------------------------------------------------------------------------------------
+
   }

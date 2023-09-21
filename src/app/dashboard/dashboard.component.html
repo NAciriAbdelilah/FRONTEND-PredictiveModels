@@ -3,13 +3,15 @@
 
         <div class="row justify-content-center">
 
-          <div class="col-md-4 col-xl-3">
+          <div class="col-md-4 col-xl-4">
             <div class="card bg-c-blue order-card">
               <div class="card-block">
-                <p class="m-b-0">Nombre total des Modéles Prédictifs <br/> en SGMA</p>
-                <h2 class="text-right"><img src="/assets/images/analysis.png" alt="Bootstrap" width="50" height="50">
+
+                <h2 class="text-right">
+                  <p class="m-b-0">Nombre total des Modéles Prédictifs <br/> en SGMA</p>
                   <ng-container *ngIf="listOfPredictiveModel | async as predictiveModels">
                     <ng-container *ngFor="let pm of predictiveModels; let i = index;"></ng-container>
+                    <img src="/assets/images/analysis.png" alt="Bootstrap" width="50" height="50">
                     <span class="styled-span f-right">{{(predictiveModels.length)}}</span> <!-- Display the total count PM -->
                   </ng-container>
                 </h2>
@@ -17,22 +19,24 @@
             </div>
           </div>
 
-          <div class="col-md-4 col-xl-3">
+          <div class="col-md-4 col-xl-4">
             <div class="card bg-c-green order-card">
               <div class="card-block">
-                <p class="m-b-0">Nombre des Modéles Prédictifs <br/> en Production</p>
-                <h2 class="text-right"><img src="/assets/images/cost.png" alt="Bootstrap" width="50" height="50">
+                <h2 class="text-right">
+                  <p class="m-b-0">Nombre des Modéles Prédictifs <br/> en Production</p>
+                  <img src="/assets/images/cost.png" alt="Bootstrap" width="50" height="50">
                   <span class="styled-span f-right">{{ totalProductionCount }}</span> <!-- Display the total count PM in Prod -->
                 </h2>
               </div>
             </div>
           </div>
 
-          <div class="col-md-4 col-xl-3">
+          <div class="col-md-4 col-xl-4">
             <div class="card bg-c-yellow order-card">
               <div class="card-block">
-                <p class="m-b-0">Nombre des Modéles Prédictifs <br/> en Pilote</p>
-                <h2 class="text-right"><img src="/assets/images/coding.png" alt="Bootstrap" width="50" height="50">
+                <h2 class="text-right">
+                  <p class="m-b-0">Nombre des Modéles Prédictifs <br/> en Pilote</p>
+                  <img src="/assets/images/coding.png" alt="Bootstrap" width="50" height="50">
                   <span class="styled-span f-right">{{ totalPilotCount }}</span> <!-- Display the total count PM in Pilot-->
                 </h2>
               </div>

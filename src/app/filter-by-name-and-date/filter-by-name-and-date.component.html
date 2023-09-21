@@ -1,53 +1,62 @@
 <!-- First container (form) -->
-<div class="container">
+<div class="container justify-content-center">
   <div class="card mt-3">
     <div class="card-body">
-      <div class="d-flex justify-content-center">
-        <form [formGroup]="reportOutputFileFormGroup" class="was-validated">
-          <div class="mb-3">
-            <label><strong>NOM DU MODELE PREDICTIF:</strong></label>
-            <select class="form-select form-select mb-3"
-                    formControlName="predictiveModelId"
-                    (change)="onPredictiveModelSelect($event)" required>
-              <option value="">Selectionner un Modéle  Prédictif</option>
-              <option *ngFor="let listPM of listOfPredictiveModel | async" [value]="listPM.id">
-                {{ listPM.namePM }}
-              </option>
-            </select>
-            <div class="invalid-feedback">Merci de choisir un Modéle Prédictif</div>
+      <div class="">
+
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                Reporting des Modéles Prédictifs par Canal
+              </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body">
+                <form [formGroup]="reportOutputFileFormGroup" class="was-validated">
+                  <div class="mb-3">
+                    <label><strong>NOM DU MODELE PREDICTIF:</strong></label>
+                    <select class="form-select form-select mb-3"
+                            formControlName="predictiveModelId"
+                            (change)="onPredictiveModelSelect($event)" required>
+                      <option value="">Selectionner un Modéle  Prédictif</option>
+                      <option *ngFor="let listPM of listOfPredictiveModel | async" [value]="listPM.id">
+                        {{ listPM.namePM }}
+                      </option>
+                    </select>
+                    <div class="invalid-feedback">Merci de choisir un Modéle Prédictif</div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label><strong>DATE DU CIBLE:</strong></label>
+                    <input type="month" class="form-control"
+                           formControlName="dateGeneration"
+                           (change)="onDateSelect($event)" required>
+                    <div class="invalid-feedback">Merci de choisir une Date</div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label><strong>CHOISIR UN CANAL:</strong></label>
+
+                    <select class="form-select form-select mb-3"
+                            formControlName="canalName"
+                            (change)="onCanalSelect($event)" required>
+                      <option value="">Selectionner un Canal</option>
+                      <option *ngFor="let listCanals of listOfCanals | async" [value]="listCanals.intituleCanal">
+                        {{ listCanals.intituleCanal }}
+                      </option>
+                    </select>
+
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
           </div>
+        </div>
 
-          <div class="mb-3">
-            <label><strong>DATE DU CIBLE:</strong></label>
-            <input type="month" class="form-control"
-                   formControlName="dateGeneration"
-                   (change)="onDateSelect($event)" required>
-            <div class="invalid-feedback">Merci de choisir une Date</div>
-          </div>
-
-          <div class="mb-3">
-            <label><strong>CHOISIR UN CANAL:</strong></label>
-
-            <select class="form-select form-select mb-3"
-                    formControlName="canalName"
-                    (change)="onCanalSelect($event)" required>
-              <option value="">Selectionner un Canal</option>
-              <option *ngFor="let listCanals of listOfCanals | async" [value]="listCanals.intituleCanal">
-                {{ listCanals.intituleCanal }}
-              </option>
-            </select>
-
-          </div>
-
-<!--          <div class="mb-3">
-            <button class="btn btn-outline-danger rounded-pill"
-                    (click)="showChartByDR()">Reporting par Direction Régionale</button>&nbsp;
-            <button class="btn btn-outline-danger rounded-pill"
-                    (click)="showChartBySegment()">Reporting par Segment</button>&nbsp;
-            <button class="btn btn-outline-danger rounded-pill"
-                    (click)="showChartByMarche()">Reporting par Marchés</button>&nbsp;
-          </div>-->
-        </form>
       </div>
       <div class="container mt-3">
         <div class="row justify-content-md-center">
