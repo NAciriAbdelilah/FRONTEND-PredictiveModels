@@ -9,6 +9,7 @@ import {ReportModelService} from "../services/report-model.service";
 import {ReportModelBySegment} from "../models/reportModelBySegment";
 import {Canals} from "../models/canals.model";
 import {CanalsService} from "../services/canals.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-filter-by-name-and-date',
@@ -41,12 +42,6 @@ export class FilterByNameAndDateComponent implements OnInit {
 
     this.listOfPredictiveModel = this.predictiveModelService.getAllPredictiveModels();
     this.listOfCanals = this.canalService.getAllCanals();
-
-/*    this.reportOutputFileFormGroup = this.fb.group({
-      predictiveModelId: ['1', Validators.required],
-      dateGeneration: ['2023-01', Validators.required],
-      canalName: ['INTAJ', Validators.required],
-    });*/
 
     // Set default values for predictiveModelId, dateGeneration, and canalName
     const defaultPredictiveModelId = '153'; // Replace with your desired default value
@@ -99,17 +94,8 @@ export class FilterByNameAndDateComponent implements OnInit {
   }
 
 //-------------------------------------------------------------------------------------------------------
-/*  showChartByDR() {
-    this.handleReportOutputModelByDR();
-  }
-//-------------------------------------------------------------------------------------------------------
-  showChartBySegment() {
-    this.handleReportOutputModelBySegment();
-  }
-//-------------------------------------------------------------------------------------------------------
-  showChartByMarche() {
-    this.handleReportOutputModelByMarche();
-  }*/
+
+
 //-------------------------------------------------------------------------------------------------------
   handleReportOutputModelByDR() {
     const idPredictiveModel = this.selectedPredictiveModelId;
@@ -123,10 +109,20 @@ export class FilterByNameAndDateComponent implements OnInit {
       })
     ).subscribe(
       (data) => {
-        // Handle the successful response here
-        console.log('Reporting Predictive Model By Direction Regionale:', data);
-        this.reportingByDR = of(data);
-
+        // Check if the data is empty and display an alert
+        if (data && data.length === 0) {
+          Swal.fire({
+            position: 'center',
+            icon: 'info',
+            title: 'Aucune donnée disponible pour ce modèle prédictif et ce canal.',
+            showConfirmButton: true,
+            confirmButtonColor: '#cb3533',
+            timer: 3000
+          });
+        } else {
+          console.log('Reporting Predictive Model By Direction Regionale:', data);
+          this.reportingByDR = of(data);
+        }
       }
     );
   }
@@ -137,7 +133,6 @@ export class FilterByNameAndDateComponent implements OnInit {
     const yearMonth = this.selectedDate;
     const canalName = this.selectedCanalsName;
 
-
     this.reportModelService.getReportingByMarche(idPredictiveModel, yearMonth, canalName).pipe(
       catchError((err) => {
         this.errorMessage = err.message;
@@ -145,10 +140,20 @@ export class FilterByNameAndDateComponent implements OnInit {
       })
     ).subscribe(
       (data) => {
-        // Handle the successful response here
-        console.log('Reporting Predictive Model By Marche:', data);
-        this.reportingByMarche = of(data);
-
+        // Check if the data is empty and display an alert
+        if (data && data.length === 0) {
+          Swal.fire({
+            position: 'center',
+            icon: 'info',
+            title: 'Aucune donnée disponible pour ce modèle prédictif et ce canal.',
+            showConfirmButton: true,
+            confirmButtonColor: '#cb3533',
+            timer: 3000
+          });
+        } else {
+          console.log('Reporting Predictive Model By Marche:', data);
+          this.reportingByMarche = of(data);
+        }
       }
     );
   }
@@ -165,10 +170,20 @@ export class FilterByNameAndDateComponent implements OnInit {
       })
     ).subscribe(
       (data) => {
-        // Handle the successful response here
-        console.log('Reporting Predictive Model By Segment:', data);
-        this.reportingBySegment = of(data);
-
+        // Check if the data is empty and display an alert
+        if (data && data.length === 0) {
+          Swal.fire({
+            position: 'center',
+            icon: 'info',
+            title: 'Aucune donnée disponible pour ce modèle prédictif et ce canal.',
+            showConfirmButton: true,
+            confirmButtonColor: '#cb3533',
+            timer: 3000
+          });
+        } else {
+          console.log('Reporting Predictive Model By Segment:', data);
+          this.reportingBySegment = of(data);
+        }
       }
     );
   }
