@@ -72,7 +72,6 @@
         // Split the remarks & nextSteps based on the minus (-) character and format them
         this.formattedRemarks = this.predictiveModel.remarksPM.split('-').map(remark => remark.trim());
         this.formattedNextSteps = this.predictiveModel.nextStepsPM.split('-').map(nextStep => nextStep.trim());
-
       }
     }
 //-------------------------------------------------------------------------------------------------------

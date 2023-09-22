@@ -174,7 +174,7 @@ export class UpdatePmFeaturesComponent implements OnInit {
         Swal.fire({
           position: 'center',
           icon: 'success',
-          title: 'Features mises à jour avec succès!',
+          title: 'Features du Modéle Prédictif mises à jour avec succès!',
           showConfirmButton: true,
           confirmButtonColor: '#cb3533',
           timer: 3000

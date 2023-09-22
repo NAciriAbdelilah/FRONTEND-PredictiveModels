@@ -27,11 +27,18 @@ export class FeaturesComponent implements OnInit {
   updateFeatureFormGroup!: FormGroup;
   selectedFeatureToUpdate: Features | undefined;
 
-  // Pagination properties
+  // Pagination of ALL the features properties
   page : number = 1; // Current page
   pageSize : number = 5; // Items per page
   totalItems : number = 0; // Total number of items
-  featuresByPages: Features[] = []; // Changed to an empty array initially
+  featuresByPages: Features[] = [];
+
+  // Pagination Bis of Selected feature By PM properties
+  pageBis : number = 1; // Current page
+  pageSizeBis : number = 5; // Items per page
+  totalItemsBis : number = 0; // Total number of items
+  featuresByPagesBis: Features[] = [];
+
 
   constructor( private predictiveModelService : PredictiveModelService,
                private featureService : FeaturesService,
@@ -63,16 +70,27 @@ export class FeaturesComponent implements OnInit {
 
 //-------------------------------------------------------------------------------------------------------
 
-      onPredictiveModelSelect(event: any) {
-        const selectedValue = event.target.value;
-        this.selectedPredictiveModelId = parseInt(selectedValue);
-        console.log('Selected PM ID:', this.selectedPredictiveModelId);
-        this.handleSearchFeaturesByPredictiveModelName();
-      }
+    onPredictiveModelSelect(event: any) {
+      const selectedValue = event.target.value;
+      this.selectedPredictiveModelId = parseInt(selectedValue);
+      console.log('Selected PM ID:', this.selectedPredictiveModelId);
+      this.loadFeaturesPage(this.pageBis, this.pageSizeBis,this.selectedPredictiveModelId);
+    }
+
+  //-------------------------------------------------------------------------------------------------------
+
+    // Pagination event handler
+    loadFeaturesPage(page: number, size: number,id: number) {
+      this.pageBis = page;
+      this.pageSizeBis = size;
+      this.handleGetFeaturesByPredictiveModelID(id, page, size);
+    }
 
 //-------------------------------------------------------------------------------------------------------
 
-      // Pagination event handler
+//-------------------------------------------------------------------------------------------------------
+
+      // Pagination of All features event handler
       onPageChange(event: PageEvent) {
         this.page = event.pageIndex; // PageIndex is zero-based for that we initialize page = 1
         this.pageSize = event.pageSize;
@@ -80,19 +98,6 @@ export class FeaturesComponent implements OnInit {
       }
 
 //-------------------------------------------------------------------------------------------------------
-
-/*    handleGetAllFeatures() {
-      this.featureService.getAllFeatures().subscribe(
-        features => {
-          console.log("Received updated features:", features);
-          this.features = of(features);
-        },
-        error => {
-          console.error("Error fetching features:", error);
-          this.errorMessage = error.message;
-        }
-      );
-    }*/
 
     handleGetAllFeatures() {
       this.featureService.getAllFeaturesByPages(this.page, this.pageSize).subscribe(
@@ -108,6 +113,29 @@ export class FeaturesComponent implements OnInit {
       );
     }
 
+//-------------------------------------------------------------------------------------------------------
+
+  handleGetFeaturesByPredictiveModelID(predictiveModelId: number, page: number, size: number): void {
+    this.featureService.getAllFeaturesByPagesByID(page, size, predictiveModelId).pipe(
+      catchError(err => {
+        this.errorMessage = err.message;
+        return throwError(err);
+      })
+    ).subscribe(
+      (page) => {
+        console.log('Received page object:', page);
+        this.featuresByPagesBis = page.content; // Assign the page.content directly
+        this.totalItemsBis = page.totalElements; // Set the total count of features
+      },
+      (error) => {
+        console.error('Error fetching features:', error);
+        this.errorMessage = error.message;
+      }
+    );
+
+  }
+
+//-------------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------------
 
@@ -306,6 +334,7 @@ export class FeaturesComponent implements OnInit {
     }
 
   //-------------------------------------------------------------------------------------------------------
+
     getErrorMessage(fieldName: string, error: ValidationErrors) {
       if (error['required']){
         return fieldName + " is Required";

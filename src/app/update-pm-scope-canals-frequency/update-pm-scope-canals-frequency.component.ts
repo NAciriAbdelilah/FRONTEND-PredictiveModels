@@ -246,7 +246,7 @@ export class UpdatePmScopeCanalsFrequencyComponent implements OnInit {
         Swal.fire({
           position: 'center',
           icon: 'success',
-          title: 'Marchés, Canaux et Frequences mises à jour avec succès!',
+          title: 'Les Paramétres (Marchés, Canaux et Frequences) du Modéle Prédictif mises à jour avec succès!',
           showConfirmButton: true,
           confirmButtonColor: '#cb3533',
           timer: 3000

@@ -58,14 +58,23 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let f of filteredFeatures | async">
-                  <td><strong>{{ f.namefeature }}</strong></td>
-                  <td>{{ f.description }}</td>
-                  <td>{{ convertTimestampToDate(f.lastModifiedDate) | date: 'dd/MM/yyyy'}}</td>
+                <tr *ngFor="let feature of featuresByPagesBis">
+                  <td><strong>{{ feature.namefeature }}</strong></td>
+                  <td>{{ feature.description }}</td>
+                  <td>{{ convertTimestampToDate(feature.lastModifiedDate) | date: 'dd/MM/yyyy'}}</td>
                 </tr>
                 </tbody>
               </table>
             </div>
+            <!-- Pagination controls -->
+            <mat-paginator
+              [length]="totalItemsBis"
+              [pageSize]="pageSizeBis"
+              [pageSizeOptions]="[5, 10, 20, 50, 100]"
+              (page)="selectedPredictiveModelId !== null ? loadFeaturesPage(
+              $event.pageIndex, $event.pageSize, selectedPredictiveModelId) : null">
+            </mat-paginator>
+
           </div>
         </div>
         <!---------------------------------------FIN ROW 2 - COL 2------------------------------------------->
@@ -164,7 +173,8 @@
     <!---------------------------------------------------------------------------------->
 
             <!------------------------- MODAL TO ADD FEATURES  ---------------------------->
-                <div class="modal fade" id="addFeatureModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="addFeatureModalLabel" aria-hidden="true">
+                <div class="modal fade" id="addFeatureModal" data-bs-backdrop="static" tabindex="-1"
+                     aria-labelledby="addFeatureModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -211,7 +221,8 @@
 
 
             <!-------------------------- UPDATE FEATURES MODAL ----------------------------->
-            <div class="modal fade" id="updateFeatureModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="updateFeatureModalLabel"  aria-hidden="true">
+            <div class="modal fade" id="updateFeatureModal" data-bs-backdrop="static" tabindex="-1"
+                 aria-labelledby="updateFeatureModalLabel"  aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
