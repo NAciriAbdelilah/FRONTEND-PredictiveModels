@@ -1,6 +1,6 @@
 <!-- Navbar -->
 <div>
-<nav class=" navbar sticky-top navbar-expand-lg navbar-light"  style="background-color: rgba(16,16,15,0.07);">
+<nav class="navbar sticky-top navbar-expand-lg navbar-light"  style="background-color: #F5F5F5;">
 
   <!-- Container wrapper -->
     <!-- Navbar brand -->
@@ -13,15 +13,17 @@
       <!-- Left links -->
     <div class="container col-8 mt-2">
 
-      <ul class="navbar-nav h6 custom-spacing"  style="font-size: small; font-weight: bold" >
+      <ul class="navbar-nav h6 custom-spacing"  style="font-size: medium; font-weight: bold" >
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" routerLink="/admin/dashboard">
-              <i class="bi bi-speedometer2"></i> DASHBOARD</a>
+              <img src="/assets/images/presentation.png" alt="Bootstrap" width="25" height="25"> DASHBOARD
+            </a>
           </li>
 
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" style="margin-left: 20px;">
             <a class="nav-link link-dark dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="bi bi-graph-up-arrow"></i> MODELES PREDICTIFS</a>
+              <img src="/assets/images/analysing2.png" alt="Bootstrap" width="25" height="25">  MODELES PREDICTIFS
+            </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/predictive-models">CONSULTER LES MODELES PREDICTIFS</a></li>
               <li><hr class="dropdown-divider" *ngIf="securityService.hasRoleIn(['ADMIN'])" ></li>
@@ -39,14 +41,16 @@
             </ul>
           </li>
 
-          <li class="nav-item">
+          <li class="nav-item" style="margin-left: 20px;">
             <a class="nav-link active" aria-current="page" routerLink="/admin/features">
-              <i class="bi bi-list-columns"></i> FEATURES</a>
+              <img src="/assets/images/adjustments.png" alt="Bootstrap" width="25" height="25"> FEATURES
+            </a>
           </li>
 
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown" style="margin-left: 20px;">
           <a class="nav-link link-dark dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-gear"></i> PARAMETRES</a>
+            <img src="/assets/images/project-plan.png" alt="Bootstrap" width="25" height="25"> PARAMETRES
+          </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/scopes"> MARCHES DES MODELES PREDICTIFS </a></li>
             <li><hr class="dropdown-divider"></li>
@@ -56,10 +60,11 @@
           </ul>
         </li>
 
-          <li class="nav-item">
+          <li class="nav-item" style="margin-left: 20px;">
             <a class="nav-link active" aria-current="page" routerLink="/admin/output-models"
                *ngIf="securityService.hasRoleIn(['ADMIN'])" >
-              <i class="bi bi-filetype-csv"></i> OUTPUT DES MODELES PREDICTIFS </a>
+              <img src="/assets/images/upload.png" alt="Bootstrap" width="25" height="25"> OUTPUT DES MODELES PREDICTIFS
+            </a>
           </li>
 
       </ul>
@@ -82,7 +87,8 @@
       <li>
         <a
            class="dropdown-item small-dropdown-item" (click)="handleLogout()">
-          <i class="bi bi-box-arrow-right"></i> DECONNEXION</a>
+          <img src="/assets/images/export.png" alt="Bootstrap" width="25" height="25"> DECONNEXION
+        </a>
       </li>
     </ul>
   </div>
