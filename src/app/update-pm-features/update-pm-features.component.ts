@@ -8,6 +8,7 @@ import {FeaturesService} from "../services/features.service";
 import {Router} from "@angular/router";
 import {SecurityService} from "../services/security.service";
 import Swal from "sweetalert2";
+import {PageEvent} from "@angular/material/paginator";
 
 
 @Component({
@@ -19,13 +20,19 @@ export class UpdatePmFeaturesComponent implements OnInit {
 
 
   searchFormGroup! : FormGroup;
+  errorMessage! : string;
   features!: Observable<Array<Features>>;
   listOfPredictiveModel! : Observable<Array<PredictiveModel>>;
   selectedPredictiveModelId: number | null = null;
   updatePMFeaturesFormGroup!: FormGroup;
-  allFeatures!: Observable<Array<Features>>; // For the first table
   selectedFeatures: Array<Features> = []; // For the second table
   featuresIds: number[] = []; // For updating the old features of a PM in the second table
+
+  // Pagination of ALL the features properties
+  page : number = 0; // Current page
+  pageSize : number = 10; // Items per page
+  totalItems : number = 0; // Total number of items
+  featuresByPages: Features[] = [];
 
   constructor( private predictiveModelService : PredictiveModelService,
                private featureService : FeaturesService,
@@ -35,7 +42,7 @@ export class UpdatePmFeaturesComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.handleLoadFeatures();
+    this.handleGetAllFeatures();
     this.handleLoadPredictiveModels()
 
     this.searchFormGroup= this.fb.group({
@@ -48,6 +55,18 @@ export class UpdatePmFeaturesComponent implements OnInit {
     });
 
   }
+
+
+  //-------------------------------------------------------------------------------------------------------
+
+      // Pagination of All features event handler
+      onPageChange(event: PageEvent) {
+        this.page = event.pageIndex; // PageIndex is zero-based for that we initialize page = 1
+        this.pageSize = event.pageSize;
+        this.handleGetAllFeatures();
+      }
+
+  //-------------------------------------------------------------------------------------------------------
 
   //---------------------------------------- Fetch Features Data --------------------------------------------------------
 
@@ -67,17 +86,49 @@ export class UpdatePmFeaturesComponent implements OnInit {
 
 //----------------------------------------------------------------------------------------------------------------------
 
-  handleLoadFeatures() {
-    this.allFeatures = this.featureService.getAllFeatures();
+//-------------------------------------------------------------------------------------------------------
+
+  handleGetAllFeatures() {
+    this.featureService.getAllFeaturesByPages(this.page, this.pageSize).subscribe(
+      (page) => {
+        console.log('Received page object:', page);
+        this.featuresByPages = page.content; // Assign the page.content directly
+        this.totalItems = page.totalElements; // Set the total count of features
+      },
+      (error) => {
+        console.error('Error fetching features:', error);
+        this.errorMessage = error.message;
+      }
+    );
   }
+
+//-------------------------------------------------------------------------------------------------------
 
   handleLoadPredictiveModels(){
     this.listOfPredictiveModel = this.predictiveModelService.getAllPredictiveModels()
   }
 
   handleSearchFeatures() {
+
     const keyword = this.searchFormGroup?.value.keyword;
-    this.allFeatures = this.featureService.searchFeatures(keyword);
+    if (keyword) {
+      this.featureService.searchByNameOrDescription(keyword, this.page, this.pageSize).subscribe(
+        (page) => {
+          console.log('Received page object:', page);
+          this.featuresByPages = page.content; // Assign the page.content directly
+          this.totalItems = page.totalElements; // Set the total count of features
+        },
+        (error) => {
+          // Handle the error here, e.g., show an error message to the user or log it
+          console.error('Error:', error);
+          this.errorMessage = 'An error occurred while fetching data.';
+        }
+      );
+    } else {
+      // If the keyword is empty, show all features
+      this.handleGetAllFeatures();
+    }
+
   }
 
   onPredictiveModelSelect(event: any) {
@@ -105,13 +156,8 @@ export class UpdatePmFeaturesComponent implements OnInit {
 
     console.log('After selectedFeatures:', this.selectedFeatures);
 
-    // Remove the selected feature from the first table
-    this.allFeatures = this.allFeatures.pipe(
-      map(features => features.filter(f => f.id !== feature.id))
-    );
 
   }
-
 
 //-------------------------------------------------------------------------------------------------------
 
@@ -128,7 +174,7 @@ export class UpdatePmFeaturesComponent implements OnInit {
     }
 
     // Add the removed feature back to the first table
-    this.allFeatures = this.allFeatures.pipe(map(features => [...features, feature]));
+    this.featuresByPages.push(feature); // Assuming this is an array
 
     // Update the selectedFeatures array
     this.selectedFeatures = this.selectedFeatures.filter(f => f.id !== feature.id);
@@ -187,7 +233,6 @@ export class UpdatePmFeaturesComponent implements OnInit {
         console.log(this.selectedPredictiveModelId)
         console.error('Error updating Predictive Models Features', err);
       }
-
     })
   }
 
@@ -199,8 +244,9 @@ export class UpdatePmFeaturesComponent implements OnInit {
     } else if (error['minLength']){
       return fieldName + " should have at least "+ error['minLength']['requiredLength'] + " Characters";
     } else return "";
-
   }
+
+//-------------------------------------------------------------------------------------------------------
 
 
 }

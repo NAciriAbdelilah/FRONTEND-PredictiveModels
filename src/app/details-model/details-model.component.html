@@ -85,10 +85,10 @@
           <div class="card mt-3">
             <h5 class="card-header bg-danger-subtle"><strong> REMARQUES : </strong> </h5>
             <div class="card-body">
-              <div class="p-3 text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-3">
+              <div class="p-3 text-bg-light-emphasis bg-light-subtle border border-danger-subtle rounded-3">
                 <div class="callout" *ngFor="let remark of formattedRemarks; let i = index" >
                   <ng-container *ngIf="remark.trim() !== ''">
-                    - {{ remark }}
+                    <strong> - {{ remark }} </strong>
                   </ng-container>
                 </div>
               </div>
@@ -96,12 +96,12 @@
           </div>
 
           <div class="card mt-3">
-              <h5 class="card-header bg-warning"><strong> NEXT-STEPS :</strong>  </h5>
+              <h5 class="card-header bg-primary-subtle"><strong> NEXT-STEPS :</strong>  </h5>
               <div class="card-body">
-                <div class="p-3 text-warning-emphasis bg-warning-subtle border border-warning-subtle rounded-3">
+                <div class="p-3 text-success-emphasis bg-light-subtle border border-primary-subtle rounded-3">
                   <div class="callout" *ngFor="let nextStep of formattedNextSteps; let i = index" >
                     <ng-container *ngIf="nextStep.trim() !== ''">
-                      - {{ nextStep }}
+                      <strong> - {{ nextStep }} </strong>
                     </ng-container>
                   </div>
 

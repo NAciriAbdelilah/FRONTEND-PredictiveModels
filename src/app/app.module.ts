@@ -36,8 +36,6 @@ import {NgxPaginationModule} from "ngx-pagination";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {RouterModule} from "@angular/router";
 
-
-
 export function keycloakInitializer(keycloak: KeycloakService): () =>
   Promise<any> {
   return () =>

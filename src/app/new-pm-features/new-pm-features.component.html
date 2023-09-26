@@ -90,15 +90,15 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr *ngFor="let f of allFeatures | async">
-                              <td>{{ f.namefeature }}</td>
-                              <td>{{ f.description }}</td>
+                            <tr *ngFor="let feature of featuresByPages">
+                              <td>{{ feature.namefeature }}</td>
+                              <td>{{ feature.description }}</td>
                               <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                   <!-- Add feature button -->
                                   <button class="btn btn-close-white me-md-2"
-                                          (click)="copyFeatureToSelected(f)"
-                                          [disabled]="selectedFeatures.includes(f)">
+                                          (click)="copyFeatureToSelected(feature)"
+                                          [disabled]="selectedFeatures.includes(feature)">
                                     <img src="/assets/images/add6.png" alt="Bootstrap" width="22" height="22">
                                   </button>
                                 </div>
@@ -107,6 +107,13 @@
                           </tbody>
                         </table>
                       </div>
+                      <!-- Pagination controls -->
+                          <mat-paginator
+                            [length]="totalItems"
+                            [pageSize]="pageSize"
+                            [pageSizeOptions]="[5, 10, 20, 50, 100]"
+                            (page)="onPageChange($event)">
+                          </mat-paginator>
                     </div>
                   </div>
                 </div>

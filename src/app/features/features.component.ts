@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 import {SecurityService} from "../services/security.service";
 import {PageEvent} from '@angular/material/paginator';
 import Swal from "sweetalert2";
+import {PagesFeatures} from "../models/pagesFeatures";
 
 @Component({
   selector: 'app-features',
@@ -19,7 +20,7 @@ export class FeaturesComponent implements OnInit {
 
   searchFormGroup! : FormGroup;
   errorMessage! : string;
-  features!: Observable<Array<Features>>; // Variable pour stocker la liste complète de toutes les features
+  features!: Observable<PagesFeatures>; // Variable pour stocker la liste complète de toutes les features
   filteredFeatures!: Observable<Array<Features>>; // Variable pour stocker que les features filtrées par Nom du modèle
   listOfPredictiveModel! : Observable<Array<PredictiveModel>>;
   selectedPredictiveModelId: number | null = null;
@@ -28,13 +29,13 @@ export class FeaturesComponent implements OnInit {
   selectedFeatureToUpdate: Features | undefined;
 
   // Pagination of ALL the features properties
-  page : number = 1; // Current page
+  page : number = 0; // Current page
   pageSize : number = 5; // Items per page
   totalItems : number = 0; // Total number of items
   featuresByPages: Features[] = [];
 
   // Pagination Bis of Selected feature By PM properties
-  pageBis : number = 1; // Current page
+  pageBis : number = 0; // Current page
   pageSizeBis : number = 5; // Items per page
   totalItemsBis : number = 0; // Total number of items
   featuresByPagesBis: Features[] = [];
@@ -115,6 +116,45 @@ export class FeaturesComponent implements OnInit {
 
 //-------------------------------------------------------------------------------------------------------
 
+//-------------------------------------------------------------------------------------------------------
+
+  handleSearchFeatures() {
+    const keyword = this.searchFormGroup?.value.keyword;
+    if (keyword) {
+      this.featureService.searchByNameOrDescription(keyword, this.page, this.pageSize).subscribe(
+          (page) => {
+            console.log('Received page object:', page);
+            this.featuresByPages = page.content; // Assign the page.content directly
+            this.totalItems = page.totalElements; // Set the total count of features
+          },
+          (error) => {
+            // Handle the error here, e.g., show an error message to the user or log it
+            console.error('Error:', error);
+            this.errorMessage = 'An error occurred while fetching data.';
+          }
+        );
+    } else {
+      // If the keyword is empty, show all features
+      this.handleGetAllFeatures();
+    }
+  }
+
+
+//-------------------------------------------------------------------------------------------------------
+
+    handleSearchFeaturesByPredictiveModelName() {
+      if (this.selectedPredictiveModelId) {
+        this.filteredFeatures = this.featureService.getFeaturesByPredictiveModelById(this.selectedPredictiveModelId).pipe(
+          catchError(err => {
+            this.errorMessage = err;
+            return throwError(err);
+          })
+        );
+      }
+    }
+
+//-------------------------------------------------------------------------------------------------------
+
   handleGetFeaturesByPredictiveModelID(predictiveModelId: number, page: number, size: number): void {
     this.featureService.getAllFeaturesByPagesByID(page, size, predictiveModelId).pipe(
       catchError(err => {
@@ -134,38 +174,6 @@ export class FeaturesComponent implements OnInit {
     );
 
   }
-
-//-------------------------------------------------------------------------------------------------------
-
-//-------------------------------------------------------------------------------------------------------
-
-    handleSearchFeatures() {
-      const keyword = this.searchFormGroup?.value.keyword;
-      if (keyword) {
-        this.features = this.featureService.searchByNameOrDescription(keyword).pipe(
-          catchError((err) => {
-            this.errorMessage = err;
-            return throwError(err);
-          })
-        );
-      } else {
-        // If the keyword is empty, show all features
-        this.handleGetAllFeatures();
-      }
-    }
-
-//-------------------------------------------------------------------------------------------------------
-
-    handleSearchFeaturesByPredictiveModelName() {
-      if (this.selectedPredictiveModelId) {
-        this.filteredFeatures = this.featureService.getFeaturesByPredictiveModelById(this.selectedPredictiveModelId).pipe(
-          catchError(err => {
-            this.errorMessage = err;
-            return throwError(err);
-          })
-        );
-      }
-    }
 
 //-------------------------------------------------------------------------------------------------------
     handleNewFeature() {

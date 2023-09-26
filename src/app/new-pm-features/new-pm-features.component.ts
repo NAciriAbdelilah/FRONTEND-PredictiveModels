@@ -8,6 +8,7 @@ import {Features} from "../models/features.model";
 import {PredictiveModel} from "../models/predictivemodels.model";
 import {SecurityService} from "../services/security.service";
 import Swal from "sweetalert2";
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-new-pm-features',
@@ -17,12 +18,19 @@ import Swal from "sweetalert2";
 export class NewPmFeaturesComponent implements OnInit {
 
   searchFormGroup! : FormGroup;
+  errorMessage! : string;
   features!: Observable<Array<Features>>;
   listOfPredictiveModel! : Observable<Array<PredictiveModel>>;
   selectedPredictiveModelId: number | null = null;
   savePMFeaturesFormGroup!: FormGroup;
-  allFeatures!: Observable<Array<Features>>; // For the first table
   selectedFeatures: Array<Features> = []; // For the second table
+
+  // Pagination of ALL the features properties
+  page : number = 0; // Current page
+  pageSize : number = 10; // Items per page
+  totalItems : number = 0; // Total number of items
+  featuresByPages: Features[] = [];
+
 
   constructor( private predictiveModelService : PredictiveModelService,
                private featureService : FeaturesService,
@@ -32,7 +40,7 @@ export class NewPmFeaturesComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.handleLoadFeatures();
+    this.handleGetAllFeatures();
     this.handleLoadPredictiveModels()
 
     this.searchFormGroup= this.fb.group({
@@ -46,20 +54,65 @@ export class NewPmFeaturesComponent implements OnInit {
 
   }
 
-  //-------------------------------------------------------------------------------------------------------
-
-  handleLoadFeatures() {
-    this.allFeatures = this.featureService.getAllFeatures();
-  }
+//-------------------------------------------------------------------------------------------------------
 
   handleLoadPredictiveModels(){
     this.listOfPredictiveModel = this.predictiveModelService.getAllPredictiveModels()
   }
 
-  handleSearchFeatures() {
-    const keyword = this.searchFormGroup?.value.keyword;
-    this.allFeatures = this.featureService.searchFeatures(keyword);
+//-------------------------------------------------------------------------------------------------------
+
+  // Pagination of All features event handler
+  onPageChange(event: PageEvent) {
+    this.page = event.pageIndex; // PageIndex is zero-based for that we initialize page = 1
+    this.pageSize = event.pageSize;
+    this.handleGetAllFeatures();
   }
+
+//-------------------------------------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------------------------------------
+
+  handleGetAllFeatures() {
+    this.featureService.getAllFeaturesByPages(this.page, this.pageSize).subscribe(
+      (page) => {
+        console.log('Received page object:', page);
+        this.featuresByPages = page.content; // Assign the page.content directly
+        this.totalItems = page.totalElements; // Set the total count of features
+      },
+      (error) => {
+        console.error('Error fetching features:', error);
+        this.errorMessage = error.message;
+      }
+    );
+  }
+
+//-------------------------------------------------------------------------------------------------------
+
+  handleSearchFeatures() {
+
+    const keyword = this.searchFormGroup?.value.keyword;
+    if (keyword) {
+      this.featureService.searchByNameOrDescription(keyword, this.page, this.pageSize).subscribe(
+        (page) => {
+          console.log('Received page object:', page);
+          this.featuresByPages = page.content; // Assign the page.content directly
+          this.totalItems = page.totalElements; // Set the total count of features
+        },
+        (error) => {
+          // Handle the error here, e.g., show an error message to the user or log it
+          console.error('Error:', error);
+          this.errorMessage = 'An error occurred while fetching data.';
+        }
+      );
+    } else {
+      // If the keyword is empty, show all features
+      this.handleGetAllFeatures();
+    }
+
+  }
+
+//-------------------------------------------------------------------------------------------------------
 
   onPredictiveModelSelect(event: any) {
     const selectedValue = event.target.value;
@@ -84,10 +137,6 @@ export class NewPmFeaturesComponent implements OnInit {
 
     console.log('After selectedFeatures:', this.selectedFeatures);
 
-    // Remove the selected feature from the first table
-    this.allFeatures = this.allFeatures.pipe(
-      map(features => features.filter(f => f.id !== feature.id))
-    );
   }
 
   //-------------------------------------------------------------------------------------------------------
@@ -105,7 +154,7 @@ export class NewPmFeaturesComponent implements OnInit {
     }
 
     // Add the removed feature back to the first table
-    this.allFeatures = this.allFeatures.pipe(map(features => [...features, feature]));
+    this.featuresByPages.push(feature); // Assuming this is an array
 
     // Update the selectedFeatures array
     this.selectedFeatures = this.selectedFeatures.filter(f => f.id !== feature.id);
@@ -162,7 +211,7 @@ export class NewPmFeaturesComponent implements OnInit {
       })
   }
 
-  //-------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------
 
     getErrorMessage(fieldName: string, error: ValidationErrors) {
       if (error['required']){
@@ -172,6 +221,7 @@ export class NewPmFeaturesComponent implements OnInit {
       } else return "";
 
     }
+//-------------------------------------------------------------------------------------------------------
 
 
 }

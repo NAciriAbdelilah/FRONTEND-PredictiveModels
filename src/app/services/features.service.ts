@@ -21,6 +21,12 @@ export class FeaturesService {
       `${environment.backendHost}/features/getAllFeaturesByPages?page=${page}&size=${size}`);
   }
 
+
+  public searchByNameOrDescription(keyword : string, page: number = 0, size: number = 0 ) : Observable<PagesFeatures>{
+    return this.http.get<PagesFeatures>(`${environment.backendHost}/features/searchByNameOrDescription?keyword=${keyword}&page=${page}&size=${size}`);
+  }
+
+
   public getAllFeaturesByPagesByID(page: number, size: number, predictiveModelId: number): Observable<PagesFeatures> {
     return this.http.get<PagesFeatures>(
       `${environment.backendHost}/features/getFeaturesByPagesAndByPMId/${predictiveModelId}/page?page=${page}&size=${size}`).pipe(
@@ -36,10 +42,6 @@ export class FeaturesService {
 
   public searchFeatures(keyword : string) : Observable<Array<Features>>{
     return this.http.get<Array<Features>>(environment.backendHost+"/features/search?keyword="+keyword);
-  }
-
-  public searchByNameOrDescription(keyword : string) : Observable<Array<Features>>{
-    return this.http.get<Array<Features>>(environment.backendHost+"/features/searchByNameOrDescription?keyword="+keyword);
   }
 
   public getFeaturesByPredictiveModelName(modelName: string): Observable<Array<Features>> {

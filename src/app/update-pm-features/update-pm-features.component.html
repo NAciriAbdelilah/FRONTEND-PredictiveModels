@@ -83,7 +83,7 @@
                           </tr>
                           </thead>
                           <tbody>
-                            <tr *ngFor="let feature of allFeatures | async">
+                            <tr *ngFor="let feature of featuresByPages">
                               <ng-container *ngIf="!selectedFeatures.includes(feature)">
                                 <td>{{ feature.namefeature }}</td>
                                 <td>{{ feature.description }}</td>
@@ -102,6 +102,13 @@
                           </tbody>
                         </table>
                       </div>
+                          <!-- Pagination controls -->
+                          <mat-paginator
+                            [length]="totalItems"
+                            [pageSize]="pageSize"
+                            [pageSizeOptions]="[5, 10, 20, 50, 100]"
+                            (page)="onPageChange($event)">
+                          </mat-paginator>
                     </div>
                   </div>
                 </div>

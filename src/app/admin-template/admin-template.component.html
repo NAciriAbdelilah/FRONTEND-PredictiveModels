@@ -30,14 +30,14 @@
               <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/new-predictive-model"
                      *ngIf="securityService.hasRoleIn(['ADMIN'])" >AJOUTER NOUVEAU MODELE </a></li>
               <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/new-pm-scope-canals-frequency"
-                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >AJOUTER DES PARAMETRES</a></li>
+                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >AJOUTER DES PARAMETRES AU MODELE</a></li>
               <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/new-pm-features"
-                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >AJOUTER DES FEATURES</a></li>
+                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >AJOUTER DES FEATURES AU MODELE</a></li>
               <li><hr class="dropdown-divider" *ngIf="securityService.hasRoleIn(['ADMIN'])" ></li>
               <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/update-pm-scope-canals-frequency"
-                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >MODIFIER LES PARAMETRES</a></li>
+                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >MODIFIER LES PARAMETRES D'UN MODELE</a></li>
               <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/update-pm-features"
-                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >MODIFIER LES FEATURES</a></li>
+                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >MODIFIER LES FEATURES D'UN MODELE</a></li>
             </ul>
           </li>
 

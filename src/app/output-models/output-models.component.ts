@@ -82,13 +82,17 @@ export class OutputModelsComponent implements OnInit {
         const lines = content.split('\n');
         const header = lines[0].trim();
 
-        // Define the expected header
-        const expectedHeader =
+        // Define the expected headers
+        const expectedHeader1 =
           'Code_Client,DR,DRPP,UC,Age_Client,Anciennete_Client,Code_Marche,Libelle_Marche,' +
           'Code_Gestionnaire,Libelle_Segment,Canal,Mois_Cible,Annee_Cible,Code_Agence,Nom_Model';
 
-        // Check if the header matches the expected header
-        if (header !== expectedHeader) {
+        const expectedHeader2 =
+          'Code_Client,DR,DRPP,UC,Age_Client,Anciennete_Client,Code_Marche,Libelle_Marche,' +
+          'Code_Gestionnaire,Libelle_Segment,Canal,Mois_Cible,Annee_Cible,Code_Agence,Nom_Model,Produit_Propose';
+
+        // Check if the header matches either of the expected headers
+        if (header !== expectedHeader1 && header !== expectedHeader2) {
           Swal.fire({
             position: 'center',
             icon: 'warning',
@@ -119,7 +123,7 @@ export class OutputModelsComponent implements OnInit {
             Swal.fire({
               position: 'center',
               icon: 'success',
-              title: 'Fichier téléchargé avec succès.!',
+              title: 'Fichier cible téléchargé avec succès.!',
               showConfirmButton: true,
               confirmButtonColor: '#cb3533',
               timer: 3000
@@ -127,7 +131,6 @@ export class OutputModelsComponent implements OnInit {
           },
           error: (e) => {
             console.log('error',e);
-            // Handle errors
           },
         });
       } else {

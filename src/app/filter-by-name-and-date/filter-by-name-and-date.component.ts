@@ -72,17 +72,17 @@ export class FilterByNameAndDateComponent implements OnInit {
     const selectedValue = event.target.value;
     this.selectedPredictiveModelId = parseInt(selectedValue);
     console.log('Selected PM ID:', this.selectedPredictiveModelId);
-    this.handleReportOutputModelByDR();
+/*    this.handleReportOutputModelByDR();
     this.handleReportOutputModelBySegment();
-    this.handleReportOutputModelByMarche();
+    this.handleReportOutputModelByMarche();*/
   }
 
   onDateSelect(event: any) {
     this.selectedDate = event.target.value;
     console.log('Selected DATE:', this.selectedDate);
-    this.handleReportOutputModelByDR();
+/*    this.handleReportOutputModelByDR();
     this.handleReportOutputModelBySegment();
-    this.handleReportOutputModelByMarche();
+    this.handleReportOutputModelByMarche();*/
   }
 
   onCanalSelect(event: any) {
