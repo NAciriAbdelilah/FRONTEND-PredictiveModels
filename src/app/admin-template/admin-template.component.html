@@ -28,7 +28,7 @@
               <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/predictive-models">CONSULTER LES MODELES PREDICTIFS</a></li>
               <li><hr class="dropdown-divider" *ngIf="securityService.hasRoleIn(['ADMIN'])" ></li>
               <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/new-predictive-model"
-                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >AJOUTER NOUVEAU MODELE </a></li>
+                     *ngIf="securityService.hasRoleIn(['ADMIN'])" >AJOUTER UN NOUVEAU MODELE </a></li>
               <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/new-pm-scope-canals-frequency"
                      *ngIf="securityService.hasRoleIn(['ADMIN'])" >AJOUTER DES PARAMETRES AU MODELE</a></li>
               <li><a class="dropdown-item small-dropdown-item" routerLink="/admin/new-pm-features"

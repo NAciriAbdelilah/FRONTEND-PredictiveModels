@@ -84,12 +84,12 @@
                           </div>
                         </div>
                   <!-----------------------  STATUS OF PREDICTIVE MODEL  --------------------------->
-                      <div class="card-header ">STATUS:</div>
+                      <div class="card-header ">STATUT:</div>
                       <div class="card-body">
                         <div class="form-check form-switch fs-6">
                           <input class="form-check-input" type="checkbox" formControlName="statusPM" placeholder="Status" id="flexSwitchCheckChecked" >
                           <label class="form-check-label" for="flexSwitchCheckChecked">
-                            {{ isEnPilote ? 'En Production' : 'En Pilote' }}
+                            <strong>{{ isEnPilote ? 'En Production' : 'En Pilote' }}</strong>
                           </label>
                           <small class="text-danger"
                                  *ngIf="newPredictiveModelsFormGroup.controls['statusPM'].errors
