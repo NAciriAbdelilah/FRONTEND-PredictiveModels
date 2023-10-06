@@ -23,7 +23,6 @@ export class SecurityService implements OnInit{
         }
       }
     });
-
   }
 
   ngOnInit(): void {}
@@ -40,22 +39,19 @@ export class SecurityService implements OnInit{
     return firstName;
   }
 
-  public hasRoleIn(roles:string[]):boolean
-  {
+  public hasRoleIn(roles:string[]):boolean {
     let userRoles = this.keycloakService.getUserRoles();
     for(let role of roles){
       if (userRoles.includes(role)) return true;
     } return false;
   }
 
-  public getRole() : string
-  {
+  public getRole() : string {
     let role = this.keycloakService.getUserRoles();
     return role[5];
   }
 
-  disconnect()
-  {
+  disconnect() {
     this.keycloakService.logout(window.location.origin).then((success) => {
       console.log("--> log: logout success ", success );
     }).catch((error) => {
@@ -63,8 +59,7 @@ export class SecurityService implements OnInit{
     });
   }
 
-  async connect()
-  {
+  async connect() {
     await this.keycloakService.login({
       redirectUri : window.location.origin
     }).then((success)=>{

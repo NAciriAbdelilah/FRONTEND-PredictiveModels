@@ -14,7 +14,6 @@ import {NewPmFeaturesComponent} from "./new-pm-features/new-pm-features.componen
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {UpdatePmScopeCanalsFrequencyComponent} from "./update-pm-scope-canals-frequency/update-pm-scope-canals-frequency.component";
 import {UpdatePmFeaturesComponent} from "./update-pm-features/update-pm-features.component";
-import {AuthGuard} from "./guards/security.guard";
 
 
 const routes: Routes = [

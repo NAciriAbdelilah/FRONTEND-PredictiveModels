@@ -1,0 +1,5 @@
+.custom-accordion-button {
+  background-color: rgba(236, 227, 227, 0.64); /* Change to your desired color */
+  color: rgba(16, 16, 15, 0.47); /* Change to your desired text color */
+  border-color: red; /* Change to match the background color or customize as needed */
+}

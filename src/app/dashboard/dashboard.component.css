@@ -4,29 +4,13 @@ body{
 }
 
 .order-card {
-  color: #fff;
+  color: rgba(16, 16, 15, 0.47);
 }
 
-.bg-c-blue {
+.bg-c-red {
   /*background: linear-gradient(45deg,#4099ff,#73b4ff);*/
-  background: linear-gradient(45deg, #e74343, rgba(9, 9, 91, 0.56));
+  background: linear-gradient(45deg, rgba(185, 183, 183, 0.31), rgb(203, 53, 51));
 }
-
-.bg-c-green {
-  /*background: linear-gradient(45deg,#2ed8b6,#59e0c5);*/
-  background: linear-gradient(45deg, #e74343, rgba(9, 9, 91, 0.56));
-}
-
-.bg-c-yellow {
-  /*background: linear-gradient(45deg,#FFB64D,#ffcb80);*/
-  background: linear-gradient(45deg, #e74343, rgba(9, 9, 91, 0.56));
-}
-
-.bg-c-pink {
-  /*background: linear-gradient(45deg, #de2f2d, #ff7676);*/
-  background: linear-gradient(45deg, #ce3e3e, rgba(16, 16, 15, 0.56));
-}
-
 
 .card {
   border-radius: 5px;
@@ -54,7 +38,7 @@ body{
   float: right;
 }
 .styled-span {
-  font-size: 50px;
+  font-size: 70px;
   color: white;
   font-weight: bold;
 }
