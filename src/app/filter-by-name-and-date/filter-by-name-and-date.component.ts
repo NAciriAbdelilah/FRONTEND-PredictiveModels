@@ -80,9 +80,9 @@ export class FilterByNameAndDateComponent implements OnInit {
   onDateSelect(event: any) {
     this.selectedDate = event.target.value;
     console.log('Selected DATE:', this.selectedDate);
-/*    this.handleReportOutputModelByDR();
+    this.handleReportOutputModelByDR();
     this.handleReportOutputModelBySegment();
-    this.handleReportOutputModelByMarche();*/
+    this.handleReportOutputModelByMarche();
   }
 
   onCanalSelect(event: any) {
