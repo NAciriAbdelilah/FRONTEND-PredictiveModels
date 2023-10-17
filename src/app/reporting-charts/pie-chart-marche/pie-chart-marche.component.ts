@@ -92,13 +92,17 @@ export class PieChartMarcheComponent implements OnInit, OnChanges {
                     position: 'top',
                   },
                   datalabels: {
-                    formatter: (value: any, ctx: any) => {
-                      if (ctx.chart.data.labels) {
-                        return ctx.chart.data.labels[ctx.dataIndex];
-                      }
+                    formatter: (value, ctx) => {
+                      const dataset = ctx.chart.data.datasets[0];
+                      // @ts-ignore
+                      const total = dataset.data.reduce((prev, curr) => prev + curr, 0);
+                      // @ts-ignore
+                      const percentage = ((value / total) * 100).toFixed(2) + '%';
+                      return `${percentage}`; // Return as a string
                     },
                     anchor: 'center',
                     align: 'center',
+                    color: 'white', // Set the color to white
                   },
                   title: {
                     display: true,
@@ -114,6 +118,7 @@ export class PieChartMarcheComponent implements OnInit, OnChanges {
                   duration: 200,
                 },
               },
+              plugins: [DatalabelsPlugin]
             });
           }
         }
