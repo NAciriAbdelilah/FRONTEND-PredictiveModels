@@ -4,12 +4,12 @@ body{
 }
 
 .order-card {
-  color: rgba(16, 16, 15, 0.47);
+  color: rgb(18, 14, 115);
 }
 
 .bg-c-red {
   /*background: linear-gradient(45deg,#4099ff,#73b4ff);*/
-  background: linear-gradient(45deg, rgba(185, 183, 183, 0.31), rgb(203, 53, 51));
+  background: linear-gradient(45deg, rgba(185, 183, 183, 0.31), rgba(236, 227, 227, 0.96));
 }
 
 .card {
@@ -39,7 +39,7 @@ body{
 }
 .styled-span {
   font-size: 70px;
-  color: white;
+  color: rgb(222, 47, 45);
   font-weight: bold;
 }
 /*----------------------------------------------------------------------------------------------------------------------*/

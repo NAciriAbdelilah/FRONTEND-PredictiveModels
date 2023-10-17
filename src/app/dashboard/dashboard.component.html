@@ -12,6 +12,10 @@
                     <ng-container *ngFor="let pm of predictiveModels; let i = index;"></ng-container>
                     <img src="/assets/images/analysis.png" alt="Bootstrap" width="90" height="90">
                     <span class="styled-span f-right">{{(predictiveModels.length)}}</span> <!-- Display the total count PM -->
+                    <br>
+                    <span type="button" class="btn btn-outline-dark btn-sm rounded-pill f-right" [routerLink]="['/admin/predictive-models']">
+                       <strong>Découvrir &nbsp;&nbsp;</strong><img src="/assets/images/double-right.png" alt="Bootstrap" width="15" height="15">
+                    </span>
                   </ng-container>
                 </h2>
               </div>
@@ -25,6 +29,10 @@
                   <p class="m-b-0"><strong>Nombre des Modéles Prédictifs <br/> en Production </strong></p>
                   <img src="/assets/images/cost.png" alt="Bootstrap" width="90" height="90">
                   <span class="styled-span f-right">{{ totalProductionCount }}</span> <!-- Display the total count PM in Prod -->
+                  <br>
+                  <span type="button" class="btn btn-outline-dark btn-sm rounded-pill f-right" [routerLink]="['/admin/predictive-models']">
+                       <strong>Découvrir &nbsp;&nbsp;</strong><img src="/assets/images/double-right.png" alt="Bootstrap" width="15" height="15">
+                  </span>
                 </h2>
               </div>
             </div>
@@ -37,12 +45,16 @@
                   <p class="m-b-0"><strong> Nombre des Modéles Prédictifs <br/> en Pilote</strong></p>
                   <img src="/assets/images/coding.png" alt="Bootstrap" width="90" height="90">
                   <span class="styled-span f-right">{{ totalPilotCount }}</span> <!-- Display the total count PM in Pilot-->
+                  <br>
+                  <span type="button" class="btn btn-outline-dark btn-sm rounded-pill f-right" [routerLink]="['/admin/predictive-models']">
+                       <strong>Découvrir &nbsp;&nbsp;</strong><img src="/assets/images/double-right.png" alt="Bootstrap" width="15" height="15">
+                  </span>
                 </h2>
               </div>
             </div>
           </div>
 
-          <section class="deneb_cta">
+<!--          <section class="deneb_cta">
             <div class="container">
               <div class="cta_wrapper">
                 <div class="row align-items-center">
@@ -64,12 +76,12 @@
                 </div>
               </div>
             </div>
-          </section>
-
+          </section>-->
+          <!--
+                <br><br><br><br><br><br><br>
+          -->
         </div>
 
       </div>
-
-      <br><br><br><br><br><br><br>
 
       <app-filter-by-name-and-date></app-filter-by-name-and-date>

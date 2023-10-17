@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { PredictiveModelsComponent } from './predictive-models/predictive-models.component';
 import { FeaturesComponent } from './features/features.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { AdminTemplateComponent } from './admin-template/admin-template.component';
+import { AdminTemplateComponent } from './navbar/admin-template.component';
 import { NewPredictiveModelComponent } from './new-predictive-model/new-predictive-model.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatListModule} from "@angular/material/list";

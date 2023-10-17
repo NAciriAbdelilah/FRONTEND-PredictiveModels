@@ -13,6 +13,7 @@ export class SecurityService implements OnInit{
   constructor (public keycloakService: KeycloakService) {
     this.init();
   }
+
   init(){
     this.keycloakService.keycloakEvents$.subscribe({
       next: (e) => {

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {PredictiveModelsComponent} from "./predictive-models/predictive-models.component";
 import {FeaturesComponent} from "./features/features.component";
-import {AdminTemplateComponent} from "./admin-template/admin-template.component";
+import {AdminTemplateComponent} from "./navbar/admin-template.component";
 import {NewPredictiveModelComponent} from "./new-predictive-model/new-predictive-model.component";
 import {DetailsModelComponent} from "./details-model/details-model.component";
 import {ScopesComponent} from "./scopes/scopes.component";
