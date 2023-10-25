@@ -78,7 +78,6 @@ export function keycloakInitializer(keycloak: KeycloakService): () =>
         PieChartMarcheComponent,
         PieChartDrComponent,
         PieChartSegmentComponent,
-
     ],
   imports: [
     BrowserModule,
