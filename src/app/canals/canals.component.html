@@ -57,7 +57,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let c of canals | async">
-          <td> {{c.intituleCanal}}</td>
+          <td><strong> {{c.intituleCanal}}</strong></td>
           <td> {{c.descriptionCanal}}</td>
           <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">

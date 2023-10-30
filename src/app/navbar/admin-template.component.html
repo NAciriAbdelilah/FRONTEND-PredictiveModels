@@ -1,16 +1,214 @@
 <!-- Navbar -->
-<div>
+
+<mat-toolbar>
+  <!---Button sidenav----->
+<!--  <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()" >
+    <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+    <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+  </button>-->
+
+    <div class="logo col-2">
+      &nbsp;&nbsp;&nbsp;&nbsp;<img src="../../assets/images/logo-SG.png" style="width:160px;height:25px;">
+    </div>
+    <span class="menu-spacer"></span>
+    <div>
+          <!---Dashboard----->
+          <a mat-button [routerLink]="'/admin/dashboard'">
+            <img src="/assets/images/presentation1.png" alt="Bootstrap" width="30" height="30">
+            <strong> Dashboard</strong>
+          </a>
+
+          <!---Modéles Prédictifs----->
+          <button mat-button [matMenuTriggerFor]="predictiveModelsMenu">
+            <img src="/assets/images/stats.png" alt="Bootstrap" width="30" height="30">
+            <strong> Modéles Prédictifs </strong>
+            <mat-icon>keyboard_arrow_down</mat-icon> <!-- Add an arrow icon -->
+          </button>
+          <mat-menu #predictiveModelsMenu="matMenu">
+            <button mat-menu-item [routerLink]="'/admin/predictive-models'">
+              Consulter les Modéles Prédictifs</button>
+            <mat-divider *ngIf="securityService.hasRoleIn(['ADMIN'])"></mat-divider>
+            <button mat-menu-item [routerLink]="'/admin/new-predictive-model'" *ngIf="securityService.hasRoleIn(['ADMIN'])">
+              Ajouter un nouveau Modéle Prédictif</button>
+            <button mat-menu-item [routerLink]="'/admin/new-pm-scope-canals-frequency'" *ngIf="securityService.hasRoleIn(['ADMIN'])">
+              Ajouter des Paramétres au Modéle</button>
+            <button mat-menu-item [routerLink]="'/admin/new-pm-features'" *ngIf="securityService.hasRoleIn(['ADMIN'])">
+              Ajouter des Features au Modéle</button>
+            <mat-divider *ngIf="securityService.hasRoleIn(['ADMIN'])"></mat-divider>
+            <button mat-menu-item [routerLink]="'/admin/update-pm-scope-canals-frequency'" *ngIf="securityService.hasRoleIn(['ADMIN'])">
+              Modifier Les Paramétres d'un Modéles</button>
+            <button mat-menu-item [routerLink]="'/admin/update-pm-features'" *ngIf="securityService.hasRoleIn(['ADMIN'])">
+              Modifier les Features d'un Modéle</button>
+          </mat-menu>
+
+          <!---Features----->
+          <a mat-button [routerLink]="'/admin/features'">
+            <img src="/assets/images/listme.png" alt="Bootstrap" width="30" height="30">
+            <strong> Features</strong>
+          </a>
+
+          <!---Paramétres----->
+          <button mat-button [matMenuTriggerFor]="parametresMenu">
+            <img src="/assets/images/capability.png" alt="Bootstrap" width="30" height="30">
+            <strong> Paramétres</strong>
+            <mat-icon>keyboard_arrow_down</mat-icon> <!-- Add an arrow icon -->
+          </button>
+          <mat-menu #parametresMenu="matMenu">
+            <button mat-menu-item [routerLink]="'/admin/scopes'">
+              Marchés des Modéles Prédictifs</button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item [routerLink]="'/admin/canals'">
+              Canaux des Modéles Prédictifs</button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item [routerLink]="'/admin/frequency'">
+              Fréquences des Modéles Prédictifs</button>
+          </mat-menu>
+
+          <!---Chargement des Cibles----->
+          <a mat-button [routerLink]="'/admin/output-models'" *ngIf="securityService.hasRoleIn(['ADMIN'])">
+            <img src="/assets/images/uploading.png" alt="Bootstrap" width="30" height="30">
+            <strong> Chargement des Cibles</strong>
+          </a>
+
+          <!---Monitoring des Modéles----->
+          <a mat-button [routerLink]="'#'" *ngIf="securityService.hasRoleIn(['ADMIN'])">
+            <img src="/assets/images/speedometer.png" alt="Bootstrap" width="30" height="30">
+            <strong> Monitoring des Modéles</strong>
+          </a>
+
+          <!--- Profile UserName---->
+          <a mat-button [routerLink]="'#'"></a>
+
+          <small><b>{{ securityService.getUserName() }}</b></small>
+          <button mat-button [matMenuTriggerFor]="logOutMenu">
+            <img class="rounded-start" src="./assets/images/shutdown.png" height="30">
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </button>
+
+          <!---Déconnexion----->
+          <mat-menu #logOutMenu="matMenu">
+            <button mat-menu-item (click)="handleLogout()">
+              <img src="/assets/images/logoutFleche.png" alt="Bootstrap" width="30" height="30">
+              <strong> Déconnexion</strong>
+            </button>
+          </mat-menu>
+
+      </div>
+</mat-toolbar>
+
+<router-outlet></router-outlet>
+<!-- End of Navbar -->
+
+<!----------------------------------------------------------------------------------------------------------------->
+<!--
+<mat-sidenav-container>
+  <mat-sidenav #sidenav  class="mat-elevation-z8">
+    <img src="../../assets/images/logo-SG.png" style="width:160px;height:25px;">
+    <mat-divider></mat-divider>
+
+    <mat-nav-list>
+
+      &lt;!&ndash;-Dashboard-&#45;&#45;&ndash;&gt;
+      <mat-list-item [routerLink]="'/admin/dashboard'" (click)="closeSidenav($event)" >
+        <img src="/assets/images/presentation1.png" alt="Bootstrap" width="25" height="25"> &nbsp;&nbsp;
+        <span><strong>Dashboard</strong></span>
+      </mat-list-item>
+
+      &lt;!&ndash;-Modéles Prédictifs-&#45;&#45;&ndash;&gt;
+      <mat-expansion-panel [class.mat-elevation-z5]="true">
+        <mat-expansion-panel-header>
+          <img src="/assets/images/stats.png" alt="Bootstrap" width="25" height="25"> &nbsp;&nbsp;
+          <strong>Modéles Prédictifs</strong>
+        </mat-expansion-panel-header>
+        <mat-nav-list class="aligned-list" (click)="closeSidenav($event)">
+          <a mat-list-item [routerLink]="'/admin/predictive-models'">
+            Consulter les Modéles Prédictifs</a>
+          <a mat-list-item [routerLink]="'/admin/new-predictive-model'" *ngIf="securityService.hasRoleIn(['ADMIN'])">
+            Ajouter un nouveau Modéle Prédictif</a>
+          <a mat-list-item [routerLink]="'/admin/new-pm-scope-canals-frequency'" *ngIf="securityService.hasRoleIn(['ADMIN'])">
+            Ajouter des Paramétres au Modéle</a>
+          <a mat-list-item [routerLink]="'/admin/new-pm-features'" *ngIf="securityService.hasRoleIn(['ADMIN'])">
+            Ajouter des Features au Modéle</a>
+          <a mat-list-item [routerLink]="'/admin/update-pm-scope-canals-frequency'" *ngIf="securityService.hasRoleIn(['ADMIN'])">
+            Modifier Les Paramétres d'un Modéles</a>
+          <a mat-list-item [routerLink]="'/admin/update-pm-features'" *ngIf="securityService.hasRoleIn(['ADMIN'])">
+            Modifier les Features d'un Modéle</a>
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      &lt;!&ndash;-Features-&#45;&#45;&ndash;&gt;
+      <mat-list-item [routerLink]="'/admin/features'" (click)="closeSidenav($event)">
+        <img src="/assets/images/listme.png" alt="Bootstrap" width="25" height="25"> &nbsp;&nbsp;
+        <span><strong>Features</strong></span>
+      </mat-list-item>
+
+      &lt;!&ndash;-Paramétres-&#45;&#45;&ndash;&gt;
+      <mat-expansion-panel [class.mat-elevation-z5]="true">
+        <mat-expansion-panel-header>
+          <img src="/assets/images/capability.png" alt="Bootstrap" width="25" height="25"> &nbsp;&nbsp;
+          <strong>Paramétres</strong>
+        </mat-expansion-panel-header>
+        <mat-nav-list class="aligned-list" (click)="closeSidenav($event)">
+          <a mat-list-item [routerLink]="'/admin/scopes'">Marchés des Modéles Prédictifs</a>
+          <a mat-list-item [routerLink]="'/admin/canals'">Canaux des Modéles Prédictifs</a>
+          <a mat-list-item [routerLink]="'/admin/frequency'">Fréquences des Modéles Prédictifs</a>
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      &lt;!&ndash;-Chargement des Cibles-&#45;&#45;&ndash;&gt;
+      <mat-list-item [routerLink]="'/admin/output-models'" *ngIf="securityService.hasRoleIn(['ADMIN'])" (click)="closeSidenav($event)">
+        <img src="/assets/images/uploading.png" alt="Bootstrap" width="25" height="25"> &nbsp;&nbsp;
+        <span><strong>Chargement des Cibles</strong></span>
+      </mat-list-item>
+
+      &lt;!&ndash;-Monitoring des Modéles-&#45;&#45;&ndash;&gt;
+      <mat-list-item [routerLink]="'#'" *ngIf="securityService.hasRoleIn(['ADMIN'])" (click)="closeSidenav($event)">
+        <img src="/assets/images/speedometer.png" alt="Bootstrap" width="25" height="25"> &nbsp;&nbsp;
+        <span><strong>Monitoring des Modéles</strong></span>
+      </mat-list-item>
+
+      &lt;!&ndash;-Déconnexion-&#45;&#45;&ndash;&gt;
+        <a mat-list-item (click)="handleLogout()">
+          <img src="/assets/images/shutdown.png" alt="Bootstrap" width="25" height="25"> &nbsp;&nbsp;
+          <strong>Déconnexion</strong>
+        </a>
+
+      &lt;!&ndash;- Profile UserName&#45;&#45;&ndash;&gt;
+      <mat-divider></mat-divider>
+      <img src="/assets/images/user.png" alt="Bootstrap" width="25" height="25"> &nbsp;&nbsp;
+      <strong> Bienvenue {{ securityService.getUserName() }} </strong>
+
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="content mat-elevation-z8">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+
+&lt;!&ndash;  <mat-sidenav-content class="router-container">
+      <router-outlet></router-outlet>
+  </mat-sidenav-content>&ndash;&gt;
+
+</mat-sidenav-container>
+
+-->
+
+<!----------------------------------------------------------------------------------------------------------------->
+<!-- Navbar -->
+<!--<div>
 <nav class="navbar sticky-top navbar-expand-lg navbar-light"  style="background-color: #F5F5F5;">
 
-  <!-- Container wrapper -->
-    <!-- Navbar brand -->
+  &lt;!&ndash; Container wrapper &ndash;&gt;
+    &lt;!&ndash; Navbar brand &ndash;&gt;
     <div class="logo col-2">
       &nbsp;&nbsp;&nbsp;&nbsp;<img src="../../assets/images/logo-SG.png" style="width:160px;height:25px;">
     </div>
 
-  <!-- Collapsible wrapper -->
+  &lt;!&ndash; Collapsible wrapper &ndash;&gt;
 
-      <!-- Left links -->
+      &lt;!&ndash; Left links &ndash;&gt;
     <div class="container col-8 mt-2">
 
       <ul class="navbar-nav h6 custom-spacing"  style="font-size: medium; font-weight: bold" >
@@ -68,11 +266,11 @@
           </li>
 
       </ul>
-        <!-- Left links -->
-        <!-- End Collapsible wrapper -->
+        &lt;!&ndash; Left links &ndash;&gt;
+        &lt;!&ndash; End Collapsible wrapper &ndash;&gt;
     </div>
-        <!-- Setting dropdown -->
-        <!-- End Setting dropdown -->
+        &lt;!&ndash; Setting dropdown &ndash;&gt;
+        &lt;!&ndash; End Setting dropdown &ndash;&gt;
   <div class="container col-1">
     <small class="nav-item"><b>{{ securityService.getUserName() }}</b></small>
     <a
@@ -94,6 +292,7 @@
   </div>
 </nav>
 
-</div>
+</div>-->
+<!-- End of Navbar -->
 
-<router-outlet></router-outlet>
+<!----------------------------------------------------------------------------------------------------------------->

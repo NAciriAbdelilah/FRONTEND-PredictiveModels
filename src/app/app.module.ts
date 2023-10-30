@@ -35,6 +35,14 @@ import { TokenInterceptor } from './interceptors/TokenInterceptor';
 import {NgxPaginationModule} from "ngx-pagination";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {RouterModule} from "@angular/router";
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatMenuModule} from "@angular/material/menu";
+
 
 export function keycloakInitializer(keycloak: KeycloakService): () =>
   Promise<any> {
@@ -96,6 +104,13 @@ export function keycloakInitializer(keycloak: KeycloakService): () =>
     KeycloakAngularModule,
     NgxPaginationModule,
     MatPaginatorModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatMenuModule,
   ],
   providers: [
     {

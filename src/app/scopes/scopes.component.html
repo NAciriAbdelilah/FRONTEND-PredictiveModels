@@ -58,7 +58,7 @@
           </thead>
           <tbody>
           <tr *ngFor="let s of scopes | async">
-            <td> {{s.intituleScope}}</td>
+            <td><strong> {{s.intituleScope}} </strong></td>
             <td> {{s.descriptionScope}}</td>
             <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">

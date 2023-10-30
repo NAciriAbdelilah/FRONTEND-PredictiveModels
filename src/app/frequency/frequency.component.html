@@ -50,16 +50,16 @@
           <caption> LISTE DES FREQUENCES</caption>
           <thead class="table-dark">
             <tr>
-              <th class="align-middle">CODE DU FREQUENCE</th>
               <th class="align-middle">INTITULE DU FREQUENCE</th>
+              <th class="align-middle">CODE DU FREQUENCE</th>
               <th class="align-middle" *ngIf="securityService.hasRoleIn(['ADMIN'])" >ACTIONS</th>
             </tr>
           </thead>
           <tbody>
           <tr *ngFor="let f of frequences | async">
+            <td> <strong> {{f.intitulefrequence}} </strong> </td>
             <td> {{f.codeFrequence}}</td>
-            <td> {{f.intitulefrequence}}</td>
-            <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
+                        <td *ngIf="securityService.hasRoleIn(['ADMIN'])">
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <!-- Update frequences button -->
                 <button type="button" class="btn btn-outline-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#updateFrequencyModal"
